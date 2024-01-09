@@ -51,3 +51,6 @@ These values can be adjusted in the `Constants.h` file.
     - This will set your local branch to **push** committed changes to the target upstream branch on origin/(existing_branch)
 - git checkout (existing_branch) -- switch to an existing local branch 
     - switch out your local copy to **commit** to an existing local branch (existing_branch)
+- git push --set-upstream origin (branch_name)
+    - push changes explicitly to (branch_name)
+    - NEVER PUSH TO MAIN
