@@ -1,0 +1,19 @@
+forward
+left y up 
+left y down
+left x left
+
+right x left 
+
+----------------
+
+backwards
+left x right
+
+right x right
+
+
+
+
+-------------
+emergency stopped: mandatory reboot of the robot
