@@ -13,6 +13,7 @@
 #include <frc/kinematics/SwerveDriveOdometry.h>
 #include <frc2/command/SubsystemBase.h>
 
+#include "AHRS.h"
 #include "Constants.h"
 #include "MAXSwerveModule.h"
 
@@ -101,6 +102,10 @@ class DriveSubsystem : public frc2::SubsystemBase {
       frc::Translation2d{-DriveConstants::kWheelBase / 2,
                          -DriveConstants::kTrackWidth / 2}};
 
+  void ControlShooterMotors(double speed);
+
+  void ControlIntakeMotors(double speed);
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -111,8 +116,22 @@ class DriveSubsystem : public frc2::SubsystemBase {
   MAXSwerveModule m_rearRight;
 
   // The gyro sensor
-  frc::ADIS16470_IMU m_gyro;
+  AHRS m_gyro;
+  //
+  rev::CANSparkMax m_shooterMotorLeft{
+      DriveConstants::kShooterLeftCanId,
+      rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax m_shooterMotorRight{
+      DriveConstants::kShooterRightCanId,
+      rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
+  //
+  rev::CANSparkMax m_intakeMotorLeft{
+      DriveConstants::kIntakeLeftCanId,
+      rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax m_intakeMotorRight{
+      DriveConstants::kIntakeRightCanId,
+      rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   // Slew rate filter variables for controlling lateral acceleration
   double m_currentRotation = 0.0;
   double m_currentTranslationDir = 0.0;
