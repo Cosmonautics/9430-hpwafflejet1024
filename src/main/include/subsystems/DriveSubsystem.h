@@ -102,7 +102,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
       frc::Translation2d{-DriveConstants::kWheelBase / 2,
                          -DriveConstants::kTrackWidth / 2}};
 
-  void ControlShooterMotors(double speed);
+  void ControlShooterMotors(bool isPressed,double speed);
 
   void ControlIntakeMotors(double speed);
 

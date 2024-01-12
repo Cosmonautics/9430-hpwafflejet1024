@@ -156,9 +156,14 @@ units::degree_t DriveSubsystem::GetHeading() const {
   return frc::Rotation2d(units::radian_t{m_gyro.GetAngle()}).Degrees();
 }
 
-void DriveSubsystem::ControlShooterMotors(double speed) {
-  m_shooterMotorLeft.Set(-speed);
-  m_shooterMotorRight.Set(speed);
+void DriveSubsystem::ControlShooterMotors(bool isPressed, double speed) {
+  if (isPressed) {
+    m_shooterMotorLeft.Set(-speed);
+    m_shooterMotorRight.Set(speed);
+  } else {
+    m_shooterMotorLeft.Set(0);
+    m_shooterMotorRight.Set(0);
+  }
 }
 
 void DriveSubsystem::ControlIntakeMotors(double speed) {

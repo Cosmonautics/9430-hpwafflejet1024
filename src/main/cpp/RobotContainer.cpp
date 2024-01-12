@@ -58,7 +58,11 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_driverController,
                        frc::XboxController::Button::kRightBumper)
       .WhenPressed(new frc2::InstantCommand(
-          [this] { m_drive.ControlShooterMotors(1); }, {&m_drive}));
+          [this] { m_drive.ControlShooterMotors(true, 1); }, {&m_drive}));
+  frc2::JoystickButton(&m_driverController,
+                       frc::XboxController::Button::kRightBumper)
+      .WhenReleased(new frc2::InstantCommand(
+          [this] { m_drive.ControlShooterMotors(false, 1); }, {&m_drive}));
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kA)
       .WhenPressed(new frc2::InstantCommand(
           [this] { m_drive.ControlIntakeMotors(1); }, {&m_drive}));
