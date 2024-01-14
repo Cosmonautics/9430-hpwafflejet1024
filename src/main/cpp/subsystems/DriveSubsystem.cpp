@@ -166,10 +166,17 @@ void DriveSubsystem::ControlShooterMotors(bool isPressed, double speed) {
   }
 }
 
-void DriveSubsystem::ControlIntakeMotors(double speed) {
-  m_intakeMotorLeft.Set(-speed);
-  m_intakeMotorRight.Set(speed);
+void DriveSubsystem::ControlIntakeMotors(bool isPressed, double speed) {  
+  if (isPressed) {
+    m_intakeMotorLeft.Set(-speed);
+    m_intakeMotorRight.Set(speed);
+  } else {
+    m_intakeMotorLeft.Set(0);
+    m_intakeMotorRight.Set(0);
+  }
 }
+
+
 
 void DriveSubsystem::ZeroHeading() { m_gyro.Reset(); }
 

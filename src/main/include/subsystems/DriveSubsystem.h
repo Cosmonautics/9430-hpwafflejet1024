@@ -103,9 +103,9 @@ class DriveSubsystem : public frc2::SubsystemBase {
                          -DriveConstants::kTrackWidth / 2}};
 
   void ControlShooterMotors(bool isPressed,double speed);
-
-  void ControlIntakeMotors(double speed);
-
+    
+  void ControlIntakeMotors(bool isPressed, double speed);
+    
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.

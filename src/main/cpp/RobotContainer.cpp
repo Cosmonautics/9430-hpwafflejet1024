@@ -56,6 +56,23 @@ void RobotContainer::ConfigureButtonBindings() {
                        frc::XboxController::Button::kRightBumper)
       .WhileTrue(new frc2::RunCommand([this] { m_drive.SetX(); }, {&m_drive}));
   frc2::JoystickButton(&m_driverController,
+                       frc::XboxController::Button::kX)
+      .WhenPressed(new frc2::InstantCommand(
+          [this] { m_drive.ControlIntakeMotors(true, 1); }, {&m_drive}));
+  frc2::JoystickButton(&m_driverController,
+                       frc::XboxController::Button::kX)
+      .WhenReleased(new frc2::InstantCommand(
+          [this] { m_drive.ControlIntakeMotors(false, 1); }, {&m_drive}));
+          frc2::JoystickButton(&m_driverController,
+                       frc::XboxController::Button::kB)
+      .WhenPressed(new frc2::InstantCommand(
+          [this] { m_drive.ControlIntakeMotors(true, -.25); }, {&m_drive}));
+  frc2::JoystickButton(&m_driverController,
+                       frc::XboxController::Button::kB)
+      .WhenReleased(new frc2::InstantCommand(
+          [this] { m_drive.ControlIntakeMotors(false, -.25); }, {&m_drive}));
+    
+  frc2::JoystickButton(&m_driverController,
                        frc::XboxController::Button::kRightBumper)
       .WhenPressed(new frc2::InstantCommand(
           [this] { m_drive.ControlShooterMotors(true, 1); }, {&m_drive}));
@@ -63,12 +80,6 @@ void RobotContainer::ConfigureButtonBindings() {
                        frc::XboxController::Button::kRightBumper)
       .WhenReleased(new frc2::InstantCommand(
           [this] { m_drive.ControlShooterMotors(false, 1); }, {&m_drive}));
-  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kA)
-      .WhenPressed(new frc2::InstantCommand(
-          [this] { m_drive.ControlIntakeMotors(1); }, {&m_drive}));
-  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kX)
-      .WhenPressed(new frc2::InstantCommand(
-          [this] { m_drive.ControlIntakeMotors(-0.25); }, {&m_drive}));
 }
 
 std::vector<frc::Pose2d> ParseTrajectoryJson(const nlohmann::json& json) {
