@@ -23,6 +23,7 @@ DriveSubsystem::DriveSubsystem()
                    kFrontRightChassisAngularOffset},
       m_rearRight{kRearRightDrivingCanId, kRearRightTurningCanId,
                   kRearRightChassisAngularOffset},
+      m_gyro{frc::SPI::Port::kMXP},
       m_odometry{kDriveKinematics,
                  frc::Rotation2d(units::radian_t{m_gyro.GetAngle()}),
                  {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
@@ -155,9 +156,24 @@ units::degree_t DriveSubsystem::GetHeading() const {
   return frc::Rotation2d(units::radian_t{m_gyro.GetAngle()}).Degrees();
 }
 
+void DriveSubsystem::ControlShooterMotors(bool isPressed, double speed) {
+  if (isPressed) {
+    m_shooterMotorLeft.Set(-speed);
+    m_shooterMotorRight.Set(speed);
+  } else {
+    m_shooterMotorLeft.Set(0);
+    m_shooterMotorRight.Set(0);
+  }
+}
+
+void DriveSubsystem::ControlIntakeMotors(double speed) {
+  m_intakeMotorLeft.Set(-speed);
+  m_intakeMotorRight.Set(speed);
+}
+
 void DriveSubsystem::ZeroHeading() { m_gyro.Reset(); }
 
-double DriveSubsystem::GetTurnRate() { return -m_gyro.GetRate().value(); }
+double DriveSubsystem::GetTurnRate() { return -m_gyro.GetRate(); }
 
 frc::Pose2d DriveSubsystem::GetPose() { return m_odometry.GetPose(); }
 
