@@ -13,7 +13,6 @@
 #include <frc/kinematics/SwerveDriveOdometry.h>
 #include <frc2/command/SubsystemBase.h>
 
-#include "AHRS.h"
 #include "Constants.h"
 #include "MAXSwerveModule.h"
 
