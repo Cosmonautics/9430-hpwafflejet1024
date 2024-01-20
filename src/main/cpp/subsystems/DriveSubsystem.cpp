@@ -23,16 +23,15 @@ DriveSubsystem::DriveSubsystem()
                    kFrontRightChassisAngularOffset},
       m_rearRight{kRearRightDrivingCanId, kRearRightTurningCanId,
                   kRearRightChassisAngularOffset},
-      m_gyro{frc::SPI::Port::kMXP},
       m_odometry{kDriveKinematics,
-                 frc::Rotation2d(units::radian_t{m_gyro.GetAngle()}),
+                 frc::Rotation2d(units::radian_t{m_gyro.GetAngle(frc::ADIS16470_IMU::IMUAxis::kZ).value()}),
                  {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                   m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
                  frc::Pose2d{}} {}
 
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
-  m_odometry.Update(frc::Rotation2d(units::radian_t{m_gyro.GetAngle()}),
+  m_odometry.Update(frc::Rotation2d(units::radian_t{m_gyro.GetAngle(frc::ADIS16470_IMU::IMUAxis::kZ)}),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
 }
@@ -111,7 +110,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
       fieldRelative
           ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
                 xSpeedDelivered, ySpeedDelivered, rotDelivered,
-                frc::Rotation2d(units::radian_t{m_gyro.GetAngle()}))
+                frc::Rotation2d(units::radian_t{m_gyro.GetAngle(frc::ADIS16470_IMU::IMUAxis::kZ)}))
           : frc::ChassisSpeeds{xSpeedDelivered, ySpeedDelivered, rotDelivered});
 
   kDriveKinematics.DesaturateWheelSpeeds(&states, DriveConstants::kMaxSpeed);
@@ -124,6 +123,25 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   m_rearRight.SetDesiredState(br);
 }
 
+void DriveSubsystem::ControlShooterMotors(bool isPressed, double speed) {
+  if (isPressed) {
+    m_shooterMotorLeft.Set(-speed);
+    m_shooterMotorRight.Set(speed);
+  } else {
+    m_shooterMotorLeft.Set(0);
+    m_shooterMotorRight.Set(0);
+  }
+}
+
+void DriveSubsystem::ControlIntakeMotors(bool isPressed, double speed) {
+  if (isPressed) {
+    m_intakeMotorLeft.Set(-speed);
+    m_intakeMotorRight.Set(speed);
+  } else {
+    m_intakeMotorLeft.Set(0);
+    m_intakeMotorRight.Set(0);
+  }
+}
 void DriveSubsystem::SetX() {
   m_frontLeft.SetDesiredState(
       frc::SwerveModuleState{0_mps, frc::Rotation2d{45_deg}});
@@ -153,34 +171,16 @@ void DriveSubsystem::ResetEncoders() {
 }
 
 units::degree_t DriveSubsystem::GetHeading() const {
-  return frc::Rotation2d(units::radian_t{m_gyro.GetAngle()}).Degrees();
+  return frc::Rotation2d(
+             units::radian_t{m_gyro.GetAngle(frc::ADIS16470_IMU::IMUAxis::kZ)})
+      .Degrees();
 }
-
-void DriveSubsystem::ControlShooterMotors(bool isPressed, double speed) {
-  if (isPressed) {
-    m_shooterMotorLeft.Set(-speed);
-    m_shooterMotorRight.Set(speed);
-  } else {
-    m_shooterMotorLeft.Set(0);
-    m_shooterMotorRight.Set(0);
-  }
-}
-
-void DriveSubsystem::ControlIntakeMotors(bool isPressed, double speed) {  
-  if (isPressed) {
-    m_intakeMotorLeft.Set(-speed);
-    m_intakeMotorRight.Set(speed);
-  } else {
-    m_intakeMotorLeft.Set(0);
-    m_intakeMotorRight.Set(0);
-  }
-}
-
-
 
 void DriveSubsystem::ZeroHeading() { m_gyro.Reset(); }
 
-double DriveSubsystem::GetTurnRate() { return -m_gyro.GetRate(); }
+double DriveSubsystem::GetTurnRate() {
+  return -m_gyro.GetRate(frc::ADIS16470_IMU::IMUAxis::kZ).value();
+}
 
 frc::Pose2d DriveSubsystem::GetPose() { return m_odometry.GetPose(); }
 

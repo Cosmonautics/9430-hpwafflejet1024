@@ -17,6 +17,7 @@
 #include "Constants.h"
 #include "MAXSwerveModule.h"
 
+
 class DriveSubsystem : public frc2::SubsystemBase {
  public:
   DriveSubsystem();
@@ -116,7 +117,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
   MAXSwerveModule m_rearRight;
 
   // The gyro sensor
-  AHRS m_gyro;
+  frc::ADIS16470_IMU m_gyro;
   //
   rev::CANSparkMax m_shooterMotorLeft{
       DriveConstants::kShooterLeftCanId,
