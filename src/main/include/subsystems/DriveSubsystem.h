@@ -12,10 +12,10 @@
 #include <frc/kinematics/SwerveDriveKinematics.h>
 #include <frc/kinematics/SwerveDriveOdometry.h>
 #include <frc2/command/SubsystemBase.h>
+#include <rev/CANSparkFlex.h>
 
 #include "Constants.h"
 #include "MAXSwerveModule.h"
-
 
 class DriveSubsystem : public frc2::SubsystemBase {
  public:
@@ -118,20 +118,20 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // The gyro sensor
   frc::ADIS16470_IMU m_gyro;
   //
-  rev::CANSparkMax m_shooterMotorLeft{
+  rev::CANSparkFlex m_shooterMotorLeft{
       DriveConstants::kShooterLeftCanId,
-      rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  rev::CANSparkMax m_shooterMotorRight{
+      rev::CANSparkLowLevel::MotorType::kBrushless};
+  rev::CANSparkFlex m_shooterMotorRight{
       DriveConstants::kShooterRightCanId,
-      rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+      rev::CANSparkLowLevel::MotorType::kBrushless};
 
   //
-  rev::CANSparkMax m_intakeMotorLeft{
+  rev::CANSparkFlex m_intakeMotorLeft{
       DriveConstants::kIntakeLeftCanId,
-      rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  rev::CANSparkMax m_intakeMotorRight{
+      rev::CANSparkLowLevel::MotorType::kBrushless};
+  rev::CANSparkFlex m_intakeMotorRight{
       DriveConstants::kIntakeRightCanId,
-      rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+      rev::CANSparkLowLevel::MotorType::kBrushless};
   // Slew rate filter variables for controlling lateral acceleration
   double m_currentRotation = 0.0;
   double m_currentTranslationDir = 0.0;
