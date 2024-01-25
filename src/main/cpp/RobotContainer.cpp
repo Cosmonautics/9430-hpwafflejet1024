@@ -67,15 +67,15 @@ void RobotContainer::ConfigureButtonBindings() {
  // B, Drop Note
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kB)
       .OnTrue(new frc2::InstantCommand(
-          [this] { m_drive.ControlIntakeMotors(true, -0.25); }, {&m_drive}));
+          [this] { m_drive.ControlIntakeMotors(true, -.25); }, {&m_drive}));
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kB)
       .OnFalse(new frc2::InstantCommand(
-          [this] { m_drive.ControlIntakeMotors(false, -0.25); }, {&m_drive}));
+          [this] { m_drive.ControlIntakeMotors(false, -.25); }, {&m_drive}));
     // Right, bumper Shoot
   frc2::JoystickButton(&m_driverController,
                        frc::XboxController::Button::kRightBumper)
       .OnTrue(new frc2::InstantCommand(
-          [this] { m_drive.ControlShooterMotors(true, 0.75); }, {&m_drive}));
+          [this] { m_drive.ControlShooterMotors(true, 1); }, {&m_drive}));
   frc2::JoystickButton(&m_driverController,
                        frc::XboxController::Button::kRightBumper)
       .OnFalse(new frc2::InstantCommand(
