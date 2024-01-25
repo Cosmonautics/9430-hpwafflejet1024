@@ -126,7 +126,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
 void DriveSubsystem::ControlShooterMotors(bool isPressed, double speed) {
   if (isPressed) {
     m_shooterMotorLeft.Set(-speed);
-    m_shooterMotorRight.Set(0.75);
+    m_shooterMotorRight.Set(speed * 0.75);
   } else {
     m_shooterMotorLeft.Set(0);
     m_shooterMotorRight.Set(0);
