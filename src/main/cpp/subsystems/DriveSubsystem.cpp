@@ -123,7 +123,39 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   m_rearRight.SetDesiredState(br);
 }
 
-void DriveSubsystem::ControlShooterMotors(bool isPressed, double speed) {
+void DriveSubsystem::DropNote(bool isPressed, double speed) {
+  double dropSpeed = 0.10; // drop positive speed
+
+  if (isPressed) {
+    m_shooterMotorLeft.Set(-dropSpeed);
+    m_shooterMotorRight.Set(dropSpeed);
+    // m_intakeMotorLeft.Set(-dropSpeed);
+    // m_intakeMotorRight.Set(dropSpeed);
+  } else {
+    m_shooterMotorLeft.Set(0);
+    m_shooterMotorRight.Set(0);
+    // m_intakeMotorLeft.Set(0);
+    // m_intakeMotorRight.Set(0);
+  }
+}
+
+void DriveSubsystem::PickUpNote(bool isPressed, double speed) {
+  double pickUpSpeed = -0.10; // pick up is negative speed
+
+  if (isPressed) {
+    m_shooterMotorLeft.Set(-pickUpSpeed);
+    m_shooterMotorRight.Set(pickUpSpeed);
+    // m_intakeMotorLeft.Set(-pickUpSpeed);
+    // m_intakeMotorRight.Set(pickUpSpeed);
+  } else {
+    m_shooterMotorLeft.Set(0);
+    m_shooterMotorRight.Set(0);
+    // m_intakeMotorLeft.Set(0);
+    // m_intakeMotorRight.Set(0);
+  }
+}
+
+void DriveSubsystem::ShootMotors(bool isPressed, double speed) {
   if (isPressed) {
     m_shooterMotorLeft.Set(-speed);
     m_shooterMotorRight.Set(speed * 0.75);
