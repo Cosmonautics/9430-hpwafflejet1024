@@ -1,3 +1,6 @@
+#include <"Elevator.h">
+#include <"Shooter.h">
+
 // 2 motors 
     //Design:
         // 1 for pivot angle
