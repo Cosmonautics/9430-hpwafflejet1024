@@ -101,14 +101,6 @@ class DriveSubsystem : public frc2::SubsystemBase {
                          DriveConstants::kTrackWidth / 2},
       frc::Translation2d{-DriveConstants::kWheelBase / 2,
                          -DriveConstants::kTrackWidth / 2}};
-
-  void PickUpNote(bool isPressed, double speed);
-
-  void DropNote(bool isPressed, double speed);
-
-  void ControlIntakeMotors(bool isPressed, double speed);
-
-  void ShootMotors(bool isPressed, double speed);
     
  private:
   // Components (e.g. motor controllers and sensors) should generally be
