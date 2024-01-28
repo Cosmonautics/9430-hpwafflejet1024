@@ -16,7 +16,7 @@ rev::CANSparkFlex m_intakeMotorRight{
     DriveConstants::kIntakeRightCanId,
     rev::CANSparkLowLevel::MotorType::kBrushless};
 
-void Intake::DropNote(bool isPressed, double speed) {
+void Intake::IntakeDropNote(bool isPressed, double speed) {
   double dropSpeed = 0.10;  // drop positive speed
 
   if (isPressed) {
@@ -28,7 +28,7 @@ void Intake::DropNote(bool isPressed, double speed) {
   }
 }
 
-void Intake::PickUpNote(bool isPressed, double speed) {
+void Intake::IntakePickUpNote(bool isPressed, double speed) {
   double pickUpSpeed = -0.10;  // pick up is negative speed
 
   if (isPressed) {
