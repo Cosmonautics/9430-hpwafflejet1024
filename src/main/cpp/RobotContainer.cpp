@@ -62,26 +62,26 @@ void RobotContainer::ConfigureButtonBindings() {
   // X, Reaload/Pickup Note
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kX)
       .OnTrue(new frc2::InstantCommand(
-          [this] { m_shooter.PickUpNote(true, -0.10); }, {&m_drive}));
+          [this] { m_shooter.ShooterPickUpNote(true, -0.10); }, {&m_shooter}));
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kX)
       .OnFalse(new frc2::InstantCommand(
-          [this] { m_shooter.PickUpNote(false, 0); }, {&m_drive}));
+          [this] { m_shooter.ShooterPickUpNote(false, 0); }, {&m_shooter}));
  // B, Drop Note
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kB)
       .OnTrue(new frc2::InstantCommand(
-          [this] { m_shooter.DropNote(true, 0.10); }, {&m_drive}));
+          [this] { m_shooter.ShooterDropNote(true, 0.10); }, {&m_shooter}));
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kB)
       .OnFalse(new frc2::InstantCommand(
-          [this] { m_shooter.DropNote(false, 0); }, {&m_drive}));
+          [this] { m_shooter.ShooterDropNote(false, 0); }, {&m_shooter}));
     // Right, bumper Shoot
   frc2::JoystickButton(&m_driverController,
                        frc::XboxController::Button::kRightBumper)
       .OnTrue(new frc2::InstantCommand(
-          [this] { m_shooter.ShootMotors(true, 1); }, {&m_drive}));
+          [this] { m_shooter.ShootMotors(true, 1); }, {&m_shooter}));
   frc2::JoystickButton(&m_driverController,
                        frc::XboxController::Button::kRightBumper)
       .OnFalse(new frc2::InstantCommand(
-          [this] { m_shooter.ShootMotors(false, 1); }, {&m_drive}));
+          [this] { m_shooter.ShootMotors(false, 1); }, {&m_shooter}));
 }
 
 std::vector<frc::Pose2d> ParseTrajectoryJson(const nlohmann::json& json) {

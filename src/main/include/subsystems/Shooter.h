@@ -10,7 +10,6 @@
 #include <frc2/command/RunCommand.h>
 
 #include "Constants.h"
-#include "Elevator.h"
 
 // one pivot motor - shooter manipulator
 // one roller motor - for intake part (will function at shooting out at full speed)
@@ -23,9 +22,9 @@ class Shooter : public frc2::Subsystem {
 
   void ShootMotors(bool isPressed, double speed);
 
-  void PickUpNote(bool isPressed, double speed);
+  void ShooterPickUpNote(bool isPressed, double speed);
 
-  void DropNote(bool isPressed, double speed);
+  void ShooterDropNote(bool isPressed, double speed);
 
  private:
   rev::CANSparkFlex m_shooterMotorLeft{
