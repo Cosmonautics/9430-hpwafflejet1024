@@ -113,21 +113,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   // The gyro sensor
   frc::ADIS16470_IMU m_gyro;
-  //
-  rev::CANSparkFlex m_shooterMotorLeft{
-      DriveConstants::kShooterLeftCanId,
-      rev::CANSparkLowLevel::MotorType::kBrushless};
-  rev::CANSparkFlex m_shooterMotorRight{
-      DriveConstants::kShooterRightCanId,
-      rev::CANSparkLowLevel::MotorType::kBrushless};
 
-  //
-  rev::CANSparkFlex m_intakeMotorLeft{
-      DriveConstants::kIntakeLeftCanId,
-      rev::CANSparkLowLevel::MotorType::kBrushless};
-  rev::CANSparkFlex m_intakeMotorRight{
-      DriveConstants::kIntakeRightCanId,
-      rev::CANSparkLowLevel::MotorType::kBrushless};
   // Slew rate filter variables for controlling lateral acceleration
   double m_currentRotation = 0.0;
   double m_currentTranslationDir = 0.0;
