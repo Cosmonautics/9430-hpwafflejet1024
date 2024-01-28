@@ -9,12 +9,6 @@
 #include "subsystems/Shooter.h"
 #include "utils/SwerveUtils.h"
 
-rev::CANSparkFlex m_intakeMotorLeft{
-    DriveConstants::kIntakeLeftCanId,
-    rev::CANSparkLowLevel::MotorType::kBrushless};
-rev::CANSparkFlex m_intakeMotorRight{
-    DriveConstants::kIntakeRightCanId,
-    rev::CANSparkLowLevel::MotorType::kBrushless};
 
 void Intake::IntakeDropNote(bool isPressed, double speed) {
   double dropSpeed = 0.10;  // drop positive speed
