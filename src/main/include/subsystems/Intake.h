@@ -1,11 +1,21 @@
-#include "Elevator.h"
-#include "Shooter.h"
+#include <frc/filter/SlewRateLimiter.h>
+#include <frc/geometry/Pose2d.h>
+#include <frc/geometry/Rotation2d.h>
+#include <frc/kinematics/ChassisSpeeds.h>
+#include <rev/CANSparkFlex.h>
 
-class Intake : public frc2::SubsystemBase {
+#include "Constants.h"
+#include "MAXSwerveModule.h"
+
+class Intake {
  public:
   Intake();
 
-  frc2::Command* GetAutonomousCommand();
+  void PickUpNote(bool isPressed, double speed);
+
+  void DropNote(bool isPressed, double speed);
+
+  void ControlIntakeMotors(bool isPressed, double speed);
 
  private:
   // 2 motors
@@ -14,16 +24,6 @@ class Intake : public frc2::SubsystemBase {
   rev::CANSparkMax m_intakePivotMax;
   // 1 motor for rollers
   rev::CANSparkFlex m_intakeRollersFlex;
-
-  void PickUpNote(bool isPressed, double speed);
-
-  void DropNote(bool isPressed, double speed);
-
-  void ControlIntakeMotors(bool isPressed, double speed);
-  // The chooser for the autonomous routines
-  frc::SendableChooser<frc2::Command*> m_chooser;
-
-  void ConfigureButtonBindings();
 
   // 1 throughbore encoder
 };
