@@ -16,7 +16,7 @@
 // one roller motor - for intake part (will function at shooting out at full speed)
 // two shooter motor - slow, "fly" wheels
 
-class Shooter {
+class Shooter : public frc2::Subsystem {
  public:
   Shooter();
 
