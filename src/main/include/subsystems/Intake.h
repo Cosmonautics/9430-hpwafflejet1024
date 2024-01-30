@@ -1,10 +1,8 @@
 #pragma once
 
-#include <frc/filter/SlewRateLimiter.h>
-#include <frc/geometry/Pose2d.h>
-#include <frc/geometry/Rotation2d.h>
-#include <frc/kinematics/ChassisSpeeds.h>
 #include <rev/CANSparkFlex.h>
+#include <frc/controller/PIDController.h>
+#include <frc/controller/ProfiledPIDController.h>
 #include <frc2/command/Command.h>
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/PIDCommand.h>

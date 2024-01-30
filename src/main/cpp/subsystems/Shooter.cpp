@@ -5,8 +5,11 @@
 
 #include "Constants.h"
 #include "utils/SwerveUtils.h"
-#include "subsystems/Intake.h"
 #include "subsystems/Shooter.h"
+
+Shooter::Shooter() {
+
+}
 
 void Shooter::ShootMotors(bool isPressed, double speed) {
   if (isPressed) {

@@ -6,9 +6,11 @@
 #include <units/velocity.h>
 
 #include "Constants.h"
-#include "subsystems/Shooter.h"
 #include "utils/SwerveUtils.h"
 
+Intake::Intake() {
+
+}
 
 void Intake::IntakeDropNote(bool isPressed, double speed) {
   double dropSpeed = 0.10;  // drop positive speed
