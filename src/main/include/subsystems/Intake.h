@@ -1,6 +1,7 @@
 #pragma once
 
 #include <rev/CANSparkFlex.h>
+#include <rev/CANSparkMax.h>
 #include <frc/controller/PIDController.h>
 #include <frc/controller/ProfiledPIDController.h>
 #include <frc2/command/Command.h>
