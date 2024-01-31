@@ -62,6 +62,9 @@ constexpr int kShooterRightCanId = 9;
 
 constexpr int kIntakeLeftCanId = 11;
 constexpr int kIntakeRightCanId = 12;
+
+constexpr int kElevatorLeftCanId = 13;
+constexpr int kElevatorRightCanId = 14;
 }  // namespace DriveConstants
 
 namespace ModuleConstants {

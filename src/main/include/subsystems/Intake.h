@@ -25,6 +25,7 @@ class Intake : public frc2::Subsystem {
   // 2 motors
   // Design:
   // 1 for pivot angle
+  
   rev::CANSparkFlex m_intakeMotorLeft{
     DriveConstants::kIntakeLeftCanId,
     rev::CANSparkLowLevel::MotorType::kBrushless};
