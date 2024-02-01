@@ -8,7 +8,8 @@
 #include "Constants.h"
 #include "utils/SwerveUtils.h"
 
-Intake::Intake() : m_intakePivotMax(IntakeConstants::kIntakeLeftCanId,rev::CANSparkMaxLowLevel::MotorType::kBrushless), m_intakeRollersFlex(IntakeConstants::kIntakeLeftCanId,rev::CANSparkLowLevel::MotorType::kBrushless) {
+Intake::Intake() : m_intakePivotMax(IntakeConstants::kIntakeLeftCanId,rev::CANSparkMaxLowLevel::MotorType::kBrushless), 
+  m_intakeRollersFlex(IntakeConstants::kIntakeLeftCanId,rev::CANSparkLowLevel::MotorType::kBrushless) {
 
 }
 
