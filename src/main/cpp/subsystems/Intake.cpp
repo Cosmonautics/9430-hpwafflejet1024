@@ -9,9 +9,7 @@
 #include "utils/SwerveUtils.h"
 
 Intake::Intake() : m_intakePivotMax(IntakeConstants::kIntakeLeftCanId,rev::CANSparkMaxLowLevel::MotorType::kBrushless), 
-  m_intakeRollersFlex(IntakeConstants::kIntakeLeftCanId,rev::CANSparkLowLevel::MotorType::kBrushless) {
-
-}
+  m_intakeRollersFlex(IntakeConstants::kIntakeLeftCanId,rev::CANSparkLowLevel::MotorType::kBrushless) {}
 
 void Intake::IntakeDropNote(bool isPressed, double speed) {
   double dropSpeed = 0.10;  // drop positive speed

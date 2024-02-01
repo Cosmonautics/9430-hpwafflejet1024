@@ -15,6 +15,7 @@
 
 using namespace ElevatorConstants;
 
-Elevator::Elevator(rev::CANSparkMax m_ElevatorMoterLeft)
-    : m_ElevatorMoterLeft{kElevatorLeftCanId,rev::CANSparkMaxLowLevel::MotorType::kBrushless} {}
+Elevator::Elevator() : 
+    m_ElevatorMoterLeft{ElevatorConstants::kElevatorLeftCanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless}, 
+    objectName {constructor params} {}
     
