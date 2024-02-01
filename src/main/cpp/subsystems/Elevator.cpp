@@ -11,5 +11,10 @@
 // create PID controller with constraints
 
 #include "subsystems/Elevator.h"
+#include "Constants.h"
 
-m_ElevatorMoterLeft.SetInverted(true);
+using namespace ElevatorConstants;
+
+Elevator::Elevator(rev::CANSparkMax m_ElevatorMoterLeft)
+    : m_ElevatorMoterLeft{kElevatorLeftCanId,rev::CANSparkMaxLowLevel::MotorType::kBrushless} {}
+    

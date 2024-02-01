@@ -28,9 +28,9 @@ class Shooter : public frc2::Subsystem {
 
  private:
   rev::CANSparkFlex m_shooterMotorLeft{
-      DriveConstants::kShooterLeftCanId,
+      ShooterConstants::kShooterLeftCanId,
       rev::CANSparkLowLevel::MotorType::kBrushless};
   rev::CANSparkFlex m_shooterMotorRight{
-      DriveConstants::kShooterRightCanId,
+      ShooterConstants::kShooterRightCanId,
       rev::CANSparkLowLevel::MotorType::kBrushless};
 };

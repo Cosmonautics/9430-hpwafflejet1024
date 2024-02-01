@@ -56,16 +56,22 @@ constexpr int kFrontLeftTurningCanId = 1;
 constexpr int kRearLeftTurningCanId = 5;
 constexpr int kFrontRightTurningCanId = 3;
 constexpr int kRearRightTurningCanId = 7;
+}  // namespace DriveConstants
 
+namespace ShooterConstants {
 constexpr int kShooterLeftCanId = 10;
 constexpr int kShooterRightCanId = 9;
+} // namespace ShooterConstants
 
-constexpr int kIntakeLeftCanId = 11;
-constexpr int kIntakeRightCanId = 12;
+namespace ElevatorConstants {
+    constexpr int kElevatorLeftCanId = 13;
+    constexpr int kElevatorRightCanId = 14;
+} // namespace ElevatorConstants
 
-constexpr int kElevatorLeftCanId = 13;
-constexpr int kElevatorRightCanId = 14;
-}  // namespace DriveConstants
+namespace IntakeConstants {
+    constexpr int kIntakeLeftCanId = 11;
+    constexpr int kIntakeRightCanId = 12;
+} // namespace IntakeConstants
 
 namespace ModuleConstants {
 // Invert the turning encoder, since the output shaft rotates in the opposite

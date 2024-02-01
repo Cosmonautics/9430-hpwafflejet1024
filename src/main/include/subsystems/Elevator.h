@@ -13,9 +13,12 @@
 
 #include "Constants.h"
 
+using namespace ElevatorConstants;
+
 class Elevator : public frc2::Subsystem {
     public: 
-    std::cout << "hello";
+        Elevator(rev::CANSparkMax m_ElevatorMoterLeft);
+  
 // go up
     // trigger: xbox controller button
 
@@ -27,11 +30,7 @@ class Elevator : public frc2::Subsystem {
     
 
     private: 
-    rev::CANSparkMax m_ElevatorMoterLeft{DriveConstants:: kElevatorLeftCanId,rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+    rev::CANSparkMax m_ElevatorMoterLeft; //{ElevatorConstants:: kElevatorLeftCanId,rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
-    rev::CANSparkMax m_ElevatorMoterLeft{DriveConstants:: kElevatorLeftCanId,rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-}
-    
-
-    
-
+    rev::CANSparkMax m_ElevatorMoterLeft; //{ElevatorConstants:: kElevatorLeftCanId,rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+};
