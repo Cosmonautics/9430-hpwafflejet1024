@@ -1,6 +1,6 @@
 #include <networktables/NetworkTable.h>
 #include <networktables/Topic.h>
+#include "subsystems/limelight.h"
 
-nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("<variablename>",0.0);
 
-
+std::shared_ptr<nt::NetworkTable> table = inst.GetTable("limelight");
