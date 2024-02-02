@@ -18,7 +18,6 @@ using namespace ElevatorConstants;
 class Elevator : public frc2::Subsystem {
     public: 
         Elevator();
-        // Elevator(rev::CANSparkMax m_ElevatorMoterLeft);
   
 // go up
     // trigger: xbox controller button
@@ -26,14 +25,37 @@ class Elevator : public frc2::Subsystem {
 // go down
     // trigger: xbox controller button
 
-    //throughbore encoder
-// 2 motors, one inverted 
+    
+//throughbore encoder
+
+static constexpr int kCPR = 8192;
+
+/**
+* An alternate encoder object is constructed using the GetAlternateEncoder()
+* method on an existing CANSparkMax object. If using a REV Through Bore
+* Encoder, the type should be set to quadrature and the counts per
+* revolution set to 8192
+*/
+
+
+
+//PID controller
     
 
-    private: 
-    rev::CANSparkMax m_ElevatorMoterLeft{ kElevatorLeftCanId,
-        rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+    //values
+    
 
-    rev::CANSparkMax m_ElevatorMoterRight{ kElevatorRightCanId, 
-        rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+// 2 motors, one inverted 
+    
+    private: 
+    rev::CANSparkMax m_ElevatorMotorLeft;
+    rev::CANSparkMax m_ElevatorMotorRight;
+    
+    rev::SparkPIDController m_ElevatorPIDController =
+        m_ElevatorMotorLeft.GetPIDController();
+  
+     rev::SparkMaxAlternateEncoder m_ElevatorThroughboreEncoder =
+        m_ElevatorMotorLeft.GetAlternateEncoder(rev::SparkMaxAlternateEncoder::Type::kQuadrature,
+            kCPR);
+ 
 };

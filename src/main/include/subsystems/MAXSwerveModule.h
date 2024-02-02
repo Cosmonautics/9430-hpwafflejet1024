@@ -59,6 +59,7 @@ class MAXSwerveModule {
       m_turningSparkMax.GetAbsoluteEncoder(
           rev::SparkMaxAbsoluteEncoder::Type::kDutyCycle);
 
+
   rev::SparkMaxPIDController m_drivingPIDController =
       m_drivingSparkMax.GetPIDController();
   rev::SparkMaxPIDController m_turningPIDController =

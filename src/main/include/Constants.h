@@ -66,6 +66,16 @@ constexpr int kShooterRightCanId = 9;
 namespace ElevatorConstants {
     constexpr int kElevatorLeftCanId = 13;
     constexpr int kElevatorRightCanId = 14;
+
+    constexpr double kElevatorP = 1;
+    constexpr double kElevatorI = 0;
+    constexpr double kElevatorD = 0;
+    constexpr double kElevatorFF = 0;
+    constexpr double kElevatorMinOutput = -1;
+    constexpr double kElevatorMaxOutput = 1;
+
+    static constexpr int kCPR = 8192;
+
 } // namespace ElevatorConstants
 
 namespace IntakeConstants {

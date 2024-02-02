@@ -16,6 +16,23 @@
 using namespace ElevatorConstants;
 
 Elevator::Elevator() : 
-    m_ElevatorMoterLeft{ElevatorConstants::kElevatorLeftCanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless}, 
-    {}
+    m_ElevatorMotorLeft{kElevatorLeftCanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless}, 
+    m_ElevatorMotorRight{kElevatorRightCanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless}
+    {
+        //uses the throughbore encoder instead of the other one
+        m_ElevatorPIDController.SetFeedbackDevice( m_ElevatorThroughboreEncoder);
+
+        //Sets values
+        m_ElevatorPIDController.SetP(kElevatorP);
+        m_ElevatorPIDController.SetI(kElevatorI);
+        m_ElevatorPIDController.SetD(kElevatorD);
+        m_ElevatorPIDController.SetFF(kElevatorFF);
+        m_ElevatorPIDController.SetOutputRange(kElevatorMinOutput, kElevatorMaxOutput);
+
+        
+
+
+}
     
+
+
