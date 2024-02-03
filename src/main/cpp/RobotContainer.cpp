@@ -83,6 +83,8 @@ void RobotContainer::ConfigureButtonBindings() {
                        frc::XboxController::Button::kRightBumper)
       .OnFalse(new frc2::InstantCommand(
           [this] { m_shooter.ShootMotors(false, 1); }, {&m_shooter}));
+
+  // Elevator
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kY)
       .OnTrue(new MoveElevatorToPosition(
           m_elevator, ElevatorConstants::kElevatorSetpointInches));

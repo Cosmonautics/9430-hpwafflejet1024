@@ -67,9 +67,10 @@ namespace ElevatorConstants {
 constexpr int kElevatorLeftCanId = 13;
 constexpr int kElevatorRightCanId = 14;
 
+constexpr double kElevatorUpperSoftLimit = 18.0;
+constexpr double kElevatorLowerSoftLimit = 0.0;
 constexpr double kElevatorGearRatio = 1.0;
-constexpr double kElevatorDrumDiameterInches =
-    10.0 / 2.54;  // Convert cm to inches
+constexpr double kElevatorDrumDiameterInches = 1.214;
 constexpr double kElevatorEncoderTicksPerRevolution = 42.0;
 constexpr double kElevatorInchesPerTick =
     (kElevatorDrumDiameterInches * M_PI) /

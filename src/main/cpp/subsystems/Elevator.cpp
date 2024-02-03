@@ -25,7 +25,11 @@ Elevator::Elevator() {
 void Elevator::Periodic() { UpdatePosition(); }
 
 void Elevator::MoveToPosition(double positionInches) {
-  targetPositionInches = positionInches;  // Use inches for the target position
+  if (positionInches > kElevatorUpperSoftLimit ||
+      positionInches < kElevatorLowerSoftLimit) {
+    return;
+  }
+  targetPositionInches = positionInches;
   double targetPositionUnits = ConvertInchesToEncoderUnits(positionInches);
   double currentPositionUnits = m_ElevatorEncoder.GetPosition();
   double output =
