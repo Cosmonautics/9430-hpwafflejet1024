@@ -1,3 +1,4 @@
+#pragma once
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
@@ -14,6 +15,7 @@
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/SwerveControllerCommand.h>
 #include <frc2/command/button/JoystickButton.h>
+#include <frc2/command/button/POVButton.h>
 #include <units/angle.h>
 #include <units/velocity.h>
 
@@ -21,7 +23,8 @@
 #include <utility>
 
 #include "Constants.h"
-#include "commands/MoveElevatorToPosition.h"
+#include "commands/MoveElevatorToPositionCommand.h"
+#include "commands/PivotToPositionCommand.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Intake.h"
 #include "subsystems/Shooter.h"
@@ -86,8 +89,12 @@ void RobotContainer::ConfigureButtonBindings() {
 
   // Elevator
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kY)
-      .OnTrue(new MoveElevatorToPosition(
+      .OnTrue(new MoveElevatorToPositionCommand(
           m_elevator, ElevatorConstants::kElevatorSetpointInches));
+
+  frc2::POVButton(&m_driverController, 270)
+      .OnTrue(new PivotToPositionCommand(
+          &m_shooter, ShooterConstants::kShooterSetpointDegree));
 }
 
 std::vector<frc::Pose2d> ParseTrajectoryJson(const nlohmann::json& json) {

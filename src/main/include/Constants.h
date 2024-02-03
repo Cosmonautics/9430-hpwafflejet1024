@@ -61,6 +61,13 @@ constexpr int kRearRightTurningCanId = 7;
 namespace ShooterConstants {
 constexpr int kShooterLeftCanId = 10;
 constexpr int kShooterRightCanId = 9;
+constexpr int kShooterPivotCanId = 15;
+
+constexpr double kP = 0.1;
+constexpr double kI = 0.0;
+constexpr double kD = 0.0;
+
+constexpr units::degree_t kShooterSetpointDegree = 270_deg;
 }  // namespace ShooterConstants
 
 namespace ElevatorConstants {
@@ -80,10 +87,10 @@ constexpr double kP = 0.1;
 constexpr double kI = 0.0;
 constexpr double kD = 0.0;
 
-constexpr double kElevatorSetpointInches = 6.3;          //Placeholder constant position
-constexpr double kPositionToleranceInches = 1.0 / 2.54; 
-constexpr double kEncoderUnitsPerInch =
-    1 / kElevatorInchesPerTick;
+constexpr double kElevatorSetpointInches = 6.3;  // Placeholder constant
+                                                 // position
+constexpr double kPositionToleranceInches = 1.0 / 2.54;
+constexpr double kEncoderUnitsPerInch = 1 / kElevatorInchesPerTick;
 }  // namespace ElevatorConstants
 namespace IntakeConstants {
 constexpr int kIntakeLeftCanId = 11;
