@@ -61,17 +61,29 @@ constexpr int kRearRightTurningCanId = 7;
 namespace ShooterConstants {
 constexpr int kShooterLeftCanId = 10;
 constexpr int kShooterRightCanId = 9;
-} // namespace ShooterConstants
+}  // namespace ShooterConstants
 
 namespace ElevatorConstants {
-    constexpr int kElevatorLeftCanId = 13;
-    constexpr int kElevatorRightCanId = 14;
-} // namespace ElevatorConstants
+constexpr int kElevatorLeftCanId = 13;
+constexpr int kElevatorRightCanId = 14;
 
+constexpr double kElevatorGearRatio = 1.0;
+constexpr double kElevatorDrumDiameterCm = 10.0;
+constexpr double kElevatorEncoderTicksPerRevolution = 42.0;
+constexpr double kElevatorCmPerTick =
+    (kElevatorDrumDiameterCm * M_PI) /
+    (kElevatorEncoderTicksPerRevolution * kElevatorGearRatio);
+
+constexpr double kP = 0.1;
+constexpr double kI = 0.0;
+constexpr double kD = 0.0;
+
+constexpr double kElevatorSetpointCm = 100.0;
+}  // namespace ElevatorConstants
 namespace IntakeConstants {
-    constexpr int kIntakeLeftCanId = 11;
-    constexpr int kIntakeRightCanId = 12;
-} // namespace IntakeConstants
+constexpr int kIntakeLeftCanId = 11;
+constexpr int kIntakeRightCanId = 12;
+}  // namespace IntakeConstants
 
 namespace ModuleConstants {
 // Invert the turning encoder, since the output shaft rotates in the opposite
