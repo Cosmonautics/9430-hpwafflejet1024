@@ -28,14 +28,12 @@ class Elevator : public frc2::Subsystem {
   rev::CANSparkMax m_ElevatorMotorRight{
       kElevatorRightCanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::SparkAbsoluteEncoder m_ElevatorEncoder{
-      m_ElevatorMotorLeft.GetAbsoluteEncoder(
+      // Adjusted to associate the encoder with the right motor
+      m_ElevatorMotorRight.GetAbsoluteEncoder(
           rev::SparkMaxAbsoluteEncoder::Type::kDutyCycle)};
   frc::PIDController m_pidController{kP, kI, kD};
-  double currentPositionInches =
-      0;  // Current elevator position in centimeters
-          // Elevator(rev::CANSparkMax m_ElevatorMoterLeft);
-  double targetPositionInches = 0;  // Add this to track the target position
-  // go up
+  double currentPositionInches = 0;  // Current elevator position in inches
+  double targetPositionInches = 0;   // Target elevator position in inches
   // trigger: xbox controller button
 
   // go down
@@ -46,7 +44,7 @@ class Elevator : public frc2::Subsystem {
 
   // Helper methods
   void UpdatePosition();
-  double ConvertInchesToEncoderUnits(double cm);
+  double ConvertInchesToEncoderUnits(double inches);
   double ConvertEncoderUnitsToInches(double units);
   void Move(double speed);
 };

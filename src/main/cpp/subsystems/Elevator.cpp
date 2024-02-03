@@ -36,6 +36,7 @@ void Elevator::MoveToPosition(double positionInches) {
       m_pidController.Calculate(currentPositionUnits, targetPositionUnits);
   Move(output);
 }
+
 double Elevator::ConvertInchesToEncoderUnits(double inches) {
   return inches * ElevatorConstants::kEncoderUnitsPerInch;
 }
@@ -48,6 +49,7 @@ bool Elevator::AtTargetPosition() const {
   return std::abs(currentPositionInches - targetPositionInches) <=
          ElevatorConstants::kPositionToleranceInches;
 }
+
 void Elevator::ConfigureMotors() {
   m_ElevatorMotorLeft.RestoreFactoryDefaults();
   m_ElevatorMotorRight.RestoreFactoryDefaults();
