@@ -18,6 +18,7 @@
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Intake.h"
 #include "subsystems/Shooter.h"
+#include "subsystems/Elevator.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -40,9 +41,9 @@ class RobotContainer {
 
   // The robot's subsystems
   DriveSubsystem m_drive;
-  Intake m_intake; 
+  Intake m_intake;
   Shooter m_shooter;
-
+  Elevator m_elevator;
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;
 

@@ -79,7 +79,11 @@ constexpr double kI = 0.0;
 constexpr double kD = 0.0;
 
 constexpr double kElevatorSetpointCm = 100.0;
+constexpr double kPositionToleranceCm = 1.0;  // Example tolerance
+constexpr double kEncoderUnitsPerCm =
+    1 / kElevatorCmPerTick;  // This will be used for conversion
 }  // namespace ElevatorConstants
+   // namespace ElevatorConstants
 namespace IntakeConstants {
 constexpr int kIntakeLeftCanId = 11;
 constexpr int kIntakeRightCanId = 12;

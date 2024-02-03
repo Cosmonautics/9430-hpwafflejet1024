@@ -21,6 +21,7 @@
 #include <utility>
 
 #include "Constants.h"
+#include "commands/MoveElevatorToPosition.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Intake.h"
 #include "subsystems/Shooter.h"
@@ -66,14 +67,14 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kX)
       .OnFalse(new frc2::InstantCommand(
           [this] { m_shooter.ShooterPickUpNote(false, 0); }, {&m_shooter}));
- // B, Drop Note
+  // B, Drop Note
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kB)
       .OnTrue(new frc2::InstantCommand(
           [this] { m_shooter.ShooterDropNote(true, 0.10); }, {&m_shooter}));
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kB)
       .OnFalse(new frc2::InstantCommand(
           [this] { m_shooter.ShooterDropNote(false, 0); }, {&m_shooter}));
-    // Right, bumper Shoot
+  // Right, bumper Shoot
   frc2::JoystickButton(&m_driverController,
                        frc::XboxController::Button::kRightBumper)
       .OnTrue(new frc2::InstantCommand(
@@ -82,6 +83,9 @@ void RobotContainer::ConfigureButtonBindings() {
                        frc::XboxController::Button::kRightBumper)
       .OnFalse(new frc2::InstantCommand(
           [this] { m_shooter.ShootMotors(false, 1); }, {&m_shooter}));
+  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kY)
+      .OnTrue(new MoveElevatorToPosition(
+          m_elevator, ElevatorConstants::kElevatorSetpointCm));
 }
 
 std::vector<frc::Pose2d> ParseTrajectoryJson(const nlohmann::json& json) {
