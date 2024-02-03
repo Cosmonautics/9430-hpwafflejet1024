@@ -91,7 +91,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kY)
       .OnTrue(new MoveElevatorToPositionCommand(
           m_elevator, ElevatorConstants::kElevatorSetpointInches));
-
+          
+  // Shooter Pivot
   frc2::POVButton(&m_driverController, 270)
       .OnTrue(new PivotToPositionCommand(
           &m_shooter, ShooterConstants::kShooterSetpointDegree));

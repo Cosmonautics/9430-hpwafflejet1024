@@ -96,7 +96,11 @@ namespace IntakeConstants {
 constexpr int kIntakeLeftCanId = 11;
 constexpr int kIntakeRightCanId = 12;
 }  // namespace IntakeConstants
-
+namespace ConveyorConstants {
+static constexpr int kConveyorCanId = 16;
+static constexpr int kLimitSwitchChannel =
+    0;  // Update this with the actual channel
+}  // namespace ConveyorConstants
 namespace ModuleConstants {
 // Invert the turning encoder, since the output shaft rotates in the opposite
 // direction of the steering motor in the MAXSwerve Module.
