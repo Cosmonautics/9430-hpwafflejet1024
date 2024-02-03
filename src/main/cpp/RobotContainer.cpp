@@ -85,7 +85,7 @@ void RobotContainer::ConfigureButtonBindings() {
           [this] { m_shooter.ShootMotors(false, 1); }, {&m_shooter}));
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kY)
       .OnTrue(new MoveElevatorToPosition(
-          m_elevator, ElevatorConstants::kElevatorSetpointCm));
+          m_elevator, ElevatorConstants::kElevatorSetpointInches));
 }
 
 std::vector<frc::Pose2d> ParseTrajectoryJson(const nlohmann::json& json) {

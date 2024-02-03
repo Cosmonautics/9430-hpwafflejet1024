@@ -19,22 +19,30 @@ using namespace ElevatorConstants;
 
 Elevator::Elevator() {
   ConfigureMotors();
-  m_pidController.SetTolerance(kPositionToleranceCm);
+  m_pidController.SetTolerance(kPositionToleranceInches);
 }
 
 void Elevator::Periodic() { UpdatePosition(); }
 
-void Elevator::MoveToPosition(double positionCm) {
-  targetPositionCm = positionCm;  // Update the target position
-  double targetPositionUnits = ConvertCmToEncoderUnits(positionCm);
+void Elevator::MoveToPosition(double positionInches) {
+  targetPositionInches = positionInches;  // Use inches for the target position
+  double targetPositionUnits = ConvertInchesToEncoderUnits(positionInches);
   double currentPositionUnits = m_ElevatorEncoder.GetPosition();
   double output =
       m_pidController.Calculate(currentPositionUnits, targetPositionUnits);
   Move(output);
 }
+double Elevator::ConvertInchesToEncoderUnits(double inches) {
+  return inches * ElevatorConstants::kEncoderUnitsPerInch;
+}
+
+double Elevator::ConvertEncoderUnitsToInches(double units) {
+  return units / ElevatorConstants::kEncoderUnitsPerInch;
+}
+
 bool Elevator::AtTargetPosition() const {
-  return std::abs(currentPositionCm - targetPositionCm) <=
-         ElevatorConstants::kPositionToleranceCm;
+  return std::abs(currentPositionInches - targetPositionInches) <=
+         ElevatorConstants::kPositionToleranceInches;
 }
 void Elevator::ConfigureMotors() {
   m_ElevatorMotorLeft.RestoreFactoryDefaults();
@@ -43,15 +51,8 @@ void Elevator::ConfigureMotors() {
 }
 
 void Elevator::UpdatePosition() {
-  currentPositionCm = ConvertEncoderUnitsToCm(m_ElevatorEncoder.GetPosition());
-}
-
-double Elevator::ConvertCmToEncoderUnits(double cm) {
-  return cm / kEncoderUnitsPerCm;
-}
-
-double Elevator::ConvertEncoderUnitsToCm(double units) {
-  return units * kEncoderUnitsPerCm;
+  currentPositionInches =
+      ConvertEncoderUnitsToInches(m_ElevatorEncoder.GetPosition());
 }
 
 void Elevator::Move(double speed) {

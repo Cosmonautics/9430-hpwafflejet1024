@@ -31,10 +31,10 @@ class Elevator : public frc2::Subsystem {
       m_ElevatorMotorLeft.GetAbsoluteEncoder(
           rev::SparkMaxAbsoluteEncoder::Type::kDutyCycle)};
   frc::PIDController m_pidController{kP, kI, kD};
-  double currentPositionCm =
+  double currentPositionInches =
       0;  // Current elevator position in centimeters
           // Elevator(rev::CANSparkMax m_ElevatorMoterLeft);
-  double targetPositionCm = 0;  // Add this to track the target position
+  double targetPositionInches = 0;  // Add this to track the target position
   // go up
   // trigger: xbox controller button
 
@@ -46,7 +46,7 @@ class Elevator : public frc2::Subsystem {
 
   // Helper methods
   void UpdatePosition();
-  double ConvertCmToEncoderUnits(double cm);
-  double ConvertEncoderUnitsToCm(double units);
+  double ConvertInchesToEncoderUnits(double cm);
+  double ConvertEncoderUnitsToInches(double units);
   void Move(double speed);
 };

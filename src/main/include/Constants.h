@@ -68,22 +68,22 @@ constexpr int kElevatorLeftCanId = 13;
 constexpr int kElevatorRightCanId = 14;
 
 constexpr double kElevatorGearRatio = 1.0;
-constexpr double kElevatorDrumDiameterCm = 10.0;
+constexpr double kElevatorDrumDiameterInches =
+    10.0 / 2.54;  // Convert cm to inches
 constexpr double kElevatorEncoderTicksPerRevolution = 42.0;
-constexpr double kElevatorCmPerTick =
-    (kElevatorDrumDiameterCm * M_PI) /
+constexpr double kElevatorInchesPerTick =
+    (kElevatorDrumDiameterInches * M_PI) /
     (kElevatorEncoderTicksPerRevolution * kElevatorGearRatio);
 
 constexpr double kP = 0.1;
 constexpr double kI = 0.0;
 constexpr double kD = 0.0;
 
-constexpr double kElevatorSetpointCm = 100.0;
-constexpr double kPositionToleranceCm = 1.0;  // Example tolerance
-constexpr double kEncoderUnitsPerCm =
-    1 / kElevatorCmPerTick;  // This will be used for conversion
+constexpr double kElevatorSetpointInches = 6.3;          //Placeholder constant position
+constexpr double kPositionToleranceInches = 1.0 / 2.54; 
+constexpr double kEncoderUnitsPerInch =
+    1 / kElevatorInchesPerTick;
 }  // namespace ElevatorConstants
-   // namespace ElevatorConstants
 namespace IntakeConstants {
 constexpr int kIntakeLeftCanId = 11;
 constexpr int kIntakeRightCanId = 12;
