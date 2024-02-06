@@ -59,6 +59,7 @@ void Elevator::ConfigureMotors() {
   pidController.SetP(kP);
   pidController.SetI(kI);
   pidController.SetD(kD);
+  pidController.SetOutputRange(-1.0, 1.0);
 }
 
 void Elevator::UpdatePosition() {
