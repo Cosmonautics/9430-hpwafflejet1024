@@ -19,10 +19,11 @@ using namespace ElevatorConstants;
 
 Elevator::Elevator() {
   ConfigureMotors();
-  m_pidController.SetTolerance(kPositionToleranceInches);
 }
 
-void Elevator::Periodic() { UpdatePosition(); }
+void Elevator::Periodic() { 
+  UpdatePosition(); 
+}
 
 void Elevator::MoveToPosition(double positionInches) {
   if (positionInches > kElevatorUpperSoftLimit ||
@@ -31,10 +32,8 @@ void Elevator::MoveToPosition(double positionInches) {
   }
   targetPositionInches = positionInches;
   double targetPositionUnits = ConvertInchesToEncoderUnits(positionInches);
-  double currentPositionUnits = m_ElevatorEncoder.GetPosition();
-  double output =
-      m_pidController.Calculate(currentPositionUnits, targetPositionUnits);
-  Move(output);
+  // Instead of using m_pidController.Calculate, directly set the target for SparkMax PID
+  m_ElevatorMotorLeft.GetPIDController().SetReference(targetPositionUnits, rev::ControlType::kPosition);
 }
 
 double Elevator::ConvertInchesToEncoderUnits(double inches) {
@@ -54,6 +53,12 @@ void Elevator::ConfigureMotors() {
   m_ElevatorMotorLeft.RestoreFactoryDefaults();
   m_ElevatorMotorRight.RestoreFactoryDefaults();
   m_ElevatorMotorRight.Follow(m_ElevatorMotorLeft, true);
+
+  // Configure PID controller on SparkMax
+  auto pidController = m_ElevatorMotorLeft.GetPIDController();
+  pidController.SetP(kP);
+  pidController.SetI(kI);
+  pidController.SetD(kD);
 }
 
 void Elevator::UpdatePosition() {

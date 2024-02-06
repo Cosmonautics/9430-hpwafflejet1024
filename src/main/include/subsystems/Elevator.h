@@ -14,24 +14,24 @@
 
 using namespace ElevatorConstants;
 
-class Elevator : public frc2::Subsystem {
+class Elevator : public frc2::SubsystemBase {
  public:
   Elevator();
   void Periodic() override;
   void MoveToPosition(double position);
-  void ConfigureMotors();
   bool AtTargetPosition() const;
 
  private:
   rev::CANSparkMax m_ElevatorMotorLeft{
-      kElevatorLeftCanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+      kElevatorLeftCanId, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax m_ElevatorMotorRight{
-      kElevatorRightCanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  rev::SparkAbsoluteEncoder m_ElevatorEncoder{
-      // Adjusted to associate the encoder with the right motor
-      m_ElevatorMotorRight.GetAbsoluteEncoder(
-          rev::SparkMaxAbsoluteEncoder::Type::kDutyCycle)};
-  frc::PIDController m_pidController{kP, kI, kD};
+      kElevatorRightCanId, rev::CANSparkMax::MotorType::kBrushless};
+  // Changed to SparkMaxAbsoluteEncoder for absolute position measurement
+  rev::SparkMaxAbsoluteEncoder m_ElevatorEncoder =
+      m_ElevatorMotorLeft.GetAbsoluteEncoder(rev::SparkAbsoluteEncoder::Type::kDutyCycle);
+  // Define CANPIDController for direct control through SparkMax
+  rev::SparkMaxPIDController m_pidController = 
+      m_ElevatorMotorLeft.GetPIDController();
   double currentPositionInches = 0;  // Current elevator position in inches
   double targetPositionInches = 0;   // Target elevator position in inches
   // trigger: xbox controller button
@@ -43,8 +43,10 @@ class Elevator : public frc2::Subsystem {
   // 2 motors, one inverted
 
   // Helper methods
-  void UpdatePosition();
+  // Helper methods
+  void ConfigureMotors();
   double ConvertInchesToEncoderUnits(double inches);
   double ConvertEncoderUnitsToInches(double units);
+  void UpdatePosition();
   void Move(double speed);
 };
