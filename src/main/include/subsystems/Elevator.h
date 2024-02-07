@@ -56,8 +56,6 @@ class Elevator : public frc2::Subsystem {
 // 2 motors, one inverted 
     
     private: 
-    rev::CANSparkMax m_ElevatorMotorLeft;
-    rev::CANSparkMax m_ElevatorMotorRight;
     
     rev::SparkPIDController m_ElevatorPIDController =
         m_ElevatorMotorLeft.GetPIDController();
