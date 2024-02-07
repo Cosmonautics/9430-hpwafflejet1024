@@ -17,13 +17,9 @@
 
 using namespace ElevatorConstants;
 
-Elevator::Elevator() {
-  ConfigureMotors();
-}
+Elevator::Elevator() { ConfigureMotors(); }
 
-void Elevator::Periodic() { 
-  UpdatePosition(); 
-}
+void Elevator::Periodic() { UpdatePosition(); }
 
 void Elevator::MoveToPosition(double positionInches) {
   if (positionInches > kElevatorUpperSoftLimit ||
@@ -32,16 +28,22 @@ void Elevator::MoveToPosition(double positionInches) {
   }
   targetPositionInches = positionInches;
   double targetPositionUnits = ConvertInchesToEncoderUnits(positionInches);
-  // Instead of using m_pidController.Calculate, directly set the target for SparkMax PID
-  m_ElevatorMotorLeft.GetPIDController().SetReference(targetPositionUnits, rev::ControlType::kPosition);
+  // Instead of using m_pidController.Calculate, directly set the target for
+  // SparkMax PID
+  m_ElevatorMotorLeft.GetPIDController().SetReference(
+      targetPositionUnits, rev::ControlType::kPosition);
 }
 
 double Elevator::ConvertInchesToEncoderUnits(double inches) {
-  return inches * ElevatorConstants::kEncoderUnitsPerInch;
+  double circumference = M_PI * kPullyDiameter;
+  double encoderUnitsPerInch = kElevatorEncoderResolution / circumference;
+  return static_cast<int>(inches * encoderUnitsPerInch);
 }
 
 double Elevator::ConvertEncoderUnitsToInches(double units) {
-  return units / ElevatorConstants::kEncoderUnitsPerInch;
+  double circumference = M_PI * kPullyDiameter;
+  double inchesPerEncoderUnit = circumference / kElevatorEncoderResolution;
+  return units * inchesPerEncoderUnit;
 }
 
 bool Elevator::AtTargetPosition() const {

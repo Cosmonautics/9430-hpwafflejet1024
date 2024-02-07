@@ -87,6 +87,8 @@ constexpr double kP = 0.1;
 constexpr double kI = 0.0;
 constexpr double kD = 0.0;
 
+constexpr double kPullyDiameter = 1.214;
+constexpr int kElevatorEncoderResolution = 2048;
 constexpr double kElevatorSetpointInches = 3.0;  // Placeholder constant
                                                  // position
 constexpr double kPositionToleranceInches = 1.0 / 2.54;
