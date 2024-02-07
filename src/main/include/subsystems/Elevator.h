@@ -8,7 +8,7 @@
 #include <frc2/command/PIDCommand.h>
 #include <frc2/command/ParallelRaceGroup.h>
 #include <frc2/command/RunCommand.h>
-#include <rev/CanSparkMax.h>
+#include <rev/CANSparkMax.h>
 
 #include "Constants.h"
 
