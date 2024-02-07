@@ -15,7 +15,9 @@
 #include <frc2/command/RunCommand.h>
 
 #include "Constants.h"
+#include "subsystems/Conveyor.h"
 #include "subsystems/DriveSubsystem.h"
+#include "subsystems/Elevator.h"
 #include "subsystems/Intake.h"
 #include "subsystems/Shooter.h"
 #include "subsystems/Elevator.h"
@@ -41,10 +43,10 @@ class RobotContainer {
 
   // The robot's subsystems
   DriveSubsystem m_drive;
-  Intake m_intake; 
+  Intake m_intake;
   Shooter m_shooter;
-  Elevator m_Elevator;
-
+  Elevator m_elevator;
+  Conveyor m_conveyor;
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;
 

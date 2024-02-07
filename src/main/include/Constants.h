@@ -61,11 +61,18 @@ constexpr int kRearRightTurningCanId = 7;
 namespace ShooterConstants {
 constexpr int kShooterLeftCanId = 10;
 constexpr int kShooterRightCanId = 9;
-} // namespace ShooterConstants
+constexpr int kShooterPivotCanId = 15;
+
+constexpr double kP = 0.1;
+constexpr double kI = 0.0;
+constexpr double kD = 0.0;
+
+constexpr units::degree_t kShooterSetpointDegree = 270_deg;
+}  // namespace ShooterConstants
 
 namespace ElevatorConstants {
-    constexpr int kElevatorLeftCanId = 13;
-    constexpr int kElevatorRightCanId = 14;
+constexpr int kElevatorLeftCanId = 13;
+constexpr int kElevatorRightCanId = 14;
 
     constexpr double kElevatorP = 1;
     constexpr double kElevatorI = 0;
@@ -76,13 +83,36 @@ namespace ElevatorConstants {
 
     static constexpr int kCPR = 8192;
 
-} // namespace ElevatorConstants
 
+constexpr double kElevatorUpperSoftLimit = 18.0;
+constexpr double kElevatorLowerSoftLimit = 0.0;
+constexpr double kElevatorGearRatio = 1.0;
+constexpr double kElevatorDrumDiameterInches = 1.214;
+constexpr double kElevatorEncoderTicksPerRevolution = 42.0;
+constexpr double kElevatorInchesPerTick =
+    (kElevatorDrumDiameterInches * M_PI) /
+    (kElevatorEncoderTicksPerRevolution * kElevatorGearRatio);
+
+constexpr double kP = 0.001;
+constexpr double kI = 0.0;
+constexpr double kD = 0.0;
+
+constexpr double kPullyDiameter = 1.214;
+constexpr int kElevatorEncoderResolution = 2048;
+constexpr double kElevatorSetpointInches = 0.1;  // Placeholder constant
+                                                 // position
+constexpr double kPositionToleranceInches = 1.0 / 2.54;
+constexpr double kEncoderUnitsPerInch = 1 / kElevatorInchesPerTick;
+}  // namespace ElevatorConstants
 namespace IntakeConstants {
-    constexpr int kIntakeLeftCanId = 11;
-    constexpr int kIntakeRightCanId = 12;
-} // namespace IntakeConstants
-
+constexpr int kIntakeLeftCanId = 11;
+constexpr int kIntakeRightCanId = 12;
+}  // namespace IntakeConstants
+namespace ConveyorConstants {
+static constexpr int kConveyorCanId = 16;
+static constexpr int kLimitSwitchChannel =
+    0;  // Update this with the actual channel
+}  // namespace ConveyorConstants
 namespace ModuleConstants {
 // Invert the turning encoder, since the output shaft rotates in the opposite
 // direction of the steering motor in the MAXSwerve Module.

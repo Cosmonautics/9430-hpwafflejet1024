@@ -1,3 +1,5 @@
+#include "subsystems/Shooter.h"
+
 #include <frc/geometry/Rotation2d.h>
 #include <units/angle.h>
 #include <units/angular_velocity.h>
@@ -5,11 +7,48 @@
 
 #include "Constants.h"
 #include "utils/SwerveUtils.h"
-#include "subsystems/Shooter.h"
 
-Shooter::Shooter() {
+using namespace ShooterConstants;
 
+Shooter::Shooter() : m_pivotPIDController(kP, kI, kD) {
+  m_pivotPIDController.SetTolerance(1.0);  // Acceptable error
 }
+
+void Shooter::PivotToSetPoint(units::degree_t setPoint) {
+  auto currentAngle = units::degree_t(m_pivotEncoder.GetPosition());
+  if (IsTargetInRestrictedRange(setPoint) ||
+      IsTargetInRestrictedRange(currentAngle)) {
+    auto exitAbove145 = (currentAngle <= 145_deg) ||
+                        (currentAngle > 145_deg && setPoint < currentAngle);
+    if (exitAbove145) {
+      setPoint = 145_deg + 1_deg;
+    } else {
+      setPoint = 0_deg;
+    }
+  }
+  m_targetSetpoint = setPoint;
+  auto output = m_pivotPIDController.Calculate(currentAngle.to<double>(),
+                                               setPoint.to<double>());
+  m_pivotMotor.Set(output);
+}
+
+bool Shooter::IsTargetInRestrictedRange(units::degree_t target) {
+  return target >= 1_deg && target <= 145_deg;
+}
+
+bool Shooter::IsAtSetPoint() {
+    auto currentAngle = units::degree_t(m_pivotEncoder.GetPosition());
+    // Assuming you have a method or a way to get the target setpoint for comparison
+    // and a tolerance for how close to the setpoint is acceptable
+    constexpr auto tolerance = 1_deg; // Specify an appropriate tolerance
+
+    // Calculate the difference between the current angle and the target setpoint
+    auto error = std::abs((currentAngle - m_targetSetpoint).to<double>());
+
+    // Check if the current position is within the tolerance of the target setpoint
+    return error <= tolerance.to<double>();
+}
+
 
 void Shooter::ShootMotors(bool isPressed, double speed) {
   if (isPressed) {

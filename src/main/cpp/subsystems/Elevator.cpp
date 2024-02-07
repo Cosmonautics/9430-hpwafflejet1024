@@ -4,43 +4,73 @@
 
 // set according to power / xbox button pressed
 
-// bunch of static constant expressions defining basic physic limits and voltages
+// bunch of static constant expressions defining basic physic limits and
+// voltages
 
 // setting variables for joystick, encoder, and sparkmax from FRC module
 
 // create PID controller with constraints
 
 #include "subsystems/Elevator.h"
+
 #include "Constants.h"
 
 using namespace ElevatorConstants;
 
-Elevator::Elevator() : 
-    m_ElevatorMotorLeft{kElevatorLeftCanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless}, 
-    m_ElevatorMotorRight{kElevatorRightCanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless}
-    {
-        //uses the throughbore encoder instead of the other one
-        m_ElevatorPIDController.SetFeedbackDevice( m_ElevatorThroughboreEncoder);
+Elevator::Elevator() { ConfigureMotors(); }
 
-        //Sets values
-        m_ElevatorPIDController.SetP(kElevatorP);
-        m_ElevatorPIDController.SetI(kElevatorI);
-        m_ElevatorPIDController.SetD(kElevatorD);
-        m_ElevatorPIDController.SetFF(kElevatorFF);
-        m_ElevatorPIDController.SetOutputRange(kElevatorMinOutput, kElevatorMaxOutput);
+void Elevator::Periodic() { UpdatePosition(); }
 
-        m_ElevatorMotorLeft.Set(0.1);
-        m_ElevatorMotorRight.Set(-0.1);
-
-        //Floor intake position 
-        //desired height of the floor intake/transit position:
-        //takes the desired height-the current height and then times that by P constant 
-
-        m_ElevatorMotorRight.Follow(m_ElevatorMotorLeft,kElevatorLeftCanId,true);
-
-        m_ElevatorMotorLeft.Set(m_ElevatorPIDController.Calculate(m_ElevatorThroughboreEncoder.GetDistance(), setpoint));
-
+void Elevator::MoveToPosition(double positionInches) {
+  if (positionInches > kElevatorUpperSoftLimit ||
+      positionInches < kElevatorLowerSoftLimit) {
+    return;
+  }
+  targetPositionInches = positionInches;
+  double targetPositionUnits = ConvertInchesToEncoderUnits(positionInches);
+  // Instead of using m_pidController.Calculate, directly set the target for
+  // SparkMax PID
+  m_pidController.SetReference(targetPositionUnits,
+                               rev::ControlType::kPosition);
 }
-    
 
+double Elevator::ConvertInchesToEncoderUnits(double inches) {
+  double circumference = M_PI * kPullyDiameter;
+  double encoderUnitsPerInch = kElevatorEncoderResolution / circumference;
+  return static_cast<int>(inches * encoderUnitsPerInch);
+}
 
+double Elevator::ConvertEncoderUnitsToInches(double units) {
+  double circumference = M_PI * kPullyDiameter;
+  double inchesPerEncoderUnit = circumference / kElevatorEncoderResolution;
+  return units * inchesPerEncoderUnit;
+}
+
+bool Elevator::AtTargetPosition() {
+  bool flag = std::abs(currentPositionInches - targetPositionInches) <=
+              ElevatorConstants::kPositionToleranceInches;
+  return flag;
+}
+
+void Elevator::ConfigureMotors() {
+  m_ElevatorMotorLeft.RestoreFactoryDefaults();
+  m_ElevatorMotorRight.RestoreFactoryDefaults();
+  m_ElevatorMotorRight.Follow(m_ElevatorMotorLeft, true);
+
+  // Configure PID controller on SparkMax
+  m_pidController.SetP(kP);
+  m_pidController.SetI(kI);
+  m_pidController.SetD(kD);
+  m_pidController.SetOutputRange(-1.0, 1.0);
+}
+
+void Elevator::UpdatePosition() {
+  currentPositionInches =
+      ConvertEncoderUnitsToInches(m_ElevatorEncoder.GetPosition());
+}
+
+void Elevator::Move(double speed) {
+  m_ElevatorMotorLeft.Set(speed);
+  // m_ElevatorMotorRight is following m_ElevatorMotorLeft in inverted mode, so
+  // no need to set it separately
+}
