@@ -22,13 +22,11 @@ class Elevator : public frc2::Subsystem {
 // go up
     // trigger: xbox controller button
 
-    
+
 
 // go down
     // trigger: xbox controller button
 
-
-    
 
 // 2 motors, one inverted 
     
@@ -42,6 +40,8 @@ class Elevator : public frc2::Subsystem {
      rev::SparkMaxAlternateEncoder m_ElevatorThroughboreEncoder =
         m_ElevatorMotorLeft.GetAlternateEncoder(rev::SparkMaxAlternateEncoder::Type::kQuadrature,
             kCPR);
+    
+	
  /**
 * An alternate encoder object is constructed using the GetAlternateEncoder()
 * method on an existing CANSparkMax object. If using a REV Through Bore

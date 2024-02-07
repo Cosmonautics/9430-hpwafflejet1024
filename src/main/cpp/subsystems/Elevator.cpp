@@ -29,8 +29,16 @@ Elevator::Elevator() :
         m_ElevatorPIDController.SetFF(kElevatorFF);
         m_ElevatorPIDController.SetOutputRange(kElevatorMinOutput, kElevatorMaxOutput);
 
-        
+        m_ElevatorMotorLeft.Set(0.1);
+        m_ElevatorMotorRight.Set(-0.1);
 
+        //Floor intake position 
+        //desired height of the floor intake/transit position:
+        //takes the desired height-the current height and then times that by P constant 
+
+        m_ElevatorMotorRight.Follow(m_ElevatorMotorLeft,kElevatorLeftCanId,true);
+
+        m_ElevatorMotorLeft.Set(m_ElevatorPIDController.Calculate(m_ElevatorThroughboreEncoder.GetDistance(), setpoint));
 
 }
     
