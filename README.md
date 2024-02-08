@@ -20,3 +20,37 @@ To get started, make sure you have calibrated the zero offsets for the absolute 
 It is possible that this project will not work for your robot right out of the box. Various things like the CAN IDs, PIDF gains, chassis configuration, etc. must be determined for your own robot!
 
 These values can be adjusted in the `Constants.h` file.
+
+# Resources
+
+## WPILib Documentation Homepage
++ https://docs.wpilib.org/en/stable/
+
+## Zero To Robot Programming Fundamentals
++ https://docs.wpilib.org/en/stable/docs/zero-to-robot/introduction.html
+
+## WPILib Programming Resources
++ https://docs.wpilib.org/en/stable/stubs/programming-basics-stub.html (Basic)
++ https://docs.wpilib.org/en/stable/stubs/advanced-programming-stub.html (Advanced)
++ https://github.wpilib.org/allwpilib/docs/release/cpp/index.html (Full WPILibC++ Docs)
+
+## REV and CTRE API Docs
++ https://docs.revrobotics.com/docs/
++ https://store.ctr-electronics.com/software/
+
+## Swerve Drive Programming Resources
++ Template MaxSwerve Project Source: https://github.com/REVrobotics/MAXSwerve-Cpp-Template
++ Working CPP code: https://github.com/ahayden04/swerve-falcon
++ Example of swerve robot: https://www.youtube.com/watch?v=wc8wh6RsMCs
++ Source (Chief Delphi): https://www.chiefdelphi.com/t/working-c-swerve-drive-super-proud/407116
+
+# Branching
+- git branch (new_branch) -- create a new local branch
+    - same name as upstream origin/(branch_name)
+- git branch -u (existing_branch) -- Set upstream branch to (existing_branch)
+    - This will set your local branch to **push** committed changes to the target upstream branch on origin/(existing_branch)
+- git checkout (existing_branch) -- switch to an existing local branch 
+    - switch out your local copy to **commit** to an existing local branch (existing_branch)
+- git push --set-upstream origin (branch_name)
+    - push changes explicitly to (branch_name)
+    - NEVER PUSH TO MAIN
