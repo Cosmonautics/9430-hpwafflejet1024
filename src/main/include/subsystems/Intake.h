@@ -2,6 +2,7 @@
 
 #include <frc/controller/PIDController.h>
 #include <frc/controller/ProfiledPIDController.h>
+#include <frc2/command/SubsystemBase.h>
 #include <frc2/command/Command.h>
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/PIDCommand.h>
@@ -12,10 +13,11 @@
 
 #include "Constants.h"
 
-class Intake : public frc2::Subsystem {
+class Intake : public frc2::SubsystemBase {
  public:
   Intake();
-
+  void Periodic() override; 
+  void SimulationPeriodic() override;
   void IntakePickUpNote(bool isPressed, double speed);
 
   void IntakeDropNote(bool isPressed, double speed);

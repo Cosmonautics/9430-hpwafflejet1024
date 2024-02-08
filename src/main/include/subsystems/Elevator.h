@@ -3,6 +3,7 @@
 #include <frc/XboxController.h>
 #include <frc/controller/PIDController.h>
 #include <frc/controller/ProfiledPIDController.h>
+#include <frc2/command/SubsystemBase.h>
 #include <frc2/command/Command.h>
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/PIDCommand.h>
@@ -14,12 +15,22 @@
 
 using namespace ElevatorConstants;
 
-class Elevator : public frc2::Subsystem {
+class Elevator : public frc2::SubsystemBase {
  public:
   Elevator();
   void Periodic() override;
+  void SimulationPeriodic() override;
   void MoveToPosition(double position);
   bool AtTargetPosition();
+  
+  // Helper methods
+  void ConfigureMotors();
+  double ConvertInchesToEncoderUnits(double inches);
+  double ConvertEncoderUnitsToInches(double units);
+  void UpdatePosition();
+  void Move(double speed);
+  rev::SparkMaxAbsoluteEncoder GetkElevatorThroughBoreEncoder(); // these functions are needed to get private class attributes
+  rev::SparkMaxPIDController Elevator::GetkElevatorPIDController(); // these functions are needed to get private class attributes 
 
  private:
   rev::CANSparkMax m_ElevatorMotorLeft{
@@ -45,24 +56,7 @@ class Elevator : public frc2::Subsystem {
   // 2 motors, one inverted
 
   // Helper methods
-  // Helper methods
-  void ConfigureMotors();
-  double ConvertInchesToEncoderUnits(double inches);
-  double ConvertEncoderUnitsToInches(double units);
-  void UpdatePosition();
-  void Move(double speed);
 
-  
-// 2 motors, one inverted 
-    
-    private: 
-    
-    rev::SparkPIDController m_ElevatorPIDController =
-        m_ElevatorMotorLeft.GetPIDController();
-  
-     rev::SparkMaxAlternateEncoder m_ElevatorThroughboreEncoder =
-        m_ElevatorMotorLeft.GetAlternateEncoder(rev::SparkMaxAlternateEncoder::Type::kQuadrature,
-            kCPR);
     
 	
  /**

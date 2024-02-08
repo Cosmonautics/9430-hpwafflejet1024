@@ -17,9 +17,21 @@
 
 using namespace ElevatorConstants;
 
-Elevator::Elevator() { ConfigureMotors(); }
+Elevator::Elevator() { 
+  // ConfigureMotors(); 
+  SetName("Elevator");
+  SetSubsystem("Elevator");
+}
 
 void Elevator::Periodic() { UpdatePosition(); }
+
+rev::SparkMaxAbsoluteEncoder Elevator::GetkElevatorThroughBoreEncoder() {
+  return m_ElevatorEncoder;
+} // This is an example of how to get a private class attribute
+
+rev::SparkMaxPIDController Elevator::GetkElevatorPIDController() {
+  return m_pidController;
+} // This is an example of how to get a private class attribute
 
 void Elevator::MoveToPosition(double positionInches) {
   if (positionInches > kElevatorUpperSoftLimit ||
