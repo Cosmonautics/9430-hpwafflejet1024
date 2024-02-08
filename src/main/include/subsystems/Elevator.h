@@ -48,12 +48,12 @@ private:
   // Changed to SparkMaxAbsoluteEncoder for absolute position measurement
                                      // private class attributes
 
-  rev::SparkMaxAbsoluteEncoder m_ElevatorEncoder =
+  rev::SparkMaxAbsoluteEncoder m_ElevatorThroughBoreEncoder =
       m_ElevatorMotorLeft.GetAbsoluteEncoder(
           rev::SparkAbsoluteEncoder::Type::kDutyCycle);
   // Define CANPIDController for direct control through SparkMax
 
-  rev::SparkMaxPIDController m_pidController =
+  rev::SparkMaxPIDController m_ElevatorPIDController =
       m_ElevatorMotorLeft.GetPIDController();
 
   double currentPositionInches = 0;  // Current elevator position in inches

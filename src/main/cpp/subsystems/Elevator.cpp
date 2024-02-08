@@ -30,7 +30,7 @@ void Elevator::MoveToPosition(double positionInches) {
   double targetPositionUnits = ConvertInchesToEncoderUnits(positionInches);
   // Instead of using m_pidController.Calculate, directly set the target for
   // SparkMax PID
-  m_pidController.SetReference(targetPositionUnits,
+  m_ElevatorPIDController.SetReference(targetPositionUnits,
                                rev::ControlType::kPosition);
 }
 
@@ -58,15 +58,15 @@ void Elevator::ConfigureMotors() {
   m_ElevatorMotorRight.Follow(m_ElevatorMotorLeft, true);
 
   // Configure PID controller on SparkMax
-  m_pidController.SetP(kP);
-  m_pidController.SetI(kI);
-  m_pidController.SetD(kD);
-  m_pidController.SetOutputRange(-1.0, 1.0);
+  m_ElevatorPIDController.SetP(kP);
+  m_ElevatorPIDController.SetI(kI);
+  m_ElevatorPIDController.SetD(kD);
+  m_ElevatorPIDController.SetOutputRange(-1.0, 1.0);
 }
 
 void Elevator::UpdatePosition() {
   currentPositionInches =
-      ConvertEncoderUnitsToInches(m_ElevatorEncoder.GetPosition());
+      ConvertEncoderUnitsToInches(m_ElevatorThroughBoreEncoder.GetPosition());
 }
 
 void Elevator::Move(double speed) {
@@ -76,9 +76,9 @@ void Elevator::Move(double speed) {
 }
 
 
-double CalculateTargetHeight(units::angle::degrees theta2) {
-    units::angle::degrees theta1 = m_ElevatorEncoder.GetPosition();
-    ElevatorConstants::kElevatorDrumDiameterInches * (theta2 - theta1);
+double Elevator::CalculateTargetHeight(units::degree_t theta2) {
+    units::degree_t theta1 = units::degree_t(GetkElevatorThroughBoreEncoder().GetPosition());
+    ElevatorConstants::kElevatorDrumDiameterInches * (theta2-theta1);
 }
 
  
