@@ -69,16 +69,11 @@ void Elevator::UpdatePosition() {
       ConvertEncoderUnitsToInches(m_ElevatorThroughBoreEncoder.GetPosition());
 }
 
-void Elevator::Move(double speed) {
-  m_ElevatorMotorLeft.Set(speed);
-  // m_ElevatorMotorRight is following m_ElevatorMotorLeft in inverted mode, so
-  // no need to set it separately
-}
 
 
-double Elevator::CalculateTargetHeight(units::degree_t theta2) {
-    units::degree_t theta1 = units::degree_t(GetkElevatorThroughBoreEncoder().GetPosition());
-    ElevatorConstants::kElevatorDrumDiameterInches * (theta2-theta1);
+double  Elevator::CalculateTargetHeight(units::degree_t theta2) {
+    units::degree_t theta1 = units::degree_t{m_ElevatorThroughBoreEncoder.GetPosition()};
+    ElevatorConstants::kElevatorDrumDiameterInches * (theta2 - theta1);
 }
 
  
