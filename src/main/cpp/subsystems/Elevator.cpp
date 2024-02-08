@@ -74,3 +74,12 @@ void Elevator::Move(double speed) {
   // m_ElevatorMotorRight is following m_ElevatorMotorLeft in inverted mode, so
   // no need to set it separately
 }
+
+double GetCurrentPosition() {
+    return m_ElevatorEncoder.GetPosition();
+}
+double CalculateTargetHeight(units::angle::degrees theta2) {
+    units::angle::degrees theta1 = m_ElevatorEncoder.GetPosition();
+    ElevatorConstants::kElevatorDrumDiameterInches * (theta2 - )
+}
+
