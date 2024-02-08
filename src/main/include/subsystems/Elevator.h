@@ -30,7 +30,7 @@ class Elevator : public frc2::SubsystemBase {
   void UpdatePosition();
   void Move(double speed);
   rev::SparkMaxAbsoluteEncoder GetkElevatorThroughBoreEncoder(); // these functions are needed to get private class attributes
-  rev::SparkMaxPIDController Elevator::GetkElevatorPIDController(); // these functions are needed to get private class attributes 
+  rev::SparkMaxPIDController GetkElevatorPIDController(); // these functions are needed to get private class attributes 
 
  private:
   rev::CANSparkMax m_ElevatorMotorLeft{
