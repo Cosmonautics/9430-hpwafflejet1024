@@ -30,8 +30,8 @@ void Elevator::MoveToPosition(double positionInches) {
   double targetPositionUnits = ConvertInchesToEncoderUnits(positionInches);
   // Instead of using m_pidController.Calculate, directly set the target for
   // SparkMax PID
-  m_ElevatorMotorLeft.GetPIDController().SetReference(
-      targetPositionUnits, rev::ControlType::kPosition);
+  m_pidController.SetReference(targetPositionUnits,
+                               rev::ControlType::kPosition);
 }
 
 double Elevator::ConvertInchesToEncoderUnits(double inches) {
@@ -46,9 +46,10 @@ double Elevator::ConvertEncoderUnitsToInches(double units) {
   return units * inchesPerEncoderUnit;
 }
 
-bool Elevator::AtTargetPosition() const {
-  return std::abs(currentPositionInches - targetPositionInches) <=
-         ElevatorConstants::kPositionToleranceInches;
+bool Elevator::AtTargetPosition() {
+  bool flag = std::abs(currentPositionInches - targetPositionInches) <=
+              ElevatorConstants::kPositionToleranceInches;
+  return flag;
 }
 
 void Elevator::ConfigureMotors() {
@@ -57,11 +58,10 @@ void Elevator::ConfigureMotors() {
   m_ElevatorMotorRight.Follow(m_ElevatorMotorLeft, true);
 
   // Configure PID controller on SparkMax
-  auto pidController = m_ElevatorMotorLeft.GetPIDController();
-  pidController.SetP(kP);
-  pidController.SetI(kI);
-  pidController.SetD(kD);
-  pidController.SetOutputRange(-1.0, 1.0);
+  m_pidController.SetP(kP);
+  m_pidController.SetI(kI);
+  m_pidController.SetD(kD);
+  m_pidController.SetOutputRange(-1.0, 1.0);
 }
 
 void Elevator::UpdatePosition() {

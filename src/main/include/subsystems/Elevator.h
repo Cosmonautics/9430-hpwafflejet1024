@@ -14,12 +14,12 @@
 
 using namespace ElevatorConstants;
 
-class Elevator : public frc2::SubsystemBase {
+class Elevator : public frc2::Subsystem {
  public:
   Elevator();
   void Periodic() override;
   void MoveToPosition(double position);
-  bool AtTargetPosition() const;
+  bool AtTargetPosition();
 
  private:
   rev::CANSparkMax m_ElevatorMotorLeft{
