@@ -123,7 +123,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   m_rearRight.SetDesiredState(br);
 }
 
-void DriveSubsystem::DropNote(bool isPressed, double speed) {
+/*void DriveSubsystem::DropNote(bool isPressed, double speed) {
   double dropSpeed = 0.10; // drop positive speed
 
   if (isPressed) {
@@ -173,7 +173,7 @@ void DriveSubsystem::ControlIntakeMotors(bool isPressed, double speed) {
     m_intakeMotorLeft.Set(0);
     m_intakeMotorRight.Set(0);
   }
-}
+}*/
 void DriveSubsystem::SetX() {
   m_frontLeft.SetDesiredState(
       frc::SwerveModuleState{0_mps, frc::Rotation2d{45_deg}});

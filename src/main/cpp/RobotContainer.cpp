@@ -44,7 +44,7 @@ RobotContainer::RobotContainer() {
                  m_driverController.GetLeftX()*0.50, OIConstants::kDriveDeadband)},
              -units::radians_per_second_t{frc::ApplyDeadband(
                  m_driverController.GetRightX()*0.50, OIConstants::kDriveDeadband)},
-             true, true);
+             false, true);
        },
        {&m_drive}));
 }
@@ -56,7 +56,7 @@ void RobotContainer::ConfigureButtonBindings() {
   // TODO: m_drive.ControlIntakeMotors(true, 1); make  less hacky
 
   // X, Reaload/Pickup Note
-  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kX)
+  /*frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kX)
       .OnTrue(new frc2::InstantCommand(
           [this] { m_drive.PickUpNote(true, -0.10); }, {&m_drive}));
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kX)
@@ -77,7 +77,7 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_driverController,
                        frc::XboxController::Button::kRightBumper)
       .OnFalse(new frc2::InstantCommand(
-          [this] { m_drive.ShootMotors(false, 1); }, {&m_drive}));
+          [this] { m_drive.ShootMotors(false, 1); }, {&m_drive}));*/
 }
 
 std::vector<frc::Pose2d> ParseTrajectoryJson(const nlohmann::json& json) {
