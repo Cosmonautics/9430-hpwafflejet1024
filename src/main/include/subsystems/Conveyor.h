@@ -12,7 +12,6 @@ class Conveyor : public frc2::SubsystemBase {
  public:
   Conveyor();
   void Periodic() override;
-  void SimulationPeriodic() override; 
   void Forward();
   void Reverse();
   void Stop();
