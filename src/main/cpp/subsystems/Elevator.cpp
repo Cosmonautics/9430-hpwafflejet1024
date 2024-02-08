@@ -22,28 +22,16 @@ Elevator::Elevator() { ConfigureMotors(); }
 void Elevator::Periodic() { UpdatePosition(); }
 
 void Elevator::MoveToPosition(double positionInches) {
-  // TODO:
-  // Add logic to keep track of absolute elevator position
-  MoveToRelativePosition(positionInches);
-}
-
-void Elevator::MoveToRelativePosition(double positionInches) {
-  double currentPositionInchesLocal =
-      ConvertEncoderUnitsToInches(m_ElevatorEncoder.GetPosition());
-
-  double newPositionInches = currentPositionInchesLocal + positionInches;
-
-  if (newPositionInches > kElevatorUpperSoftLimit ||
-      newPositionInches < kElevatorLowerSoftLimit) {
+  if (positionInches > kElevatorUpperSoftLimit ||
+      positionInches < kElevatorLowerSoftLimit) {
     return;
   }
-
-  double targetPositionUnits = ConvertInchesToEncoderUnits(newPositionInches);
-
+  targetPositionInches = positionInches;
+  double targetPositionUnits = ConvertInchesToEncoderUnits(positionInches);
+  // Instead of using m_pidController.Calculate, directly set the target for
+  // SparkMax PID
   m_pidController.SetReference(targetPositionUnits,
                                rev::ControlType::kPosition);
-
-  targetPositionInches = newPositionInches;
 }
 
 double Elevator::ConvertInchesToEncoderUnits(double inches) {
@@ -87,11 +75,10 @@ void Elevator::Move(double speed) {
   // no need to set it separately
 }
 
-double GetCurrentPosition() {
-    return m_ElevatorEncoder.GetPosition();
-}
+
 double CalculateTargetHeight(units::angle::degrees theta2) {
     units::angle::degrees theta1 = m_ElevatorEncoder.GetPosition();
-    ElevatorConstants::kElevatorDrumDiameterInches * (theta2 - )
+    ElevatorConstants::kElevatorDrumDiameterInches * (theta2 - theta1);
 }
 
+ 
