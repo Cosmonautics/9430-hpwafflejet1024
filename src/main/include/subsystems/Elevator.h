@@ -20,6 +20,7 @@ class Elevator : public frc2::Subsystem {
   void Periodic() override;
   void MoveToPosition(double position);
   bool AtTargetPosition();
+<<<<<<< HEAD
   double GetCurrentPosition();
   // m_ElevatorEncoder.GetPosition(); 
 
@@ -51,6 +52,10 @@ class Elevator : public frc2::Subsystem {
   // 2 motors, one inverted
 
   // Helper methods
+=======
+  void MoveToRelativePosition(double position);
+  
+>>>>>>> 8d273335a748d7ec1aac28cece7df4dee9326079
   // Helper methods
   void ConfigureMotors();
   double ConvertInchesToEncoderUnits(double inches);
@@ -58,7 +63,14 @@ class Elevator : public frc2::Subsystem {
   void UpdatePosition();
   double CalculateTargetHeight(units::angle::degrees theta2);
   void Move(double speed);
+  rev::SparkMaxAbsoluteEncoder
+  GetkElevatorThroughBoreEncoder();  // these functions are needed to get
+                                     // private class attributes
+  rev::SparkMaxPIDController
+  GetkElevatorPIDController();  // these functions are needed to get private
+                                // class attributes
 
+<<<<<<< HEAD
   
 // 2 motors, one inverted 
  /**
@@ -67,4 +79,34 @@ class Elevator : public frc2::Subsystem {
 * Encoder, the type should be set to quadrature and the counts per
 * revolution set to 8192
 */
+=======
+ private:
+  rev::CANSparkMax m_ElevatorMotorLeft{kElevatorLeftCanId,
+                                       rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax m_ElevatorMotorRight{
+      kElevatorRightCanId, rev::CANSparkMax::MotorType::kBrushless};
+  // Changed to SparkMaxAbsoluteEncoder for absolute position measurement
+  rev::SparkMaxAbsoluteEncoder m_ElevatorEncoder =
+      m_ElevatorMotorLeft.GetAbsoluteEncoder(
+          rev::SparkAbsoluteEncoder::Type::kDutyCycle);
+  // Define CANPIDController for direct control through SparkMax
+  rev::SparkMaxPIDController m_pidController =
+      m_ElevatorMotorLeft.GetPIDController();
+  double currentPositionInches = 0;  // Current elevator position in inches
+  double targetPositionInches = 0;   // Target elevator position in inches
+  // trigger: xbox controller button
+
+  // go down
+  // trigger: xbox controller button
+
+  // throughbore encoder
+  // 2 motors, one inverted
+
+  /**
+   * An alternate encoder object is constructed using the GetAlternateEncoder()
+   * method on an existing CANSparkMax object. If using a REV Through Bore
+   * Encoder, the type should be set to quadrature and the counts per
+   * revolution set to 8192
+   */
+>>>>>>> 8d273335a748d7ec1aac28cece7df4dee9326079
 };

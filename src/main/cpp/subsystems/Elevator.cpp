@@ -22,16 +22,28 @@ Elevator::Elevator() { ConfigureMotors(); }
 void Elevator::Periodic() { UpdatePosition(); }
 
 void Elevator::MoveToPosition(double positionInches) {
-  if (positionInches > kElevatorUpperSoftLimit ||
-      positionInches < kElevatorLowerSoftLimit) {
+  // TODO:
+  // Add logic to keep track of absolute elevator position
+  MoveToRelativePosition(positionInches);
+}
+
+void Elevator::MoveToRelativePosition(double positionInches) {
+  double currentPositionInchesLocal =
+      ConvertEncoderUnitsToInches(m_ElevatorEncoder.GetPosition());
+
+  double newPositionInches = currentPositionInchesLocal + positionInches;
+
+  if (newPositionInches > kElevatorUpperSoftLimit ||
+      newPositionInches < kElevatorLowerSoftLimit) {
     return;
   }
-  targetPositionInches = positionInches;
-  double targetPositionUnits = ConvertInchesToEncoderUnits(positionInches);
-  // Instead of using m_pidController.Calculate, directly set the target for
-  // SparkMax PID
+
+  double targetPositionUnits = ConvertInchesToEncoderUnits(newPositionInches);
+
   m_pidController.SetReference(targetPositionUnits,
                                rev::ControlType::kPosition);
+
+  targetPositionInches = newPositionInches;
 }
 
 double Elevator::ConvertInchesToEncoderUnits(double inches) {
