@@ -30,7 +30,6 @@ class Elevator : public frc2::Subsystem {
   double ConvertEncoderUnitsToInches(double units);
   void UpdatePosition();
   double CalculateTargetHeight(units::degree_t theta2);
-  void Move(double speed);
 
   rev::SparkMaxAbsoluteEncoder
   GetkElevatorThroughBoreEncoder();  // these functions are needed to get
