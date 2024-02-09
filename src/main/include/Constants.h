@@ -84,7 +84,7 @@ constexpr int kElevatorRightCanId = 14;
     static constexpr int kCPR = 8192;
 
 
-constexpr double kElevatorUpperSoftLimit = 18.0;
+constexpr double kElevatorUpperSoftLimit = 17.0;
 constexpr double kElevatorLowerSoftLimit = 0.0;
 constexpr double kElevatorGearRatio = 1.0;
 constexpr double kElevatorDrumDiameterInches = 1.214;
@@ -98,8 +98,8 @@ constexpr double kI = 0.0;
 constexpr double kD = 0.0;
 
 constexpr double kPullyDiameter = 1.214;
-constexpr int kElevatorEncoderResolution = 2048; // TODO: 8192 bb 
-constexpr double kElevatorSetpointInches = 0.1;  // Placeholder constant
+constexpr int kElevatorEncoderResolution = 1024; // TODO: 8192 bb 
+constexpr double kElevatorSetpointInches = 1.0;  // Placeholder constant
                                                  // position
 constexpr double kPositionToleranceInches = 1.0 / 2.54;
 constexpr double kEncoderUnitsPerInch = 1 / kElevatorInchesPerTick;

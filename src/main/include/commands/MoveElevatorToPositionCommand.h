@@ -7,7 +7,7 @@ public:
     explicit MoveElevatorToPositionCommand(Elevator& elevator, double position);
     void Initialize() override;
     bool IsFinished() override;
-
+    void Execute() override;
 private:
     Elevator& m_elevator;
     double m_position;
