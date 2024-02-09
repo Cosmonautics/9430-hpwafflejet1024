@@ -76,8 +76,8 @@ void Elevator::Move(double speed) {
 }
 
 
-double CalculateTargetHeight(units::angle::degrees theta2) {
-    units::angle::degrees theta1 = m_ElevatorEncoder.GetPosition();
+double  Elevator::CalculateTargetHeight(units::degree_t theta2) {
+    units::degree_t theta1 = units::degree_t{m_ElevatorEncoder.GetPosition()};
     ElevatorConstants::kElevatorDrumDiameterInches * (theta2 - theta1);
 }
 

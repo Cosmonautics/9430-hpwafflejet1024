@@ -29,7 +29,7 @@ class Elevator : public frc2::Subsystem {
   double ConvertInchesToEncoderUnits(double inches);
   double ConvertEncoderUnitsToInches(double units);
   void UpdatePosition();
-  double CalculateTargetHeight(units::angle::degrees theta2);
+  double CalculateTargetHeight(units::degree_t theta2);
   void Move(double speed);
 
   rev::SparkMaxAbsoluteEncoder
