@@ -48,8 +48,7 @@ void Elevator::MoveToPosition(double positionInches) {
     return;  // Position out of bounds
   }
   double targetPositionRotations = InchesToRotations(positionInches);
-  units::radian_t targetRadians = RotationsToRadians(targetPositionRotations);
-  m_pidController.SetReference(targetRadians.value(),
+  m_pidController.SetReference(targetPositionRotations,
                                rev::ControlType::kPosition);
 }
 
@@ -57,8 +56,7 @@ void Elevator::MoveToRelativePosition(double positionInches) {
   // Convert the requested move distance to rotations and then to radians
   double targetPositionRotations =
       InchesToRotations(positionInches + GetCurrentPosition());
-  units::radian_t targetRadians = RotationsToRadians(targetPositionRotations);
-  m_pidController.SetReference(targetRadians.value(),
+  m_pidController.SetReference(targetPositionRotations,
                                rev::ControlType::kPosition);
 }
 
@@ -99,10 +97,6 @@ double Elevator::InchesToRotations(double inches) {
 
 double Elevator::RotationsToInches(double rotations) {
   return rotations * (kPullyDiameter * M_PI);
-}
-
-units::radian_t Elevator::RotationsToRadians(double rotations) {
-  return units::radian_t{rotations * 2 * M_PI};
 }
 
 bool Elevator::AtTargetPosition() {
