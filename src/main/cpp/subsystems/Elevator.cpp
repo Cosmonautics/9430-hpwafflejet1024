@@ -13,67 +13,83 @@
 
 #include "subsystems/Elevator.h"
 
+#include <cmath>  // For std::abs
+
 #include "Constants.h"
 
 using namespace ElevatorConstants;
 
-Elevator::Elevator() { ConfigureMotors(); }
+Elevator::Elevator() {
+  ConfigureMotors();
+  // Use absolute encoder to set the initial position
+  double initialPositionInches = positionTracker.LoadPosition();
+  SetInitialPosition(initialPositionInches);
+}
 
-void Elevator::Periodic() { UpdatePosition(); }
+void Elevator::Periodic() {
+  UpdatePosition();
+  positionTracker.SavePosition(currentPositionInches);
+}
 
 void Elevator::MoveToPosition(double positionInches) {
   if (positionInches > kElevatorUpperSoftLimit ||
       positionInches < kElevatorLowerSoftLimit) {
-    return;
+    return;  // Position out of bounds
   }
-  targetPositionInches = positionInches;
-  double targetPositionUnits = ConvertInchesToEncoderUnits(positionInches);
-  // Instead of using m_pidController.Calculate, directly set the target for
-  // SparkMax PID
-  m_pidController.SetReference(targetPositionUnits,
+  double targetPositionRotations = InchesToRotations(positionInches);
+  units::radian_t targetRadians = RotationsToRadians(targetPositionRotations);
+  m_pidController.SetReference(targetRadians.value(),
                                rev::ControlType::kPosition);
 }
 
-double Elevator::ConvertInchesToEncoderUnits(double inches) {
-  double circumference = M_PI * kPullyDiameter;
-  double encoderUnitsPerInch = kElevatorEncoderResolution / circumference;
-  return static_cast<int>(inches * encoderUnitsPerInch);
+void Elevator::MoveToRelativePosition(double positionInches) {
+  // Convert the requested move distance to rotations and then to radians
+  double targetPositionRotations =
+      InchesToRotations(positionInches + GetCurrentPosition());
+  units::radian_t targetRadians = RotationsToRadians(targetPositionRotations);
+  m_pidController.SetReference(targetRadians.value(),
+                               rev::ControlType::kPosition);
 }
 
-double Elevator::ConvertEncoderUnitsToInches(double units) {
-  double circumference = M_PI * kPullyDiameter;
-  double inchesPerEncoderUnit = circumference / kElevatorEncoderResolution;
-  return units * inchesPerEncoderUnit;
+double Elevator::GetCurrentPosition() {
+  // Use the relative encoder to get the current position
+  double currentPositionRotations =
+      m_ElevatorRelativeEncoder.GetPosition() / kElevatorEncoderResolution;
+  return RotationsToInches(currentPositionRotations);
 }
 
-bool Elevator::AtTargetPosition() {
-  bool flag = std::abs(currentPositionInches - targetPositionInches) <=
-              ElevatorConstants::kPositionToleranceInches;
-  return flag;
-}
-
-void Elevator::ConfigureMotors() {
-  m_ElevatorMotorLeft.RestoreFactoryDefaults();
-  m_ElevatorMotorRight.RestoreFactoryDefaults();
-  m_ElevatorMotorRight.Follow(m_ElevatorMotorLeft, true);
-
-  // Configure PID controller on SparkMax
-  m_pidController.SetP(kP);
-  m_pidController.SetI(kI);
-  m_pidController.SetD(kD);
-  m_pidController.SetOutputRange(-1.0, 1.0);
+void Elevator::SetInitialPosition(double positionInches) {
+  currentPositionInches = positionInches;
+  // Assume this method is called only at initialization or when manually
+  // resetting position
+  m_ElevatorRelativeEncoder.SetPosition(InchesToRotations(positionInches) *
+                                        kElevatorEncoderResolution);
+  // Also save this as the new initial position
+  positionTracker.SavePosition(positionInches);
 }
 
 void Elevator::UpdatePosition() {
-  currentPositionInches =
-      ConvertEncoderUnitsToInches(m_ElevatorEncoder.GetPosition());
+  // Update currentPositionInches using the relative encoder
+  currentPositionInches = GetCurrentPosition();
 }
 
+double Elevator::CalculateTargetHeight(units::degree_t targetRevolutions) {
+  units::degree_t currentRevolutions = units::degree_t{
+      m_ElevatorEncoder.GetPosition() / kElevatorEncoderResolution};
 
+  units::degree_t revolutionDifference = targetRevolutions - currentRevolutions;
 
-double  Elevator::CalculateTargetHeight(units::degree_t theta2) {
-    units::degree_t theta1 = units::degree_t{m_ElevatorEncoder.GetPosition()};
-    ElevatorConstants::kElevatorDrumDiameterInches * (theta2 - theta1);
+  return revolutionDifference.to<double>();
 }
 
- 
+double Elevator::InchesToRotations(double inches) {
+  return inches / (kPullyDiameter * M_PI);
+}
+
+double Elevator::RotationsToInches(double rotations) {
+  return rotations * (kPullyDiameter * M_PI);
+}
+
+units::radian_t RotationsToRadians(double rotations) {
+  return units::radian_t{rotations * 2 * M_PI};
+}
