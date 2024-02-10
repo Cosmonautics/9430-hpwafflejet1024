@@ -83,7 +83,7 @@ constexpr double kElevatorInchesPerTick =
     (kElevatorDrumDiameterInches * M_PI) /
     (kElevatorEncoderTicksPerRevolution * kElevatorGearRatio);
 
-constexpr double kP = 0.75;
+constexpr double kP = 0.2;
 constexpr double kI = 0.0;
 constexpr double kD = 0.0;
 
