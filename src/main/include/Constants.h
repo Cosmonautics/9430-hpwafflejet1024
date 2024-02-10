@@ -74,16 +74,6 @@ namespace ElevatorConstants {
 constexpr int kElevatorLeftCanId = 13;
 constexpr int kElevatorRightCanId = 14;
 
-    constexpr double kElevatorP = 1;
-    constexpr double kElevatorI = 0;
-    constexpr double kElevatorD = 0;
-    constexpr double kElevatorFF = 0;
-    constexpr double kElevatorMinOutput = -1;
-    constexpr double kElevatorMaxOutput = 1;
-
-    static constexpr int kCPR = 8192;
-
-
 constexpr double kElevatorUpperSoftLimit = 17.0;
 constexpr double kElevatorLowerSoftLimit = 0.0;
 constexpr double kElevatorGearRatio = 1.0;
@@ -99,7 +89,7 @@ constexpr double kD = 0.0;
 
 constexpr double kPullyDiameter = 1.214;
 constexpr int kElevatorEncoderResolution = 8192; // TODO: 8192 bb 
-constexpr double kElevatorSetpointInches = 3.0;  // Placeholder constant
+constexpr double kElevatorSetpointInches = 1.0;  // Placeholder constant
                                                  // position
 constexpr double kPositionToleranceInches = 1.0 / 2.54;
 constexpr double kEncoderUnitsPerInch = 1 / kElevatorInchesPerTick;
