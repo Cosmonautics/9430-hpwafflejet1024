@@ -26,6 +26,17 @@ Elevator::Elevator() {
   SetInitialPosition(initialPositionInches);
 }
 
+void Elevator::ConfigureMotors() {
+  m_ElevatorMotorLeft.RestoreFactoryDefaults();
+  m_ElevatorMotorRight.RestoreFactoryDefaults();
+  m_ElevatorMotorRight.Follow(m_ElevatorMotorLeft, true);
+
+  // Configure PID controller on SparkMax
+  m_pidController.SetP(kP);
+  m_pidController.SetI(kI);
+  m_pidController.SetD(kD);
+  m_pidController.SetOutputRange(-1.0, 1.0);
+}
 void Elevator::Periodic() {
   UpdatePosition();
   positionTracker.SavePosition(currentPositionInches);
@@ -90,6 +101,12 @@ double Elevator::RotationsToInches(double rotations) {
   return rotations * (kPullyDiameter * M_PI);
 }
 
-units::radian_t RotationsToRadians(double rotations) {
+units::radian_t Elevator::RotationsToRadians(double rotations) {
   return units::radian_t{rotations * 2 * M_PI};
+}
+
+bool Elevator::AtTargetPosition() {
+  bool flag = std::abs(currentPositionInches - targetPositionInches) <=
+              ElevatorConstants::kPositionToleranceInches;
+  return flag;
 }
