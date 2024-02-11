@@ -37,10 +37,8 @@ void Elevator::ConfigureMotors() {
   m_pidController.SetD(kD);
   m_pidController.SetOutputRange(-1.0, 1.0);
 }
-void Elevator::Periodic() {
-  UpdatePosition();
-  positionTracker.SavePosition(currentPositionInches);
-}
+
+void Elevator::Periodic() { UpdatePosition(); }
 
 void Elevator::MoveToPosition(double positionInches) {
   if (positionInches > kElevatorUpperSoftLimit ||
@@ -54,16 +52,19 @@ void Elevator::MoveToPosition(double positionInches) {
 
 void Elevator::MoveToRelativePosition(double positionInches) {
   // Convert the requested move distance to rotations and then to radians
-  double targetPositionRotations =
-      InchesToRotations(positionInches + GetCurrentPosition());
+  double targetPositionRotations = InchesToRotations(targetPositionInches);
+  if (targetPositionInches > kElevatorUpperSoftLimit ||
+      targetPositionInches < kElevatorLowerSoftLimit) {
+    return;  // Position out of bounds
+  }
+  double targetPositionInches = positionInches + GetCurrentPosition();
+
   m_pidController.SetReference(targetPositionRotations,
                                rev::ControlType::kPosition);
 }
 
 double Elevator::GetCurrentPosition() {
-  // Use the relative encoder to get the current position
-  double currentPositionRotations =
-      m_ElevatorRelativeEncoder.GetPosition() / kElevatorEncoderResolution;
+  double currentPositionRotations = m_ElevatorEncoder.GetPosition();
   return RotationsToInches(currentPositionRotations);
 }
 
@@ -71,8 +72,7 @@ void Elevator::SetInitialPosition(double positionInches) {
   currentPositionInches = positionInches;
   // Assume this method is called only at initialization or when manually
   // resetting position
-  m_ElevatorRelativeEncoder.SetPosition(InchesToRotations(positionInches) *
-                                        kElevatorEncoderResolution);
+  m_ElevatorRelativeEncoder.SetPosition(InchesToRotations(positionInches));
   // Also save this as the new initial position
   positionTracker.SavePosition(positionInches);
 }
@@ -80,6 +80,7 @@ void Elevator::SetInitialPosition(double positionInches) {
 void Elevator::UpdatePosition() {
   // Update currentPositionInches using the relative encoder
   currentPositionInches = GetCurrentPosition();
+  positionTracker.SavePosition(currentPositionInches);
 }
 
 double Elevator::CalculateTargetHeight(units::degree_t targetRevolutions) {
