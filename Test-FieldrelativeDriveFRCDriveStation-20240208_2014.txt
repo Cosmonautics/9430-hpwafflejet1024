@@ -1,0 +1,53 @@
+﻿﻿﻿﻿﻿﻿﻿ Info roboRIO: Game data update "" received by Robot ﻿
+﻿﻿﻿﻿﻿﻿  ﻿
+﻿﻿﻿﻿﻿﻿ ********** Robot program starting ********** ﻿
+﻿﻿﻿﻿﻿﻿ NT: Listening on NT3 port 1735, NT4 port 5810 ﻿
+﻿﻿﻿﻿﻿﻿  ﻿
+﻿﻿﻿﻿﻿﻿ ********** Robot program starting ********** ﻿
+﻿﻿﻿﻿﻿﻿ NT: Listening on NT3 port 1735, NT4 port 5810 ﻿
+﻿﻿﻿﻿﻿﻿  ﻿
+﻿﻿﻿﻿﻿﻿ ********** Robot program starting ********** ﻿
+﻿﻿﻿﻿﻿﻿ NT: Listening on NT3 port 1735, NT4 port 5810 ﻿
+﻿﻿﻿﻿﻿﻿  ﻿
+﻿﻿﻿﻿﻿﻿ ********** Robot program starting ********** ﻿
+﻿﻿﻿﻿﻿﻿ NT: Listening on NT3 port 1735, NT4 port 5810 ﻿
+﻿﻿﻿﻿﻿﻿  ﻿
+﻿﻿﻿﻿﻿﻿ ********** Robot program starting ********** ﻿
+﻿﻿﻿﻿﻿﻿ NT: Listening on NT3 port 1735, NT4 port 5810 ﻿
+﻿﻿﻿﻿﻿﻿  ﻿
+﻿Warning﻿ ﻿﻿ 44007 <secondsSinceReboot> 415.903
+﻿﻿FRC: Time since robot boot.﻿﻿﻿﻿﻿﻿ ********** Robot program starting ********** ﻿
+﻿﻿﻿﻿﻿﻿ NT: Listening on NT3 port 1735, NT4 port 5810 ﻿
+﻿﻿﻿﻿﻿﻿  ﻿
+﻿﻿﻿﻿﻿﻿ ********** Robot program starting ********** ﻿
+﻿﻿﻿﻿﻿﻿ NT: Listening on NT3 port 1735, NT4 port 5810 ﻿
+﻿﻿﻿﻿﻿﻿  ﻿
+﻿﻿﻿﻿﻿﻿ ********** Robot program starting ********** ﻿
+﻿﻿﻿﻿﻿﻿ NT: Listening on NT3 port 1735, NT4 port 5810 ﻿
+﻿Warning﻿ ﻿﻿ 44008 <radioLostEvents>  408.141 <radioSeenEvents>  406.640
+﻿﻿FRC: Robot radio detection times.﻿﻿﻿﻿﻿﻿  ﻿
+﻿﻿﻿﻿﻿﻿ ********** Robot program starting ********** ﻿
+﻿﻿﻿﻿﻿﻿ NT: Listening on NT3 port 1735, NT4 port 5810 ﻿
+﻿﻿﻿﻿﻿﻿ NT: Got a NT4 connection from 10.94.30.207 port 54818 ﻿
+﻿﻿﻿﻿﻿﻿ NT: CONNECTED NT4 client 'Dashboard@1' (from 10.94.30.207:54818) ﻿
+﻿﻿﻿﻿﻿﻿  ﻿
+﻿﻿﻿﻿﻿﻿ ********** Robot program starting ********** ﻿
+﻿﻿﻿﻿﻿﻿ NT: Listening on NT3 port 1735, NT4 port 5810 ﻿
+﻿﻿﻿﻿﻿﻿  ﻿
+﻿﻿﻿﻿﻿﻿ ********** Robot program starting ********** ﻿
+﻿﻿﻿﻿﻿﻿ NT: Listening on NT3 port 1735, NT4 port 5810 ﻿
+﻿﻿﻿﻿﻿﻿ NT: Got a NT4 connection from 10.94.30.207 port 56644 ﻿
+﻿﻿﻿﻿﻿﻿ NT: CONNECTED NT4 client 'Dashboard@1' (from 10.94.30.207:56644) ﻿
+﻿﻿﻿﻿﻿﻿  ﻿
+﻿﻿﻿﻿﻿﻿ ********** Robot program starting ********** ﻿
+﻿﻿﻿﻿﻿﻿ NT: Listening on NT3 port 1735, NT4 port 5810 ﻿
+﻿﻿﻿﻿﻿﻿  ﻿
+﻿﻿﻿﻿﻿﻿ ********** Robot program starting ********** ﻿
+﻿﻿﻿﻿﻿﻿ NT: Listening on NT3 port 1735, NT4 port 5810 ﻿
+﻿﻿﻿﻿﻿﻿ NT: Got a NT4 connection from 10.94.30.207 port 53544 ﻿
+﻿﻿﻿﻿﻿﻿ NT: CONNECTED NT4 client 'Dashboard@1' (from 10.94.30.207:53544) ﻿
+﻿﻿﻿﻿﻿﻿  ﻿
+﻿﻿﻿﻿﻿﻿ ********** Robot program starting ********** ﻿
+﻿﻿﻿﻿﻿﻿ NT: Listening on NT3 port 1735, NT4 port 5810 ﻿
+﻿﻿﻿﻿﻿﻿ NT: Got a NT4 connection from 10.94.30.207 port 61216 ﻿
+﻿﻿﻿﻿﻿﻿ NT: CONNECTED NT4 client 'Dashboard@1' (from 10.94.30.207:61216) ﻿
