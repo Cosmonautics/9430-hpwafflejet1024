@@ -25,7 +25,7 @@ class Elevator : public frc2::Subsystem {
   double GetCurrentPosition();
   void SetInitialPosition(double positionInches);
   // m_ElevatorEncoder.GetPosition();
-
+  void CheckForFullRotation();
   // Helper methods
   void ConfigureMotors();
   double ConvertInchesToEncoderUnits(double inches);
@@ -67,6 +67,8 @@ class Elevator : public frc2::Subsystem {
 
   double currentPositionInches = 0;  // Current elevator position in inches
   double targetPositionInches = 0;   // Target elevator position in inches
+  double m_TotalRotations = 0;
+  double m_LastEncoderPosition = 0;
   // trigger: xbox controller button
 
   // go down
