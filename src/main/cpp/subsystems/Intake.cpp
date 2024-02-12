@@ -8,6 +8,19 @@
 #include "Constants.h"
 #include "utils/SwerveUtils.h"
 
+/* 
+Todo:
+Pivot: have intake motor pivot to a floor position
+elevator postion and shooter position remain defult to transit positon
+
+
+
+*/
+
+
+
+
+
 Intake::Intake() {}
 
 void Intake::IntakeDropNote(bool isPressed, double speed) {
