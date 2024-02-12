@@ -24,14 +24,14 @@ DriveSubsystem::DriveSubsystem()
       m_rearRight{kRearRightDrivingCanId, kRearRightTurningCanId,
                   kRearRightChassisAngularOffset},
       m_odometry{kDriveKinematics,
-                 frc::Rotation2d(units::radian_t{ahrs->GetAngle()}),
+                 ahrs->GetRotation2d(),
                  {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                   m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
                  frc::Pose2d{}} {}
 
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
-  m_odometry.Update(frc::Rotation2d(units::radian_t{ahrs->GetAngle()}),
+  m_odometry.Update(ahrs->GetRotation2d(),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
 }
@@ -110,7 +110,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
       fieldRelative
           ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
                 xSpeedDelivered, ySpeedDelivered, rotDelivered,
-                frc::Rotation2d(units::radian_t{ahrs->GetAngle()}))
+                ahrs->GetRotation2d())
           : frc::ChassisSpeeds{xSpeedDelivered, ySpeedDelivered, rotDelivered});
 
   kDriveKinematics.DesaturateWheelSpeeds(&states, DriveConstants::kMaxSpeed);
@@ -203,7 +203,7 @@ void DriveSubsystem::ResetEncoders() {
 }
 
 units::degree_t DriveSubsystem::GetHeading() const {
-  return frc::Rotation2d(units::radian_t{ahrs->GetAngle()}).Degrees();
+  return ahrs->GetRotation2d().Degrees();
 }
 
 void DriveSubsystem::ZeroHeading() { ahrs->Reset(); }

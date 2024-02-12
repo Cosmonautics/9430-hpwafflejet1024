@@ -122,7 +122,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   // The gyro sensor
   // frc::ADIS16470_IMU m_gyro;
-  AHRS *ahrs;
+  AHRS *ahrs = new AHRS(frc::SPI::Port::kMXP);
   //
  /* rev::CANSparkFlex m_shooterMotorLeft{
       DriveConstants::kShooterLeftCanId,

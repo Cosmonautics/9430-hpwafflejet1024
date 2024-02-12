@@ -3,9 +3,10 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "RobotContainer.h"
-#include <iostream>
 
 #include <base64.h>
+#include <frc/DriverStation.h>
+#include <frc/Timer.h>
 #include <frc/controller/PIDController.h>
 #include <frc/geometry/Translation2d.h>
 #include <frc/shuffleboard/Shuffleboard.h>
@@ -15,10 +16,10 @@
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/SwerveControllerCommand.h>
 #include <frc2/command/button/JoystickButton.h>
-#include <frc/DriverStation.h>
 #include <units/angle.h>
 #include <units/velocity.h>
 
+#include <iostream>
 #include <json.hpp>
 #include <utility>
 
@@ -37,25 +38,47 @@ RobotContainer::RobotContainer() {
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
   // SPEED IS AT 50%
-   m_drive.SetDefaultCommand(frc2::RunCommand(
-       [this] {
-         m_drive.Drive( // FLAG: x and y might be switched here.
-             -units::meters_per_second_t{frc::ApplyDeadband(
-                 m_driverController.GetLeftY()*0.50, OIConstants::kDriveDeadband)},
-             -units::meters_per_second_t{frc::ApplyDeadband(
-                 m_driverController.GetLeftX()*0.50, OIConstants::kDriveDeadband)},
-             -units::radians_per_second_t{frc::ApplyDeadband(
-                 m_driverController.GetRightX()*0.50, OIConstants::kDriveDeadband)},
-             false, true);
-       },
-       {&m_drive}));
 
+  m_drive.SetDefaultCommand(frc2::RunCommand(
+      [this] {
+        m_drive.Drive(  // FLAG: x and y might be switched here.
+            -units::meters_per_second_t{
+                frc::ApplyDeadband(m_driverController.GetLeftY() * 0.50,
+                                   OIConstants::kDriveDeadband)},
+            -units::meters_per_second_t{
+                frc::ApplyDeadband(m_driverController.GetLeftX() * 0.50,
+                                   OIConstants::kDriveDeadband)},
+            -units::radians_per_second_t{
+                frc::ApplyDeadband(m_driverController.GetRightX() * 0.50,
+                                   OIConstants::kDriveDeadband)},
+            true, true);
+      },
+      {&m_drive}));
 }
 
 void RobotContainer::ConfigureButtonBindings() {
+  frc::Timer holdTimer;
+
   frc2::JoystickButton(&m_driverController,
                        frc::XboxController::Button::kRightBumper)
       .WhileTrue(new frc2::RunCommand([this] { m_drive.SetX(); }, {&m_drive}));
+
+  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kStart)
+      .OnTrue(new frc2::InstantCommand(
+          [this, &holdTimer] {
+            holdTimer.Reset();
+            holdTimer.Start();
+          },
+          {&m_drive}))
+      .OnFalse(new frc2::InstantCommand(
+          [this, &holdTimer] {
+            holdTimer.Stop();
+            if (holdTimer.HasElapsed(2_s)) {
+              m_drive.ZeroHeading();
+            }
+          },
+          {&m_drive}));
+
   // TODO: m_drive.ControlIntakeMotors(true, 1); make  less hacky
 
   // X, Reaload/Pickup Note
