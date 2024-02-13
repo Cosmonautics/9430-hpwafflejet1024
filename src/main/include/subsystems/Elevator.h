@@ -21,15 +21,9 @@ class Elevator : public frc2::Subsystem {
   void Periodic() override;
   void MoveToPosition(double position);
   bool AtTargetPosition();
-  void MoveToRelativePosition(double position);
-  double GetCurrentPosition();
-  void SetInitialPosition(double positionInches);
   // m_ElevatorEncoder.GetPosition();
-  void CheckForFullRotation();
   // Helper methods
   void ConfigureMotors();
-  double ConvertInchesToEncoderUnits(double inches);
-  double ConvertEncoderUnitsToInches(double units);
   void UpdatePosition();
   double CalculateTargetHeight(units::degree_t theta2);
   double InchesToRotations(double inches);
