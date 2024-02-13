@@ -21,7 +21,13 @@ elevator postion and shooter position remain defult to transit positon
 
 
 
-Intake::Intake() {}
+Intake::Intake() {
+
+m_pidController.SetP(IntakeConstants::kP);
+  m_pidController.SetI(IntakeConstants::kI);
+  m_pidController.SetD(IntakeConstants::kD);
+
+}
 
 void Intake::IntakeDropNote(bool isPressed, double speed) {
   double dropSpeed = 0.10;  // drop positive speed
@@ -33,6 +39,11 @@ void Intake::IntakeDropNote(bool isPressed, double speed) {
     m_intakeMotorLeft.Set(0);
     m_intakeMotorRight.Set(0);
   }
+}
+
+void Intake::PivotToAngle(double intakeAngle) {
+   double targetAngle = intakeAngle / 360;
+m_pidController.SetReference(targetAngle, rev::ControlType::kPosition);
 }
 
 void Intake::IntakePickUpNote(bool isPressed, double speed) {
