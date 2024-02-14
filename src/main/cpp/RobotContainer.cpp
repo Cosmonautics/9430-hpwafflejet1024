@@ -99,21 +99,6 @@ void RobotContainer::ConfigureButtonBindings() {
           &m_shooter, ShooterConstants::kShooterSetpointDegree));
 }
 
-std::vector<frc::Pose2d> ParseTrajectoryJson(const nlohmann::json& json) {
-  std::vector<frc::Pose2d> points;
-
-  for (const auto& item : json) {
-    double x = std::stod(item.at("x").get<std::string>());
-    double y = std::stod(item.at("y").get<std::string>());
-    double angle = std::stod(item.at("angle").get<std::string>());
-
-    points.emplace_back(units::meter_t(x), units::meter_t(y),
-                        frc::Rotation2d(units::degree_t(angle)));
-  }
-
-  return points;
-}
-
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // Set up config for trajectory
   frc::TrajectoryConfig config(AutoConstants::kMaxSpeed,

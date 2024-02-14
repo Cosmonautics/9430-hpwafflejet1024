@@ -92,9 +92,6 @@ constexpr int kElevatorEncoderResolution = 8192;  // TODO: 8192 bb
 constexpr double kElevatorSetpointInches = 3.0;   // Placeholder constant
                                                   // position
 constexpr double kGearBoxScale = 4.45;
-constexpr int kElevatorEncoderResolution = 8192; // TODO: 8192 bb 
-constexpr double kElevatorSetpointInches = 7.0;  // Placeholder constant
-                                                 // position
 constexpr double kPositionToleranceInches = 1.0 / 2.54;
 constexpr double kEncoderUnitsPerInch = 1 / kElevatorInchesPerTick;
 }  // namespace ElevatorConstants
