@@ -5,7 +5,7 @@
 
 #include "RobotContainer.h"
 
-#include <base64.h>
+
 #include <frc/controller/PIDController.h>
 #include <frc/geometry/Translation2d.h>
 #include <frc/shuffleboard/Shuffleboard.h>
@@ -19,7 +19,6 @@
 #include <units/angle.h>
 #include <units/velocity.h>
 
-#include <json.hpp>
 #include <utility>
 
 #include "Constants.h"

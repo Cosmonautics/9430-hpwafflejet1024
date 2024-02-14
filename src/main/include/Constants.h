@@ -56,7 +56,7 @@ constexpr int kFrontLeftTurningCanId = 5;
 constexpr int kRearLeftTurningCanId = 1;
 constexpr int kFrontRightTurningCanId = 7;
 constexpr int kRearRightTurningCanId = 3;
-} // namespace DriveConstants
+}  // namespace DriveConstants
 
 namespace ShooterConstants {
 constexpr int kShooterLeftCanId = 10;
@@ -88,6 +88,9 @@ constexpr double kI = 0.0;
 constexpr double kD = 0.0;
 
 constexpr double kPullyDiameter = 1.214;
+constexpr int kElevatorEncoderResolution = 8192;  // TODO: 8192 bb
+constexpr double kElevatorSetpointInches = 3.0;   // Placeholder constant
+                                                  // position
 constexpr double kGearBoxScale = 4.45;
 constexpr int kElevatorEncoderResolution = 8192; // TODO: 8192 bb 
 constexpr double kElevatorSetpointInches = 7.0;  // Placeholder constant
@@ -96,8 +99,12 @@ constexpr double kPositionToleranceInches = 1.0 / 2.54;
 constexpr double kEncoderUnitsPerInch = 1 / kElevatorInchesPerTick;
 }  // namespace ElevatorConstants
 namespace IntakeConstants {
+constexpr double kP = 0.01;
+constexpr double kI = 0.0;
+constexpr double kD = 0.0;
 constexpr int kIntakeLeftCanId = 11;
 constexpr int kIntakeRightCanId = 12;
+constexpr int kIntakePivotCanId = 15;
 }  // namespace IntakeConstants
 namespace ConveyorConstants {
 static constexpr int kConveyorCanId = 16;
