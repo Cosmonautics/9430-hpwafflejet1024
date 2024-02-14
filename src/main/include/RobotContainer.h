@@ -16,7 +16,7 @@
 
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
-
+#include "subsystems/LimelightSubsystem.h"
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -38,7 +38,8 @@ class RobotContainer {
 
   // The robot's subsystems
   DriveSubsystem m_drive;
-
+  LimelightSubsystem m_limelight;
+  
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;
 
