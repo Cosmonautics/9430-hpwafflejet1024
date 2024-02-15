@@ -7,7 +7,9 @@ RunConveyorCommand::RunConveyorCommand(Conveyor* subsystem, bool forward)
   AddRequirements({subsystem});
 }
 
-void RunConveyorCommand::Initialize() {
+void RunConveyorCommand::Initialize() {}
+
+void RunConveyorCommand::Execute() {
   if (m_forward) {
     m_conveyorSubsystem->Forward();
   } else {
@@ -15,11 +17,6 @@ void RunConveyorCommand::Initialize() {
   }
 }
 
-void RunConveyorCommand::End(bool interrupted) {
-  m_conveyorSubsystem->Stop();
-}
+void RunConveyorCommand::End(bool interrupted) { m_conveyorSubsystem->Stop(); }
 
-bool RunConveyorCommand::IsFinished() {
-  // The command will finish if the limit switch is triggered, handled internally by the subsystem
-  return false; // This keeps the command running until explicitly canceled or interrupted
-}
+bool RunConveyorCommand::IsFinished() { return false; }

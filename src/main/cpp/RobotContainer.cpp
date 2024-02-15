@@ -5,7 +5,6 @@
 
 #include "RobotContainer.h"
 
-
 #include <frc/controller/PIDController.h>
 #include <frc/geometry/Translation2d.h>
 #include <frc/shuffleboard/Shuffleboard.h>
@@ -25,9 +24,9 @@
 #include "commands/MoveElevatorToPositionCommand.h"
 #include "commands/PivotToPositionCommand.h"
 #include "subsystems/DriveSubsystem.h"
+#include "subsystems/Elevator.h"
 #include "subsystems/Intake.h"
 #include "subsystems/Shooter.h"
-#include "subsystems/Elevator.h"
 
 using namespace DriveConstants;
 
@@ -56,7 +55,6 @@ RobotContainer::RobotContainer() {
       },
       {&m_drive}));
 }
-
 
 void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_driverController,
@@ -92,7 +90,7 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kY)
       .OnTrue(new MoveElevatorToPositionCommand(
           m_elevator, ElevatorConstants::kElevatorSetpointInches));
-          
+
   // Shooter Pivot
   frc2::POVButton(&m_driverController, 270)
       .OnTrue(new PivotToPositionCommand(
