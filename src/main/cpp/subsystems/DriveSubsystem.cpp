@@ -27,13 +27,21 @@ DriveSubsystem::DriveSubsystem()
                  ahrs->GetRotation2d(),
                  {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                   m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
-                 frc::Pose2d{}} {}
+                 frc::Pose2d{}} {
+  auto inst = nt::NetworkTableInstance::GetDefault();
+  auto movementTable = inst.GetTable("RobotMovement");
+}
 
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
   m_odometry.Update(ahrs->GetRotation2d(),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
+  auto pose = m_odometry.GetPose();
+  movementTable->PutNumber("X", pose.X().to<double>());
+  movementTable->PutNumber("Y", pose.Y().to<double>());
+  movementTable->PutNumber("Heading", GetHeading().to<double>());
+  movementTable->PutNumber("Timestamp", frc::Timer::GetFPGATimestamp().to<double>());
 }
 
 void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
