@@ -12,9 +12,11 @@
 #include <frc/kinematics/SwerveDriveKinematics.h>
 #include <frc/kinematics/SwerveDriveOdometry.h>
 #include <frc2/command/SubsystemBase.h>
+#include <rev/CANSparkFlex.h>
 
 #include "Constants.h"
 #include "MAXSwerveModule.h"
+#include "AHRS.h"
 
 class DriveSubsystem : public frc2::SubsystemBase {
  public:
@@ -101,6 +103,14 @@ class DriveSubsystem : public frc2::SubsystemBase {
       frc::Translation2d{-DriveConstants::kWheelBase / 2,
                          -DriveConstants::kTrackWidth / 2}};
 
+  /*void PickUpNote(bool isPressed, double speed);
+
+  void DropNote(bool isPressed, double speed);
+
+  void ControlIntakeMotors(bool isPressed, double speed);
+
+  void ShootMotors(bool isPressed, double speed);
+    */
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -111,8 +121,23 @@ class DriveSubsystem : public frc2::SubsystemBase {
   MAXSwerveModule m_rearRight;
 
   // The gyro sensor
-  frc::ADIS16470_IMU m_gyro;
+  // frc::ADIS16470_IMU m_gyro;
+  AHRS *ahrs = new AHRS(frc::SPI::Port::kMXP);
+  //
+ /* rev::CANSparkFlex m_shooterMotorLeft{
+      DriveConstants::kShooterLeftCanId,
+      rev::CANSparkLowLevel::MotorType::kBrushless};
+  rev::CANSparkFlex m_shooterMotorRight{
+      DriveConstants::kShooterRightCanId,
+      rev::CANSparkLowLevel::MotorType::kBrushless};
 
+  //
+  rev::CANSparkFlex m_intakeMotorLeft{
+      DriveConstants::kIntakeLeftCanId,
+      rev::CANSparkLowLevel::MotorType::kBrushless};
+  rev::CANSparkFlex m_intakeMotorRight{
+      DriveConstants::kIntakeRightCanId,
+      rev::CANSparkLowLevel::MotorType::kBrushless};*/
   // Slew rate filter variables for controlling lateral acceleration
   double m_currentRotation = 0.0;
   double m_currentTranslationDir = 0.0;

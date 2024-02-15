@@ -4,10 +4,36 @@
 
 #include "Robot.h"
 
+#include <iostream>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+  try { 
+    /***********************************************************************
+     * navX-MXP:
+     * - Communication via RoboRIO MXP (SPI, I2C) and USB.
+     * - See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface.
+     *
+     * navX-Micro:
+     * - Communication via I2C (RoboRIO MXP or Onboard) and USB.
+     * - See http://navx-micro.kauailabs.com/guidance/selecting-an-interface.
+     *
+     * VMX-pi:
+     * - Communication via USB.
+     * - See https://vmx-pi.kauailabs.com/installation/roborio-installation/
+     *
+     * Multiple navX-model devices on a single robot are supported.
+     ************************************************************************/
+    ahrs = new AHRS(frc::SPI::Port::kMXP);
+  } catch (std::exception &ex) {
+    std::string what_string = ex.what();
+    std::string err_msg("Error instantiating navX MXP:  " + what_string);
+    const char *p_err_msg = err_msg.c_str();
+    // std::cout << p_err_msg;
+    std::cout << err_msg;
+  }
+}
 
 /**
  * This function is called every 20 ms, no matter the mode. Use

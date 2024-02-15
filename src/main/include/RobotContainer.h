@@ -14,6 +14,7 @@
 #include <frc2/command/ParallelRaceGroup.h>
 #include <frc2/command/RunCommand.h>
 
+#include "AHRS.h"
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/LimelightSubsystem.h"

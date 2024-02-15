@@ -1,0 +1,356 @@
+[
+    {
+        "messageType": 2,
+        "timestamp": 0.0400390625,
+        "seqNumber": 0,
+        "line": "Info roboRIO: Game data update \"\" received by Robot"
+    },
+    {
+        "messageType": 2,
+        "timestamp": -42.178924560546875,
+        "seqNumber": 1858,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": -42.178466796875,
+        "seqNumber": 1859,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": -42.171539306640625,
+        "seqNumber": 1860,
+        "line": "NT: Listening on NT3 port 1735, NT4 port 5810"
+    },
+    {
+        "messageType": 2,
+        "timestamp": -36.338653564453125,
+        "seqNumber": 1861,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": -36.33642578125,
+        "seqNumber": 1862,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": -36.33148193359375,
+        "seqNumber": 1863,
+        "line": "NT: Listening on NT3 port 1735, NT4 port 5810"
+    },
+    {
+        "messageType": 2,
+        "timestamp": -30.217620849609375,
+        "seqNumber": 1864,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": -30.21734619140625,
+        "seqNumber": 1865,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": -30.205078125,
+        "seqNumber": 1866,
+        "line": "NT: Listening on NT3 port 1735, NT4 port 5810"
+    },
+    {
+        "messageType": 2,
+        "timestamp": -24.440155029296875,
+        "seqNumber": 1867,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": -24.439666748046875,
+        "seqNumber": 1868,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": -24.4327392578125,
+        "seqNumber": 1869,
+        "line": "NT: Listening on NT3 port 1735, NT4 port 5810"
+    },
+    {
+        "messageType": 2,
+        "timestamp": -18.60894775390625,
+        "seqNumber": 1870,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": -18.6083984375,
+        "seqNumber": 1871,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": -18.6014404296875,
+        "seqNumber": 1872,
+        "line": "NT: Listening on NT3 port 1735, NT4 port 5810"
+    },
+    {
+        "messageType": 2,
+        "timestamp": -12.7763671875,
+        "seqNumber": 1873,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": -12.775909423828125,
+        "seqNumber": 1874,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": -12.770599365234375,
+        "seqNumber": 1875,
+        "line": "NT: Listening on NT3 port 1735, NT4 port 5810"
+    },
+    {
+        "messageType": 2,
+        "timestamp": -6.95953369140625,
+        "seqNumber": 1876,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": -6.95928955078125,
+        "seqNumber": 1877,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": -6.953125,
+        "seqNumber": 1878,
+        "line": "NT: Listening on NT3 port 1735, NT4 port 5810"
+    },
+    {
+        "messageType": 2,
+        "timestamp": -1.118499755859375,
+        "seqNumber": 1879,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": -1.114959716796875,
+        "seqNumber": 1880,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": -1.111785888671875,
+        "seqNumber": 1881,
+        "line": "NT: Listening on NT3 port 1735, NT4 port 5810"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 4.6444091796875,
+        "seqNumber": 1882,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": 4.64520263671875,
+        "seqNumber": 1883,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 4.651153564453125,
+        "seqNumber": 1884,
+        "line": "NT: Listening on NT3 port 1735, NT4 port 5810"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 4.90557861328125,
+        "seqNumber": 1885,
+        "line": "NT: Got a NT4 connection from 10.94.30.207 port 54818"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 4.906158447265625,
+        "seqNumber": 1886,
+        "line": "NT: CONNECTED NT4 client 'Dashboard@1' (from 10.94.30.207:54818)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 10.48382568359375,
+        "seqNumber": 1887,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": 10.48455810546875,
+        "seqNumber": 1888,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 10.490631103515625,
+        "seqNumber": 1889,
+        "line": "NT: Listening on NT3 port 1735, NT4 port 5810"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 16.32403564453125,
+        "seqNumber": 1890,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": 16.324951171875,
+        "seqNumber": 1891,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 16.331878662109375,
+        "seqNumber": 1892,
+        "line": "NT: Listening on NT3 port 1735, NT4 port 5810"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 16.478179931640625,
+        "seqNumber": 1893,
+        "line": "NT: Got a NT4 connection from 10.94.30.207 port 56644"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 16.47955322265625,
+        "seqNumber": 1894,
+        "line": "NT: CONNECTED NT4 client 'Dashboard@1' (from 10.94.30.207:56644)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 22.1441650390625,
+        "seqNumber": 1895,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": 22.144927978515625,
+        "seqNumber": 1896,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 22.152374267578125,
+        "seqNumber": 1897,
+        "line": "NT: Listening on NT3 port 1735, NT4 port 5810"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 28.003662109375,
+        "seqNumber": 1898,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": 28.004486083984375,
+        "seqNumber": 1899,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 28.0107421875,
+        "seqNumber": 1900,
+        "line": "NT: Listening on NT3 port 1735, NT4 port 5810"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 28.109710693359375,
+        "seqNumber": 1901,
+        "line": "NT: Got a NT4 connection from 10.94.30.207 port 53544"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 28.1123046875,
+        "seqNumber": 1902,
+        "line": "NT: CONNECTED NT4 client 'Dashboard@1' (from 10.94.30.207:53544)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 33.831756591796875,
+        "seqNumber": 1903,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": 33.832427978515625,
+        "seqNumber": 1904,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 33.839111328125,
+        "seqNumber": 1905,
+        "line": "NT: Listening on NT3 port 1735, NT4 port 5810"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 33.871124267578125,
+        "seqNumber": 1906,
+        "line": "NT: Got a NT4 connection from 10.94.30.207 port 61216"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 33.872314453125,
+        "seqNumber": 1907,
+        "line": "NT: CONNECTED NT4 client 'Dashboard@1' (from 10.94.30.207:61216)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 39.664337158203125,
+        "seqNumber": 1908,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": 39.665069580078125,
+        "seqNumber": 1909,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 39.67120361328125,
+        "seqNumber": 1910,
+        "line": "NT: Listening on NT3 port 1735, NT4 port 5810"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 45.483367919921875,
+        "seqNumber": 1911,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": 45.48382568359375,
+        "seqNumber": 1912,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 45.490234375,
+        "seqNumber": 1913,
+        "line": "NT: Listening on NT3 port 1735, NT4 port 5810"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 45.648895263671875,
+        "seqNumber": 1914,
+        "line": "NT: Got a NT4 connection from 10.94.30.207 port 52017"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 45.6502685546875,
+        "seqNumber": 1915,
+        "line": "NT: CONNECTED NT4 client 'Dashboard@1' (from 10.94.30.207:52017)"
+    }
+]
