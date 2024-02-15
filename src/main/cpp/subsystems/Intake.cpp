@@ -8,7 +8,7 @@
 #include "Constants.h"
 #include "utils/SwerveUtils.h"
 
-/* 
+/*
 Todo:
 Pivot: have intake motor pivot to a floor position
 elevator postion and shooter position remain defult to transit positon
@@ -17,16 +17,10 @@ elevator postion and shooter position remain defult to transit positon
 
 */
 
-
-
-
-
 Intake::Intake() {
-
-m_pidController.SetP(IntakeConstants::kP);
+  m_pidController.SetP(IntakeConstants::kP);
   m_pidController.SetI(IntakeConstants::kI);
   m_pidController.SetD(IntakeConstants::kD);
-
 }
 
 void Intake::IntakeDropNote(bool isPressed, double speed) {
@@ -41,9 +35,29 @@ void Intake::IntakeDropNote(bool isPressed, double speed) {
   }
 }
 
-void Intake::PivotToAngle(double intakeAngle) {
-   double targetAngle = intakeAngle / 360;
-m_pidController.SetReference(targetAngle, rev::ControlType::kPosition);
+void Intake::PivotToAngle(double intakeAngleDegrees) {
+
+  double intakeAngleRadians = intakeAngleDegrees * (M_PI / 180.0);
+
+  intakeAngleRadians = fmod(intakeAngleRadians, 2 * M_PI);
+  if (intakeAngleRadians < 0) {
+    intakeAngleRadians += 2 * M_PI;  
+  }
+
+  double intakeAngleRotations = intakeAngleRadians / (2 * M_PI);
+
+  const double minAngleRotations = 3.0 / 4.0;  
+  const double maxAngleRotations = 1.0;        
+
+  if (intakeAngleRotations < minAngleRotations) {
+    intakeAngleRotations = minAngleRotations;
+  } else if (intakeAngleRotations > maxAngleRotations) {
+
+    intakeAngleRotations = maxAngleRotations;
+  }
+
+  m_pidController.SetReference(intakeAngleRotations,
+                               rev::ControlType::kPosition);
 }
 
 void Intake::IntakePickUpNote(bool isPressed, double speed) {
