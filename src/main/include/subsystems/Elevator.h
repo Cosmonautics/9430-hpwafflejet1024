@@ -22,6 +22,7 @@ class Elevator : public frc2::Subsystem {
   void MoveToPosition(double position);
   bool AtTargetPosition();
   // m_ElevatorEncoder.GetPosition();
+
   // Helper methods
   void ConfigureMotors();
   void UpdatePosition();
@@ -36,9 +37,9 @@ class Elevator : public frc2::Subsystem {
   GetkElevatorPIDController();  // these functions are needed to get private
                                 // class attributes
 
- private:
-  rev::CANSparkMax m_ElevatorMotorLeft{kElevatorLeftCanId,
-                                       rev::CANSparkMax::MotorType::kBrushless};
+private:
+  rev::CANSparkMax m_ElevatorMotorLeft{
+      kElevatorLeftCanId, rev::CANSparkMax::MotorType::kBrushless};
 
   rev::CANSparkMax m_ElevatorMotorRight{
       kElevatorRightCanId, rev::CANSparkMax::MotorType::kBrushless};
@@ -50,23 +51,17 @@ class Elevator : public frc2::Subsystem {
           rev::SparkAbsoluteEncoder::Type::kDutyCycle);
   // Define CANPIDController for direct control through SparkMax
 
-<<<<<<< HEAD
-  rev::SparkMaxPIDController m_ElevatorPIDController =
-=======
   rev::SparkRelativeEncoder m_ElevatorRelativeEncoder =
       m_ElevatorMotorLeft.GetEncoder(
           rev::SparkRelativeEncoder::Type::kHallSensor, 42);
 
-  rev::SparkMaxPIDController m_pidController =
->>>>>>> 29dc543adc154de897f4bb9e61e559869060714c
+  rev::SparkMaxPIDController m_ElevatorPIDController =
       m_ElevatorMotorLeft.GetPIDController();
 
   ElevatorPositionTracker positionTracker;
 
   double currentPositionInches = 0;  // Current elevator position in inches
   double targetPositionInches = 0;   // Target elevator position in inches
-  double m_TotalRotations = 0;
-  double m_LastEncoderPosition = 0;
   // trigger: xbox controller button
 
   // go down
