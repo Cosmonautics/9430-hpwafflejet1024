@@ -19,7 +19,7 @@
 
 using namespace ElevatorConstants;
 
-Elevator::Elevator() : m_TotalRotations(0.0), m_LastEncoderPosition(0.0) {
+Elevator::Elevator() {
   ConfigureMotors();
 }
 
