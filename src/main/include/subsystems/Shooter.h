@@ -40,6 +40,7 @@ class Shooter : public frc2::Subsystem {
                                  rev::CANSparkLowLevel::MotorType::kBrushless};
   rev::SparkAbsoluteEncoder m_pivotEncoder{m_pivotMotor.GetAbsoluteEncoder(
       rev::SparkAbsoluteEncoder::Type::kDutyCycle)};
-  frc::PIDController m_pivotPIDController;
+  rev::SparkMaxPIDController m_pivotPIDController =
+      m_pivotMotor.GetPIDController();
   units::degree_t m_targetSetpoint = 0_deg;
 };

@@ -11,6 +11,7 @@
 #include <rev/CANSparkMax.h>
 
 #include "Constants.h"
+#include "utils/ElevatorPositionTracker.h"
 
 using namespace ElevatorConstants;
 
@@ -20,16 +21,13 @@ class Elevator : public frc2::Subsystem {
   void Periodic() override;
   void MoveToPosition(double position);
   bool AtTargetPosition();
-  void MoveToRelativePosition(double position);
-  double GetCurrentPosition();
-  // m_ElevatorEncoder.GetPosition(); 
-
-    // Helper methods
+  // m_ElevatorEncoder.GetPosition();
+  // Helper methods
   void ConfigureMotors();
-  double ConvertInchesToEncoderUnits(double inches);
-  double ConvertEncoderUnitsToInches(double units);
   void UpdatePosition();
   double CalculateTargetHeight(units::degree_t theta2);
+  double InchesToRotations(double inches);
+  double RotationsToInches(double revolution);
 
   rev::SparkMaxAbsoluteEncoder
   GetkElevatorThroughBoreEncoder();  // these functions are needed to get
@@ -38,25 +36,37 @@ class Elevator : public frc2::Subsystem {
   GetkElevatorPIDController();  // these functions are needed to get private
                                 // class attributes
 
-private:
-  rev::CANSparkMax m_ElevatorMotorLeft{
-      kElevatorLeftCanId, rev::CANSparkMax::MotorType::kBrushless};
+ private:
+  rev::CANSparkMax m_ElevatorMotorLeft{kElevatorLeftCanId,
+                                       rev::CANSparkMax::MotorType::kBrushless};
 
   rev::CANSparkMax m_ElevatorMotorRight{
       kElevatorRightCanId, rev::CANSparkMax::MotorType::kBrushless};
   // Changed to SparkMaxAbsoluteEncoder for absolute position measurement
-                                     // private class attributes
+  // private class attributes
 
   rev::SparkMaxAbsoluteEncoder m_ElevatorThroughBoreEncoder =
       m_ElevatorMotorLeft.GetAbsoluteEncoder(
           rev::SparkAbsoluteEncoder::Type::kDutyCycle);
   // Define CANPIDController for direct control through SparkMax
 
+<<<<<<< HEAD
   rev::SparkMaxPIDController m_ElevatorPIDController =
+=======
+  rev::SparkRelativeEncoder m_ElevatorRelativeEncoder =
+      m_ElevatorMotorLeft.GetEncoder(
+          rev::SparkRelativeEncoder::Type::kHallSensor, 42);
+
+  rev::SparkMaxPIDController m_pidController =
+>>>>>>> 29dc543adc154de897f4bb9e61e559869060714c
       m_ElevatorMotorLeft.GetPIDController();
+
+  ElevatorPositionTracker positionTracker;
 
   double currentPositionInches = 0;  // Current elevator position in inches
   double targetPositionInches = 0;   // Target elevator position in inches
+  double m_TotalRotations = 0;
+  double m_LastEncoderPosition = 0;
   // trigger: xbox controller button
 
   // go down

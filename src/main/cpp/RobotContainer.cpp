@@ -5,7 +5,6 @@
 
 #include "RobotContainer.h"
 
-#include <base64.h>
 #include <frc/controller/PIDController.h>
 #include <frc/geometry/Translation2d.h>
 #include <frc/shuffleboard/Shuffleboard.h>
@@ -19,16 +18,16 @@
 #include <units/angle.h>
 #include <units/velocity.h>
 
-#include <json.hpp>
 #include <utility>
 
 #include "Constants.h"
 #include "commands/MoveElevatorToPositionCommand.h"
 #include "commands/PivotToPositionCommand.h"
+#include "commands/GoToFloorIntakePositionCommand.h"
 #include "subsystems/DriveSubsystem.h"
+#include "subsystems/Elevator.h"
 #include "subsystems/Intake.h"
 #include "subsystems/Shooter.h"
-#include "subsystems/Elevator.h"
 
 using namespace DriveConstants;
 
@@ -57,7 +56,6 @@ RobotContainer::RobotContainer() {
       },
       {&m_drive}));
 }
-
 
 void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_driverController,
@@ -93,26 +91,10 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kY)
       .OnTrue(new MoveElevatorToPositionCommand(
           m_elevator, ElevatorConstants::kElevatorSetpointInches));
-          
-  // Shooter Pivot
+
+  // Floor Intake Position
   frc2::POVButton(&m_driverController, 270)
-      .OnTrue(new PivotToPositionCommand(
-          &m_shooter, ShooterConstants::kShooterSetpointDegree));
-}
-
-std::vector<frc::Pose2d> ParseTrajectoryJson(const nlohmann::json& json) {
-  std::vector<frc::Pose2d> points;
-
-  for (const auto& item : json) {
-    double x = std::stod(item.at("x").get<std::string>());
-    double y = std::stod(item.at("y").get<std::string>());
-    double angle = std::stod(item.at("angle").get<std::string>());
-
-    points.emplace_back(units::meter_t(x), units::meter_t(y),
-                        frc::Rotation2d(units::degree_t(angle)));
-  }
-
-  return points;
+      .OnTrue(new GoToFloorIntakePositionCommand(m_elevator, m_shooter, m_intake));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

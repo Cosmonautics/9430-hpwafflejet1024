@@ -43,3 +43,14 @@ These values can be adjusted in the `Constants.h` file.
 + Working CPP code: https://github.com/ahayden04/swerve-falcon
 + Example of swerve robot: https://www.youtube.com/watch?v=wc8wh6RsMCs
 + Source (Chief Delphi): https://www.chiefdelphi.com/t/working-c-swerve-drive-super-proud/407116
+
+# Branching
+- git branch (new_branch) -- create a new local branch
+    - same name as upstream origin/(branch_name)
+- git branch -u (existing_branch) -- Set upstream branch to (existing_branch)
+    - This will set your local branch to **push** committed changes to the target upstream branch on origin/(existing_branch)
+- git checkout (existing_branch) -- switch to an existing local branch 
+    - switch out your local copy to **commit** to an existing local branch (existing_branch)
+- git push --set-upstream origin (branch_name)
+    - push changes explicitly to (branch_name)
+    - NEVER PUSH TO MAIN

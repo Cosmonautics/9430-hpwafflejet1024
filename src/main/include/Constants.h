@@ -47,15 +47,15 @@ constexpr double kRearLeftChassisAngularOffset = std::numbers::pi;
 constexpr double kRearRightChassisAngularOffset = std::numbers::pi / 2;
 
 // SPARK MAX CAN IDs
-constexpr int kFrontLeftDrivingCanId = 2;
-constexpr int kRearLeftDrivingCanId = 6;
-constexpr int kFrontRightDrivingCanId = 4;
-constexpr int kRearRightDrivingCanId = 8;
+constexpr int kFrontLeftDrivingCanId = 6;
+constexpr int kRearLeftDrivingCanId = 2;
+constexpr int kFrontRightDrivingCanId = 8;
+constexpr int kRearRightDrivingCanId = 4;
 
-constexpr int kFrontLeftTurningCanId = 1;
-constexpr int kRearLeftTurningCanId = 5;
-constexpr int kFrontRightTurningCanId = 3;
-constexpr int kRearRightTurningCanId = 7;
+constexpr int kFrontLeftTurningCanId = 5;
+constexpr int kRearLeftTurningCanId = 1;
+constexpr int kFrontRightTurningCanId = 7;
+constexpr int kRearRightTurningCanId = 3;
 }  // namespace DriveConstants
 
 namespace ShooterConstants {
@@ -74,16 +74,6 @@ namespace ElevatorConstants {
 constexpr int kElevatorLeftCanId = 13;
 constexpr int kElevatorRightCanId = 14;
 
-    constexpr double kElevatorP = 1;
-    constexpr double kElevatorI = 0;
-    constexpr double kElevatorD = 0;
-    constexpr double kElevatorFF = 0;
-    constexpr double kElevatorMinOutput = -1;
-    constexpr double kElevatorMaxOutput = 1;
-
-    static constexpr int kCPR = 8192;
-
-
 constexpr double kElevatorUpperSoftLimit = 17.0;
 constexpr double kElevatorLowerSoftLimit = 0.0;
 constexpr double kElevatorGearRatio = 1.0;
@@ -93,20 +83,25 @@ constexpr double kElevatorInchesPerTick =
     (kElevatorDrumDiameterInches * M_PI) /
     (kElevatorEncoderTicksPerRevolution * kElevatorGearRatio);
 
-constexpr double kP = 0.001;
+constexpr double kP = 0.01;
 constexpr double kI = 0.0;
 constexpr double kD = 0.0;
 
 constexpr double kPullyDiameter = 1.214;
-constexpr int kElevatorEncoderResolution = 1024; // TODO: 8192 bb 
-constexpr double kElevatorSetpointInches = 1.0;  // Placeholder constant
-                                                 // position
+constexpr int kElevatorEncoderResolution = 8192;  // TODO: 8192 bb
+constexpr double kElevatorSetpointInches = 3.0;   // Placeholder constant
+                                                  // position
+constexpr double kGearBoxScale = 4.45;
 constexpr double kPositionToleranceInches = 1.0 / 2.54;
 constexpr double kEncoderUnitsPerInch = 1 / kElevatorInchesPerTick;
 }  // namespace ElevatorConstants
 namespace IntakeConstants {
+constexpr double kP = 0.01;
+constexpr double kI = 0.0;
+constexpr double kD = 0.0;
 constexpr int kIntakeLeftCanId = 11;
 constexpr int kIntakeRightCanId = 12;
+constexpr int kIntakePivotCanId = 15;
 }  // namespace IntakeConstants
 namespace ConveyorConstants {
 static constexpr int kConveyorCanId = 16;
@@ -194,3 +189,9 @@ namespace OIConstants {
 constexpr int kDriverControllerPort = 0;
 constexpr double kDriveDeadband = 0.05;
 }  // namespace OIConstants
+
+namespace CommandConstants {
+    constexpr double kFLoorIntakePostionIntake = 90.0;
+    constexpr units::degree_t kFloorIntakePositionShooter = 90_deg;
+    constexpr double kFLoorIntakePostionElevator = 1;
+}
