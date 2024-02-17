@@ -13,6 +13,5 @@ void PivotShooterToPositionCommand::Initialize() {
 void PivotShooterToPositionCommand::Execute() {}
 
 bool PivotShooterToPositionCommand::IsFinished() {
-  // Assuming you implement this method in the Shooter subsystem
-  return m_shooter->IsAtSetPoint();
+    return m_shooter->IsAtSetPoint();
 }
