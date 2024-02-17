@@ -26,7 +26,7 @@ class Elevator : public frc2::Subsystem {
   void ConfigureMotors();
   void UpdatePosition();
   double CalculateTargetHeight(units::degree_t theta2);
-  double InchesToRotations(double inches);
+  double CalculateRotations(double height);
   double RotationsToInches(double revolution);
 
   rev::SparkMaxAbsoluteEncoder

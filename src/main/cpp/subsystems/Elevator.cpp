@@ -39,7 +39,7 @@ void Elevator::MoveToPosition(double positionInches) {
       positionInches < kElevatorLowerSoftLimit) {
     return;  // Position out of bounds
   }
-  double targetPositionRotations = InchesToRotations(positionInches);
+  double targetPositionRotations = CalculateRotations(positionInches); // change this to my new function 
   m_ElevatorPIDController.SetReference(targetPositionRotations,
                                rev::ControlType::kPosition);
 }
@@ -58,8 +58,8 @@ double Elevator::CalculateTargetHeight(units::degree_t targetRevolutions) {
   return revolutionDifference.to<double>();
 }
 
-double Elevator::InchesToRotations(double inches) {
-  return (((kGearBoxScale) * (inches)) / (kPullyDiameter * M_PI));
+double Elevator::CalculateRotations(double height) {
+  return (((kGearBoxScale) * (height)) / (kPullyDiameter * M_PI));
 }
 
 double Elevator::RotationsToInches(double rotations) {
