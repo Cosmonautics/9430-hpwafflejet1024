@@ -62,8 +62,8 @@ double Elevator::InchesToRotations(double inches) {
   return (((kGearBoxScale) * (inches)) / (kPullyDiameter * M_PI));
 }
 
-double Elevator::InchesToRotations(double inches) {
-  return (((kGearBoxScale) * (inches)) / (kPullyDiameter * M_PI));
+double Elevator::RotationsToInches(double rotations) {
+  return (rotations * kPullyDiameter * M_PI) / kGearBoxScale;
 }
 
 bool Elevator::AtTargetPosition() {
