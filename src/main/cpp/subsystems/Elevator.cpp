@@ -18,9 +18,8 @@
 #include "Constants.h"
 
 using namespace ElevatorConstants;
-Elevator::Elevator() {
-  ConfigureMotors();
-}
+
+Elevator::Elevator() {}
 
 void Elevator::ConfigureMotors() {
   m_ElevatorMotorLeft.RestoreFactoryDefaults();
@@ -32,18 +31,6 @@ void Elevator::ConfigureMotors() {
   m_ElevatorPIDController.SetI(kI);
   m_ElevatorPIDController.SetD(kD);
   m_ElevatorPIDController.SetOutputRange(-1.0, 1.0);
-}
-
-void Elevator::Periodic() { UpdatePosition(); }
-
-void Elevator::MoveToPosition(double positionInches) {
-  if (positionInches > kElevatorUpperSoftLimit ||
-      positionInches < kElevatorLowerSoftLimit) {
-    return;  // Position out of bounds
-  }
-  double targetPositionRotations = InchesToRotations(positionInches);
-  m_ElevatorPIDController.SetReference(targetPositionRotations,
-                               rev::ControlType::kPosition);
 }
 
 void Elevator::Periodic() { UpdatePosition(); }

@@ -2,7 +2,9 @@
 #include <frc2/command/CommandHelper.h>
 #include "subsystems/Elevator.h" // Include the Elevator subsystem header
 
-class MoveElevatorToPositionCommand : public frc2::CommandHelper<frc2::Command, MoveElevatorToPositionCommand> {
+class MoveElevatorToPositionCommand 
+    : public frc2::CommandHelper<frc2::Command, MoveElevatorToPositionCommand> {
+        
 public:
     explicit MoveElevatorToPositionCommand(Elevator& elevator, double position);
     void Initialize() override;
