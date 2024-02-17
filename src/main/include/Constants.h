@@ -61,7 +61,7 @@ constexpr int kRearRightTurningCanId = 3;
 namespace ShooterConstants {
 constexpr int kShooterLeftCanId = 10;
 constexpr int kShooterRightCanId = 9;
-constexpr int kShooterPivotCanId = 15;
+constexpr int kShooterPivotCanId = 60;
 
 constexpr double kP = 0.1;
 constexpr double kI = 0.0;
@@ -94,7 +94,7 @@ constexpr double kElevatorInchesPerTick =
     (kElevatorDrumDiameterInches * M_PI) /
     (kElevatorEncoderTicksPerRevolution * kElevatorGearRatio);
 
-constexpr double kP = 0.01;
+constexpr double kP = 0.05;
 constexpr double kI = 0.0;
 constexpr double kD = 0.0;
 
@@ -102,7 +102,7 @@ constexpr double kPullyDiameter = 1.214;
 constexpr int kElevatorEncoderResolution = 8192;  // TODO: 8192 bb
 constexpr double kElevatorSetpointInches = 10.0;   // Placeholder constant
                                                   // position
-constexpr double kGearBoxScale = 4.45;
+constexpr double kGearBoxScale = 0.2045;
 constexpr double kPositionToleranceInches = 1.0 / 2.54;
 constexpr double kEncoderUnitsPerInch = 1 / kElevatorInchesPerTick;
 

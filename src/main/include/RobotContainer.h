@@ -59,10 +59,10 @@ class RobotContainer {
 
   // The robot's subsystems
   DriveSubsystem m_drive;
-  Intake m_intake;
-  Shooter m_shooter;
+ // Intake m_intake;
+  //Shooter m_shooter;
   Elevator m_elevator;
-  Conveyor m_conveyor;
+  //Conveyor m_conveyor;
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;
 

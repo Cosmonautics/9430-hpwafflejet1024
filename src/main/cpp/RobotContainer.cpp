@@ -61,7 +61,7 @@ void RobotContainer::ConfigureButtonBindings() {
       .WhileTrue(new frc2::RunCommand([this] { m_drive.SetX(); }, {&m_drive}));
 
   // X Button (Reload/Pickup Note)
-  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kX)
+  /*frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kX)
       .OnTrue(new IntakePickUpNoteCommand(&m_intake, true, -0.10))
       .OnFalse(new IntakePickUpNoteCommand(&m_intake, false, 0));
 
@@ -74,7 +74,7 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_driverController,
                        frc::XboxController::Button::kRightBumper)
       .OnTrue(new ShootMotorsCommand(m_shooter, true, 1))
-      .OnFalse(new ShootMotorsCommand(m_shooter, false, 1));
+      .OnFalse(new ShootMotorsCommand(m_shooter, false, 1));*/
 
   // Y Button (Elevator)
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kY)
@@ -82,7 +82,7 @@ void RobotContainer::ConfigureButtonBindings() {
           m_elevator, ElevatorConstants::kElevatorSetpointInches));
 
   // POV Button (Shooter Pivot)
-  frc2::POVButton(&m_driverController, 270)
+  /*frc2::POVButton(&m_driverController, 270)
       .OnTrue(new PivotToPositionCommand(
           &m_shooter, ShooterConstants::kShooterSetpointDegree));
 
@@ -110,7 +110,7 @@ void RobotContainer::ConfigureButtonBindings() {
       .OnTrue(new MoveElevatorToClimb1PositionCommand(&m_elevator))
       .OnTrue(new PivotShooterToClimb1PositionCommand(&m_shooter))
       .OnTrue(new PivotIntakeToAngleCommand(
-          &m_intake, ClimbPositionConstants::kClimbAngle1));
+          &m_intake, ClimbPositionConstants::kClimbAngle1));*/
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

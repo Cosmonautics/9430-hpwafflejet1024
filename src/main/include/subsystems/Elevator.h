@@ -11,7 +11,6 @@
 #include <rev/CANSparkMax.h>
 
 #include "Constants.h"
-#include "utils/ElevatorPositionTracker.h"
 
 using namespace ElevatorConstants;
 
@@ -19,7 +18,7 @@ class Elevator : public frc2::Subsystem {
  public:
   Elevator();
   void Periodic() override;
-  void MoveToPosition(double position);
+  void MoveToPosition(double positionInches);
   bool AtTargetPosition();
   // m_ElevatorEncoder.GetPosition();
   // Helper methods
@@ -28,13 +27,6 @@ class Elevator : public frc2::Subsystem {
   double CalculateTargetHeight(units::degree_t theta2);
   double InchesToRotations(double inches);
   double RotationsToInches(double revolution);
-
-  rev::SparkMaxAbsoluteEncoder
-  GetkElevatorThroughBoreEncoder();  // these functions are needed to get
-                                     // private class attributes
-  rev::SparkMaxPIDController
-  GetkElevatorPIDController();  // these functions are needed to get private
-                                // class attributes
 
  private:
   rev::CANSparkMax m_ElevatorMotorLeft{kElevatorLeftCanId,
@@ -46,18 +38,12 @@ class Elevator : public frc2::Subsystem {
   // private class attributes
 
   rev::SparkMaxAbsoluteEncoder m_ElevatorEncoder =
-      m_ElevatorMotorLeft.GetAbsoluteEncoder(
+      m_ElevatorMotorRight.GetAbsoluteEncoder(
           rev::SparkAbsoluteEncoder::Type::kDutyCycle);
   // Define CANPIDController for direct control through SparkMax
 
-  rev::SparkRelativeEncoder m_ElevatorRelativeEncoder =
-      m_ElevatorMotorLeft.GetEncoder(
-          rev::SparkRelativeEncoder::Type::kHallSensor, 42);
-
-  rev::SparkMaxPIDController m_pidController =
-      m_ElevatorMotorLeft.GetPIDController();
-
-  ElevatorPositionTracker positionTracker;
+  rev::SparkPIDController m_pidController =
+      m_ElevatorMotorRight.GetPIDController();
 
   double currentPositionInches = 0;  // Current elevator position in inches
   double targetPositionInches = 0;   // Target elevator position in inches
