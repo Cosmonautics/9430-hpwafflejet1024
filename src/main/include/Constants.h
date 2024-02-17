@@ -116,6 +116,8 @@ constexpr double kClimb2PositionInches = 48.0;   // Climb 2 position (in inches)
 
 constexpr double kClimbPositionInches = 8.0;
 }  // namespace ElevatorConstants
+
+
 namespace IntakeConstants {
 constexpr double kP = 0.01;
 constexpr double kI = 0.0;
@@ -227,6 +229,6 @@ constexpr double kDriveDeadband = 0.05;
 
 namespace CommandConstants {
     constexpr double kFLoorIntakePostionIntake = 90.0;
-    constexpr units::degree_t kFloorIntakePositionShooter = 90_deg;
+    constexpr double kFloorIntakePositionShooter = 90.0;
     constexpr double kFLoorIntakePostionElevator = 1;
 }

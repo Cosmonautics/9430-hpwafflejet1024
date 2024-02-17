@@ -25,7 +25,7 @@ void Elevator::ConfigureMotors() {
   m_ElevatorMotorRight.Follow(m_ElevatorMotorLeft, true);
 
   // Configure PID controller on SparkMax
-  m_ElevatorPIDController.SetFeedbackDevice(m_ElevatorEncoder);
+  m_ElevatorPIDController.SetFeedbackDevice(m_ElevatorThroughBoreEncoder);
   m_ElevatorPIDController.SetP(kP);
   m_ElevatorPIDController.SetI(kI);
   m_ElevatorPIDController.SetD(kD);
@@ -45,7 +45,7 @@ void Elevator::MoveToPosition(double positionInches) {
 }
 
 void Elevator::UpdatePosition() {
-  double currentPositionRotations = m_ElevatorEncoder.GetPosition();
+  double currentPositionRotations = m_ElevatorThroughBoreEncoder.GetPosition();
   currentPositionInches = RotationsToInches(currentPositionRotations);
 }
 
