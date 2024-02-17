@@ -6,10 +6,10 @@
 
 #include "subsystems/Shooter.h"
 
-class PivotToPositionCommand
-    : public frc2::CommandHelper<frc2::Command, PivotToPositionCommand> {
+class PivotShooterToPositionCommand
+    : public frc2::CommandHelper<frc2::Command, PivotShooterToPositionCommand> {
  public:
-  PivotToPositionCommand(Shooter* shooter, double setPoint);
+  PivotShooterToPositionCommand(Shooter* shooter, double setPoint);
 
   void Initialize() override;
   bool IsFinished() override;

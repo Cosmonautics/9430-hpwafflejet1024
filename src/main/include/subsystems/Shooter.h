@@ -25,8 +25,8 @@ class Shooter : public frc2::Subsystem {
 
   void ShooterDropNote(bool isPressed, double speed);
 
-  bool IsTargetInRestrictedRange(units::degree_t target);
-  void PivotToSetPoint(units::degree_t setPoint);
+  bool IsTargetInRestrictedRange(double target);
+  void PivotToSetPoint(double setPoint);
   bool IsAtSetPoint();
 
  private:
