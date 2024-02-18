@@ -1,3 +1,4 @@
+#pragma once
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
@@ -16,20 +17,55 @@
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/SwerveControllerCommand.h>
 #include <frc2/command/button/JoystickButton.h>
+#include <frc2/command/button/POVButton.h>
 #include <units/angle.h>
 #include <units/velocity.h>
 
-#include <iostream>
-#include <json.hpp>
 #include <utility>
 
 #include "Constants.h"
+#include "commands/PivotToPositionCommand.h"
+#include "commands/GoToFloorIntakePositionCommand.h"
 #include "subsystems/DriveSubsystem.h"
+#include "subsystems/Elevator.h"
+#include "subsystems/Intake.h"
+#include "subsystems/Shooter.h"
 
 using namespace DriveConstants;
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
+  m_elevator.SetDefaultCommand(frc2::RunCommand(
+      [this] {
+        double rightTriggerValue = m_driverController.GetRightTriggerAxis();
+        double leftTriggerValue = m_driverController.GetLeftTriggerAxis();
+
+        // Apply deadband to the trigger values
+        rightTriggerValue = frc::ApplyDeadband(
+            rightTriggerValue, ElevatorConstants::kTriggerDeadband);
+        leftTriggerValue = frc::ApplyDeadband(
+            leftTriggerValue, ElevatorConstants::kTriggerDeadband);
+
+        double triggerValue = 0;
+
+        // If right trigger is pressed more than the left, move up (positive
+        // direction)
+        if (rightTriggerValue > leftTriggerValue) {
+          triggerValue = rightTriggerValue;  // Positive direction
+        }
+        // If left trigger is pressed more than the right, move down (negative
+        // direction)
+        else if (leftTriggerValue > rightTriggerValue) {
+          triggerValue = -leftTriggerValue;  // Negative direction
+        }
+        // If both triggers are pressed equally or not at all, don't move
+        // (triggerValue remains 0)
+
+        // Use the triggerValue to control the elevator. Assuming SetSpeed or a
+        // similar method controls the elevator's speed.
+        m_elevator.ManualMove(triggerValue);
+      },
+      {&m_elevator}));
 
   // Configure the button bindings
   ConfigureButtonBindings();
@@ -58,67 +94,56 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureButtonBindings() {
   frc::Timer holdTimer;
-
+  // Right Bumper
   frc2::JoystickButton(&m_driverController,
                        frc::XboxController::Button::kRightBumper)
       .WhileTrue(new frc2::RunCommand([this] { m_drive.SetX(); }, {&m_drive}));
 
-  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kStart)
+  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kBack)
       .OnTrue(new frc2::InstantCommand(
           [this, &holdTimer] {
             holdTimer.Reset();
             holdTimer.Start();
           },
-          {&m_drive}))
+          {&m_elevator}))
       .OnFalse(new frc2::InstantCommand(
           [this, &holdTimer] {
             holdTimer.Stop();
             if (holdTimer.HasElapsed(2_s)) {
-              m_drive.ZeroHeading();
+              m_elevator.ToggleManualOverride();
             }
           },
-          {&m_drive}));
+          {&m_elevator}));
 
-  // TODO: m_drive.ControlIntakeMotors(true, 1); make  less hacky
+  frc::ApplyDeadband(m_driverController.GetRightTriggerAxis(),
+                     ElevatorConstants::kTriggerDeadband);
 
-  // X, Reaload/Pickup Note
-  /*frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kX)
-      .OnTrue(new frc2::InstantCommand(
-          [this] { m_drive.PickUpNote(true, -0.10); }, {&m_drive}));
-  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kX)
-      .OnFalse(new frc2::InstantCommand(
-          [this] { m_drive.PickUpNote(false, 0); }, {&m_drive}));
- // B, Drop Note
-  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kB)
-      .OnTrue(new frc2::InstantCommand(
-          [this] { m_drive.DropNote(true, 0.10); }, {&m_drive}));
-  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kB)
-      .OnFalse(new frc2::InstantCommand(
-          [this] { m_drive.DropNote(false, 0); }, {&m_drive}));
-    // Right, bumper Shoot
+  // X Button (Reload/Pickup Note)
+  /*frc2::JoystickButton(&m_driverController,
+  frc::XboxController::Button::kX) .OnTrue(new
+  IntakePickUpNoteCommand(&m_intake, true, -0.10)) .OnFalse(new
+  IntakePickUpNoteCommand(&m_intake, false, 0));
+
+  // B Button (Drop Note)
+  frc2::JoystickButton(&m_driverController,
+  frc::XboxController::Button::kB) .OnTrue(new
+  IntakeDropNoteCommand(&m_intake, true, 0.10)) .OnFalse(new
+  IntakeDropNoteCommand(&m_intake, false, 0));
+
+  // Right Bumper (Shoot)
   frc2::JoystickButton(&m_driverController,
                        frc::XboxController::Button::kRightBumper)
-      .OnTrue(new frc2::InstantCommand(
-          [this] { m_drive.ShootMotors(true, 1); }, {&m_drive}));
-  frc2::JoystickButton(&m_driverController,
-                       frc::XboxController::Button::kRightBumper)
-      .OnFalse(new frc2::InstantCommand(
-          [this] { m_drive.ShootMotors(false, 1); }, {&m_drive}));*/
-}
+      .OnTrue(new ShootMotorsCommand(m_shooter, true, 1))
+      .OnFalse(new ShootMotorsCommand(m_shooter, false, 1));*/
 
-std::vector<frc::Pose2d> ParseTrajectoryJson(const nlohmann::json& json) {
-  std::vector<frc::Pose2d> points;
+  // Y Button (Elevator)
+  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kY)
+      .OnTrue(new MoveElevatorToPositionCommand(
+          m_elevator, ElevatorConstants::kElevatorSetpointInches));
 
-  for (const auto& item : json) {
-    double x = std::stod(item.at("x").get<std::string>());
-    double y = std::stod(item.at("y").get<std::string>());
-    double angle = std::stod(item.at("angle").get<std::string>());
-
-    points.emplace_back(units::meter_t(x), units::meter_t(y),
-                        frc::Rotation2d(units::degree_t(angle)));
-  }
-
-  return points;
+  // Floor Intake Position
+  frc2::POVButton(&m_driverController, 270)
+      .OnTrue(new GoToFloorIntakePositionCommand(m_elevator, m_shooter, m_intake));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
