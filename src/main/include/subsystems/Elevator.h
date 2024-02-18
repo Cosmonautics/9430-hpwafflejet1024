@@ -10,6 +10,8 @@
 #include <frc2/command/RunCommand.h>
 #include <rev/CANSparkMax.h>
 
+#include <iostream>
+
 #include "Constants.h"
 
 using namespace ElevatorConstants;
@@ -38,9 +40,9 @@ class Elevator : public frc2::Subsystem {
   GetkElevatorPIDController();  // these functions are needed to get private
                                 // class attributes
 
-private:
-  rev::CANSparkMax m_ElevatorMotorLeft{
-      kElevatorLeftCanId, rev::CANSparkMax::MotorType::kBrushless};
+ private:
+  rev::CANSparkMax m_ElevatorMotorLeft{kElevatorLeftCanId,
+                                       rev::CANSparkMax::MotorType::kBrushless};
 
   rev::CANSparkMax m_ElevatorMotorRight{
       kElevatorRightCanId, rev::CANSparkMax::MotorType::kBrushless};
@@ -49,10 +51,10 @@ private:
 
   rev::SparkMaxAbsoluteEncoder m_ElevatorThroughBoreEncoder =
       m_ElevatorMotorRight.GetAbsoluteEncoder(
-          rev::SparkAbsoluteEncoder::Type::kDutyCycle);
+          rev::SparkMaxAbsoluteEncoder::Type::kDutyCycle);
   // Define CANPIDController for direct control through SparkMax
 
-  rev::SparkPIDController m_ElevatorPIDController =
+  rev::SparkMaxPIDController m_ElevatorPIDController =
       m_ElevatorMotorRight.GetPIDController();
 
   double currentPositionInches = 0;  // Current elevator position in inches
