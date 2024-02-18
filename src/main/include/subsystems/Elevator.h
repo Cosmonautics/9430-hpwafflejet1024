@@ -22,6 +22,7 @@ class Elevator : public frc2::Subsystem {
   bool AtTargetPosition();
   void ManualMove(double speed);
   // m_ElevatorEncoder.GetPosition();
+
   // Helper methods
   void ConfigureMotors();
   void UpdatePosition();
@@ -30,21 +31,28 @@ class Elevator : public frc2::Subsystem {
   double RotationsToInches(double revolution);
   bool ToggleManualOverride();
 
- private:
-  rev::CANSparkMax m_ElevatorMotorLeft{kElevatorLeftCanId,
-                                       rev::CANSparkMax::MotorType::kBrushless};
+  rev::SparkMaxAbsoluteEncoder
+  GetkElevatorThroughBoreEncoder();  // these functions are needed to get
+                                     // private class attributes
+  rev::SparkMaxPIDController
+  GetkElevatorPIDController();  // these functions are needed to get private
+                                // class attributes
+
+private:
+  rev::CANSparkMax m_ElevatorMotorLeft{
+      kElevatorLeftCanId, rev::CANSparkMax::MotorType::kBrushless};
 
   rev::CANSparkMax m_ElevatorMotorRight{
       kElevatorRightCanId, rev::CANSparkMax::MotorType::kBrushless};
   // Changed to SparkMaxAbsoluteEncoder for absolute position measurement
   // private class attributes
 
-  rev::SparkMaxAbsoluteEncoder m_ElevatorEncoder =
+  rev::SparkMaxAbsoluteEncoder m_ElevatorThroughBoreEncoder =
       m_ElevatorMotorRight.GetAbsoluteEncoder(
           rev::SparkAbsoluteEncoder::Type::kDutyCycle);
   // Define CANPIDController for direct control through SparkMax
 
-  rev::SparkPIDController m_pidController =
+  rev::SparkPIDController m_ElevatorPIDController =
       m_ElevatorMotorRight.GetPIDController();
 
   double currentPositionInches = 0;  // Current elevator position in inches

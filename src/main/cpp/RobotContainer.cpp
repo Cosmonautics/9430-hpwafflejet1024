@@ -21,6 +21,8 @@
 #include <utility>
 
 #include "Constants.h"
+#include "commands/PivotToPositionCommand.h"
+#include "commands/GoToFloorIntakePositionCommand.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
 #include "subsystems/Intake.h"
@@ -134,36 +136,9 @@ void RobotContainer::ConfigureButtonBindings() {
       .OnTrue(new MoveElevatorToPositionCommand(
           m_elevator, ElevatorConstants::kElevatorSetpointInches));
 
-  // POV Button (Shooter Pivot)
-  /*frc2::POVButton(&m_driverController, 270)
-      .OnTrue(new PivotToPositionCommand(
-          &m_shooter, ShooterConstants::kShooterSetpointDegree));
-
-  // Dpad Left (Floor Intake Position)
-  frc2::POVButton(&m_driverController, 180)
-      .OnTrue(new MoveElevatorToFloorIntakePositionCommand(&m_elevator))
-      .OnTrue(new PivotShooterToFloorIntakePositionCommand(&m_shooter))
-      .OnTrue(new PivotIntakeToAngleCommand(
-          &m_intake, FloorIntakeConstants::kFloorIntakeAngle));
-
-  // Dpad Right (AMP/Speaker Score Position)
-  frc2::POVButton(&m_driverController, 0)
-      .OnTrue(new MoveElevatorToAMPScorePositionCommand(&m_elevator))
-      .OnTrue(new PivotShooterToAMPScorePositionCommand(&m_shooter));
-
-  // Dpad Down (Transit Position)
-  frc2::POVButton(&m_driverController, 90)
-      .OnTrue(new MoveElevatorToTransitPositionCommand(&m_elevator))
-      .OnTrue(new PivotShooterToTransitPositionCommand(&m_shooter))
-      .OnTrue(new PivotIntakeToAngleCommand(
-          &m_intake, TransitPositionConstants::kTransitAngle));
-
-  // Dpad Up (Climb Position)
+  // Floor Intake Position
   frc2::POVButton(&m_driverController, 270)
-      .OnTrue(new MoveElevatorToClimb1PositionCommand(&m_elevator))
-      .OnTrue(new PivotShooterToClimb1PositionCommand(&m_shooter))
-      .OnTrue(new PivotIntakeToAngleCommand(
-          &m_intake, ClimbPositionConstants::kClimbAngle1));*/
+      .OnTrue(new GoToFloorIntakePositionCommand(m_elevator, m_shooter, m_intake));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
