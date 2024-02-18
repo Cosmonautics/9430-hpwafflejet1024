@@ -94,13 +94,13 @@ constexpr double kElevatorInchesPerTick =
     (kElevatorDrumDiameterInches * M_PI) /
     (kElevatorEncoderTicksPerRevolution * kElevatorGearRatio);
 
-constexpr double kP = 0.2;
+constexpr double kP = 5;
 constexpr double kI = 0.0;
-constexpr double kD = 0.0;
+constexpr double kD = 0.1;
 constexpr double kTriggerDeadband = 0.05;
 constexpr double kPullyDiameter = 1.214;
 constexpr int kElevatorEncoderResolution = 8192;  // TODO: 8192 bb
-constexpr double kElevatorSetpointInches = 8.0;  // Placeholder constant
+constexpr double kElevatorSetpointInches = 12.0;  // Placeholder constant
                                                   // position
 constexpr double kGearBoxScale = 0.2045;
 constexpr double kPositionToleranceInches = 1.0 / 2.54;
