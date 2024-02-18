@@ -45,7 +45,7 @@ private:
   // Changed to SparkMaxAbsoluteEncoder for absolute position measurement
   // private class attributes
 
-  rev::SparkMaxAbsoluteEncoder m_ElevatorThroughBoreEncoder =
+  rev::SparkMaxAbsoluteEncoder m_ElevatorEncoder =
       m_ElevatorMotorRight.GetAbsoluteEncoder(
           rev::SparkAbsoluteEncoder::Type::kDutyCycle);
   // Define CANPIDController for direct control through SparkMax

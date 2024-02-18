@@ -21,6 +21,7 @@
 #include <utility>
 
 #include "Constants.h"
+#include "commands/MoveElevatorToPositionCommand.h"
 #include "commands/PivotToPositionCommand.h"
 #include "commands/GoToFloorIntakePositionCommand.h"
 #include "subsystems/DriveSubsystem.h"
