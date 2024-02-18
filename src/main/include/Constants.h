@@ -97,10 +97,10 @@ constexpr double kElevatorInchesPerTick =
 constexpr double kP = 0.05;
 constexpr double kI = 0.0;
 constexpr double kD = 0.0;
-
+constexpr double kTriggerDeadband = 0.05;
 constexpr double kPullyDiameter = 1.214;
 constexpr int kElevatorEncoderResolution = 8192;  // TODO: 8192 bb
-constexpr double kElevatorSetpointInches = 10.0;   // Placeholder constant
+constexpr double kElevatorSetpointInches = 10.0;  // Placeholder constant
                                                   // position
 constexpr double kGearBoxScale = 0.2045;
 constexpr double kPositionToleranceInches = 1.0 / 2.54;
@@ -138,10 +138,10 @@ namespace FloorIntakeConstants {
 constexpr double kFloorIntakeAngle = 5.0;
 }  // namespace FloorIntakeConstants
 namespace TransitPositionConstants {
-    constexpr double kTransitAngle = 5.0;
+constexpr double kTransitAngle = 5.0;
 }
-namespace ClimbPositionConstants{
-    constexpr double kClimbAngle1 = 5.0;
+namespace ClimbPositionConstants {
+constexpr double kClimbAngle1 = 5.0;
 }
 namespace ModuleConstants {
 // Invert the turning encoder, since the output shaft rotates in the opposite

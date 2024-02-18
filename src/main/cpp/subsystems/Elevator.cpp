@@ -71,3 +71,21 @@ bool Elevator::AtTargetPosition() {
               ElevatorConstants::kPositionToleranceInches;
   return flag;
 }
+
+bool Elevator::ToggleManualOverride() {
+  manualOverride = !manualOverride;
+  return manualOverride;
+}
+
+void Elevator::ManualMove(double speed) {
+  if (manualOverride) {
+    double currentElevatorPosition = m_ElevatorEncoder.GetPosition();
+    double currentElevatorRotations =
+        RotationsToInches(currentElevatorPosition);
+
+    if (currentElevatorRotations > kElevatorLowerSoftLimit &&
+        currentElevatorRotations < kElevatorUpperSoftLimit) {
+      m_ElevatorMotorLeft.Set(speed * 0.25);
+    }
+  }
+}
