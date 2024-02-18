@@ -11,6 +11,7 @@
 #include <rev/CANSparkMax.h>
 
 #include "Constants.h"
+#include "utils/ElevatorPositionTracker.h"
 
 using namespace ElevatorConstants;
 
@@ -18,7 +19,7 @@ class Elevator : public frc2::Subsystem {
  public:
   Elevator();
   void Periodic() override;
-  void MoveToPosition(double positionInches);
+  void MoveToPosition(double position);
   bool AtTargetPosition();
   // m_ElevatorEncoder.GetPosition();
 
@@ -45,13 +46,19 @@ private:
   // Changed to SparkMaxAbsoluteEncoder for absolute position measurement
   // private class attributes
 
-  rev::SparkMaxAbsoluteEncoder m_ElevatorEncoder =
-      m_ElevatorMotorRight.GetAbsoluteEncoder(
+  rev::SparkMaxAbsoluteEncoder m_ElevatorThroughBoreEncoder =
+      m_ElevatorMotorLeft.GetAbsoluteEncoder(
           rev::SparkAbsoluteEncoder::Type::kDutyCycle);
   // Define CANPIDController for direct control through SparkMax
 
-  rev::SparkPIDController m_ElevatorPIDController =
-      m_ElevatorMotorRight.GetPIDController();
+  rev::SparkRelativeEncoder m_ElevatorRelativeEncoder =
+      m_ElevatorMotorLeft.GetEncoder(
+          rev::SparkRelativeEncoder::Type::kHallSensor, 42);
+
+  rev::SparkMaxPIDController m_ElevatorPIDController =
+      m_ElevatorMotorLeft.GetPIDController();
+
+  ElevatorPositionTracker positionTracker;
 
   double currentPositionInches = 0;  // Current elevator position in inches
   double targetPositionInches = 0;   // Target elevator position in inches

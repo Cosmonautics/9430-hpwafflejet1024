@@ -19,13 +19,14 @@
 
 using namespace ElevatorConstants;
 
-Elevator::Elevator() { ConfigureMotors(); }
+Elevator::Elevator() {}
 
 void Elevator::ConfigureMotors() {
+  m_ElevatorMotorLeft.RestoreFactoryDefaults();
+  m_ElevatorMotorRight.RestoreFactoryDefaults();
   m_ElevatorMotorRight.Follow(m_ElevatorMotorLeft, true);
 
   // Configure PID controller on SparkMax
-  m_ElevatorPIDController.SetFeedbackDevice(m_ElevatorEncoder);
   m_ElevatorPIDController.SetP(kP);
   m_ElevatorPIDController.SetI(kI);
   m_ElevatorPIDController.SetD(kD);
@@ -45,7 +46,7 @@ void Elevator::MoveToPosition(double positionInches) {
 }
 
 void Elevator::UpdatePosition() {
-  double currentPositionRotations = m_ElevatorEncoder.GetPosition();
+  double currentPositionRotations = m_ElevatorRelativeEncoder.GetPosition();
   currentPositionInches = RotationsToInches(currentPositionRotations);
 }
 
@@ -59,11 +60,11 @@ double Elevator::CalculateTargetHeight(units::degree_t targetRevolutions) {
 }
 
 double Elevator::InchesToRotations(double inches) {
-  return (((kGearBoxScale) * (inches)) / (kPullyDiameter * M_PI));
+  return inches / ((kPullyDiameter * M_PI) * kGearBoxScale);
 }
 
 double Elevator::RotationsToInches(double rotations) {
-  return (rotations * kPullyDiameter * M_PI) / kGearBoxScale;
+  return rotations * ((kPullyDiameter * M_PI) * kGearBoxScale);
 }
 
 bool Elevator::AtTargetPosition() {

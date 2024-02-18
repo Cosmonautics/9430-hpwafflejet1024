@@ -58,28 +58,36 @@ RobotContainer::RobotContainer() {
 }
 
 void RobotContainer::ConfigureButtonBindings() {
-  // Right Bumper
   frc2::JoystickButton(&m_driverController,
                        frc::XboxController::Button::kRightBumper)
       .WhileTrue(new frc2::RunCommand([this] { m_drive.SetX(); }, {&m_drive}));
+  // TODO: m_drive.ControlIntakeMotors(true, 1); make  less hacky
 
-  // X Button (Reload/Pickup Note)
-  /*frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kX)
-      .OnTrue(new IntakePickUpNoteCommand(&m_intake, true, -0.10))
-      .OnFalse(new IntakePickUpNoteCommand(&m_intake, false, 0));
-
-  // B Button (Drop Note)
+  // X, Reaload/Pickup Note
+  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kX)
+      .OnTrue(new frc2::InstantCommand(
+          [this] { m_shooter.ShooterPickUpNote(true, -0.10); }, {&m_shooter}));
+  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kX)
+      .OnFalse(new frc2::InstantCommand(
+          [this] { m_shooter.ShooterPickUpNote(false, 0); }, {&m_shooter}));
+  // B, Drop Note
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kB)
-      .OnTrue(new IntakeDropNoteCommand(&m_intake, true, 0.10))
-      .OnFalse(new IntakeDropNoteCommand(&m_intake, false, 0));
-
-  // Right Bumper (Shoot)
+      .OnTrue(new frc2::InstantCommand(
+          [this] { m_shooter.ShooterDropNote(true, 0.10); }, {&m_shooter}));
+  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kB)
+      .OnFalse(new frc2::InstantCommand(
+          [this] { m_shooter.ShooterDropNote(false, 0); }, {&m_shooter}));
+  // Right, bumper Shoot
   frc2::JoystickButton(&m_driverController,
                        frc::XboxController::Button::kRightBumper)
-      .OnTrue(new ShootMotorsCommand(m_shooter, true, 1))
-      .OnFalse(new ShootMotorsCommand(m_shooter, false, 1));*/
+      .OnTrue(new frc2::InstantCommand(
+          [this] { m_shooter.ShootMotors(true, 1); }, {&m_shooter}));
+  frc2::JoystickButton(&m_driverController,
+                       frc::XboxController::Button::kRightBumper)
+      .OnFalse(new frc2::InstantCommand(
+          [this] { m_shooter.ShootMotors(false, 1); }, {&m_shooter}));
 
-  // Y Button (Elevator)
+  // Elevator
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kY)
       .OnTrue(new MoveElevatorToPositionCommand(
           m_elevator, ElevatorConstants::kElevatorSetpointInches));

@@ -16,26 +16,27 @@ Shooter::Shooter() {
   m_pivotPIDController.SetD(kD);
 }
 
-void Shooter::PivotToSetPoint(double setPoint) {
-  double currentAngle =m_pivotEncoder.GetPosition() * (180.0 / M_PI);
+void Shooter::PivotToSetPoint(units::degree_t setPoint) {
+  auto currentAngle =
+      units::degree_t(m_pivotEncoder.GetPosition() * (180.0 / M_PI));
   if (IsTargetInRestrictedRange(setPoint) ||
       IsTargetInRestrictedRange(currentAngle)) {
-    auto exitAbove145 = (currentAngle <= 145.0) ||
-                        (currentAngle > 145.0 && setPoint < currentAngle);
+    auto exitAbove145 = (currentAngle <= 145_deg) ||
+                        (currentAngle > 145_deg && setPoint < currentAngle);
     if (exitAbove145) {
-      setPoint = 145.0 + 1.0;
+      setPoint = 145_deg + 1_deg;
     } else {
-      setPoint = 0.0;
+      setPoint = 0_deg;
     }
   }
-  m_targetSetpoint = units::degree_t(setPoint);
-  double targetPosition = setPoint * (M_PI / 180.0);
+  m_targetSetpoint = setPoint;
+  double targetPosition = setPoint.to<double>() * (M_PI / 180.0);
   m_pivotPIDController.SetReference(targetPosition,
                                     rev::ControlType::kPosition);
 }
 
-bool Shooter::IsTargetInRestrictedRange(double target) {
-  return target >= 1.0 && target <= 145.0;
+bool Shooter::IsTargetInRestrictedRange(units::degree_t target) {
+  return target >= 1_deg && target <= 145_deg;
 }
 
 bool Shooter::IsAtSetPoint() {

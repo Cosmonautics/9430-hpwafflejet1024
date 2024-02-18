@@ -9,12 +9,12 @@
 class PivotToPositionCommand
     : public frc2::CommandHelper<frc2::Command, PivotToPositionCommand> {
  public:
-  PivotToPositionCommand(Shooter* shooter, double setPoint);
+  PivotToPositionCommand(Shooter* shooter, units::degree_t setPoint);
 
   void Initialize() override;
   bool IsFinished() override;
   void Execute() override;
  private:
   Shooter* m_shooter;
-  double m_setPoint;
+  units::degree_t m_setPoint;
 };

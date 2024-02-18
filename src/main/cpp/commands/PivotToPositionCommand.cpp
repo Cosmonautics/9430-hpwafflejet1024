@@ -1,7 +1,7 @@
 #include "commands/PivotToPositionCommand.h"
 
 PivotToPositionCommand::PivotToPositionCommand(Shooter* shooter,
-                                               double setPoint)
+                                               units::degree_t setPoint)
     : m_shooter(shooter), m_setPoint(setPoint) {
   AddRequirements({shooter});  // Declare subsystem dependencies
 }
