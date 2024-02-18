@@ -5,7 +5,6 @@
 
 #include "RobotContainer.h"
 
-#include <base64.h>
 #include <frc/DriverStation.h>
 #include <frc/Timer.h>
 #include <frc/controller/PIDController.h>
