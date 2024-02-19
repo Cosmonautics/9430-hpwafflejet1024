@@ -23,8 +23,8 @@
 #include <utility>
 
 #include "Constants.h"
-#include "commands/PivotToPositionCommand.h"
 #include "commands/GoToFloorIntakePositionCommand.h"
+#include "commands/PivotToPositionCommand.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
 #include "subsystems/Intake.h"
@@ -109,11 +109,27 @@ void RobotContainer::ConfigureButtonBindings() {
           [this, &holdTimer] {
             holdTimer.Stop();
             if (holdTimer.HasElapsed(2_s)) {
+              ControllerUtils::VibrateController(m_driverController, 0.5, 0.4_s);
               m_elevator.ToggleManualOverride();
             }
           },
           {&m_elevator}));
-
+  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kStart)
+      .OnTrue(new frc2::InstantCommand(
+          [this, &holdTimer] {
+            holdTimer.Reset();
+            holdTimer.Start();
+          },
+          {&m_drive}))
+      .OnFalse(new frc2::InstantCommand(
+          [this, &holdTimer] {
+            holdTimer.Stop();
+            if (holdTimer.HasElapsed(2_s)) {
+              ControllerUtils::VibrateController(m_driverController, 0.5, 0.4_s);
+              m_drive.ZeroHeading();
+            }
+          },
+          {&m_drive}));
   frc::ApplyDeadband(m_driverController.GetRightTriggerAxis(),
                      ElevatorConstants::kTriggerDeadband);
 
@@ -142,7 +158,8 @@ void RobotContainer::ConfigureButtonBindings() {
 
   // Floor Intake Position
   frc2::POVButton(&m_driverController, 270)
-      .OnTrue(new GoToFloorIntakePositionCommand(m_elevator, m_shooter, m_intake));
+      .OnTrue(
+          new GoToFloorIntakePositionCommand(m_elevator, m_shooter, m_intake));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

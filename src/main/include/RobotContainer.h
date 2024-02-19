@@ -16,6 +16,7 @@
 
 #include "AHRS.h"
 #include "Constants.h"
+#include "utils/ControllerUtils.h"
 #include "commands/ClimbActionCommand.h"
 #include "commands/ControlIntakeMotorsCommand.h"
 #include "commands/IntakeDropNoteCommand.h"
