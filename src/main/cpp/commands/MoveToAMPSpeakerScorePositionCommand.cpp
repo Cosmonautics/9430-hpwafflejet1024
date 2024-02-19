@@ -2,8 +2,7 @@
 
 MoveToAmpSpeakerScorePositionCommand::MoveToAmpSpeakerScorePositionCommand(Elevator* elevatorSubsystem, Shooter* shooterSubsystem)
 : m_elevatorSubsystem(elevatorSubsystem), m_shooterSubsystem(shooterSubsystem) {
-    AddRequirements({elevatorSubsystem});
-    AddRequirements({shooterSubsystem});
+    AddRequirements({elevatorSubsystem, shooterSubsystem});
     }
 
 void MoveToAmpSpeakerScorePositionCommand::Initialize() {

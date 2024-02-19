@@ -1,14 +1,19 @@
-#include "commands/MoveElevatorToClimb1PositionCommand.h"
+#include "commands/MoveToClimb1PositionCommand.h"
 
-MoveElevatorToClimb1PositionCommand::MoveElevatorToClimb1PositionCommand(Elevator* elevatorSubsystem)
+MoveToClimb1PositionCommand::MoveToClimb1PositionCommand(Elevator* elevatorSubsystem, Shooter* shooterSubsystem, Intake* intakeSubsystem)
 : m_elevatorSubsystem(elevatorSubsystem) {
-    AddRequirements({elevatorSubsystem});
+    AddRequirements({elevatorSubsystem, shooterSubsystem, intakeSubsystem});
 }
 
-void MoveElevatorToClimb1PositionCommand::Initialize() {
+void MoveToClimb1PositionCommand::Initialize() {
     m_elevatorSubsystem->MoveToPosition(ElevatorConstants::kClimb1PositionInches);
+    m_shooterSubsystem->PivotToSetPoint(ShooterConstants::kClimb1PositionDegrees);
 }
 
-bool MoveElevatorToClimb1PositionCommand::IsFinished() {
+void MoveToClimb1PositionCommand::Execute() {}
+
+bool MoveToClimb1PositionCommand::IsFinished() {
     return m_elevatorSubsystem->AtTargetPosition();
+    return m_shooterSubsystem->IsAtSetPoint();
 }
+
