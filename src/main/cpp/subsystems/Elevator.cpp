@@ -43,13 +43,14 @@ void Elevator::ConfigureMotors() {
   m_ElevatorPIDController.SetOutputRange(-1.0, 1.0);
 }
 
-void Elevator::MoveToPosition(double positionInches) {
-  if (positionInches > kElevatorUpperSoftLimit ||
-      positionInches < kElevatorLowerSoftLimit) {
+void Elevator::MoveToPosition(double positionRotations) {
+  double targetPositionInches = RotationsToInches(positionRotations);
+  if (targetPositionInches > kElevatorUpperSoftLimit ||
+      targetPositionInches < kElevatorLowerSoftLimit) {
     return;  // Position out of bounds
   }
-  double targetPositionRotations = InchesToRotations(positionInches);
-  m_ElevatorPIDController.SetReference(targetPositionRotations,
+  m_ElevatorMotorRight.Set(0);
+  m_ElevatorPIDController.SetReference(positionRotations,
                                        rev::ControlType::kPosition);
 }
 

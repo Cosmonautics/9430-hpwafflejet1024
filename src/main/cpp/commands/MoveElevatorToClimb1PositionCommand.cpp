@@ -6,7 +6,7 @@ MoveElevatorToClimb1PositionCommand::MoveElevatorToClimb1PositionCommand(Elevato
 }
 
 void MoveElevatorToClimb1PositionCommand::Initialize() {
-    m_elevatorSubsystem->MoveToPosition(ElevatorConstants::kClimb1PositionInches);
+    m_elevatorSubsystem->MoveToPosition(ElevatorConstants::kClimb1PositionRotations);
 }
 
 bool MoveElevatorToClimb1PositionCommand::IsFinished() {

@@ -108,9 +108,10 @@ void RobotContainer::ConfigureButtonBindings() {
       .OnFalse(new frc2::InstantCommand(
           [this, &holdTimer] {
             holdTimer.Stop();
-            if (holdTimer.HasElapsed(2_s)) {
-              ControllerUtils::VibrateController(m_driverController, 0.5, 0.4_s);
+            if (holdTimer.HasElapsed(0.5_s)) {
               m_elevator.ToggleManualOverride();
+              ControllerUtils::VibrateController(m_driverController, 0.8,
+                                                 0.3_s);
             }
           },
           {&m_elevator}));
@@ -124,9 +125,10 @@ void RobotContainer::ConfigureButtonBindings() {
       .OnFalse(new frc2::InstantCommand(
           [this, &holdTimer] {
             holdTimer.Stop();
-            if (holdTimer.HasElapsed(2_s)) {
-              ControllerUtils::VibrateController(m_driverController, 0.5, 0.4_s);
+            if (holdTimer.HasElapsed(0.5_s)) {
               m_drive.ZeroHeading();
+              ControllerUtils::VibrateController(m_driverController, 0.8,
+                                                 0.3_s);
             }
           },
           {&m_drive}));
@@ -154,12 +156,17 @@ void RobotContainer::ConfigureButtonBindings() {
   // Y Button (Elevator)
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kY)
       .OnTrue(new MoveElevatorToPositionCommand(
-          m_elevator, ElevatorConstants::kElevatorSetpointInches));
+          m_elevator, ElevatorConstants::kAMPScorePositionRotations));
+  // B Button (Elevator)
+  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kB)
+      .OnTrue(new MoveElevatorToPositionCommand(
+          m_elevator, ElevatorConstants::kTransitPositionRotations));
 
   // Floor Intake Position
-  frc2::POVButton(&m_driverController, 270)
+  /*frc2::POVButton(&m_driverController, 270)
       .OnTrue(
-          new GoToFloorIntakePositionCommand(m_elevator, m_shooter, m_intake));
+          new GoToFloorIntakePositionCommand(m_elevator, m_shooter,
+     m_intake));*/
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
