@@ -54,7 +54,7 @@ class MAXSwerveModule {
   rev::CANSparkMax m_turningSparkMax;
 
   rev::SparkMaxRelativeEncoder m_drivingEncoder =
-      m_drivingSparkMax.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
+      m_drivingSparkMax.GetEncoder(rev::SparkMaxRelativeEncoder::Type::kHallSensor, 42);
   rev::SparkMaxAbsoluteEncoder m_turningAbsoluteEncoder =
       m_turningSparkMax.GetAbsoluteEncoder(
           rev::SparkMaxAbsoluteEncoder::Type::kDutyCycle);

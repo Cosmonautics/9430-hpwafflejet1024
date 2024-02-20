@@ -6,7 +6,7 @@ MoveToClimb1PositionCommand::MoveToClimb1PositionCommand(Elevator* elevatorSubsy
 }
 
 void MoveToClimb1PositionCommand::Initialize() {
-    m_elevatorSubsystem->MoveToPosition(ElevatorConstants::kClimb1PositionInches);
+    m_elevatorSubsystem->MoveToPosition(ElevatorConstants::kClimb1PositionRotations);
     m_shooterSubsystem->PivotToSetPoint(ShooterConstants::kClimb1PositionDegrees);
 }
 

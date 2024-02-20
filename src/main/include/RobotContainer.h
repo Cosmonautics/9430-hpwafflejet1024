@@ -14,6 +14,9 @@
 #include <frc2/command/ParallelRaceGroup.h>
 #include <frc2/command/RunCommand.h>
 
+#include "AHRS.h"
+#include "Constants.h"
+#include "utils/ControllerUtils.h"
 #include "commands/ClimbActionCommand.h"
 #include "commands/ControlIntakeMotorsCommand.h"
 #include "commands/IntakeDropNoteCommand.h"
@@ -25,11 +28,12 @@
 #include "commands/MoveToClimb1PositionCommand.h"
 #include "commands/MoveToFloorIntakePositionCommand.h"
 #include "commands/PivotIntakeToAngleCommand.h"
+#include "commands/PivotShooterToPositionCommand.h"
 #include "commands/PivotShooterToTransitPositionCommand.h"
-#include "commands/ShootMotorsCommand.h"
 #include "commands/PivotToPositionCommand.h"
+#include "commands/RunConveyorCommand.h"
+#include "commands/ShootMotorsCommand.h"
 
-#include "Constants.h"
 #include "subsystems/Conveyor.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
@@ -53,15 +57,18 @@ class RobotContainer {
   // The driver's controller
   frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
 
-  // The robot's subsystems and commands are defined here...
+  // In RobotContainer.cpp, within the RobotContainer constructor:
+  // Enum to keep track of the last pressed trigger
 
+  // Variables to track the last pressed trigger and its value
+  double lastTriggerValue = 0.0;
   // The robot's subsystems
   DriveSubsystem m_drive;
   Intake m_intake;
   Shooter m_shooter;
   Elevator m_elevator;
-  //Conveyor m_conveyor;
-  // The chooser for the autonomous routines
+  // Conveyor m_conveyor;
+  //  The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;
 
   void ConfigureButtonBindings();

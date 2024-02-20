@@ -6,7 +6,7 @@ MoveToAmpSpeakerScorePositionCommand::MoveToAmpSpeakerScorePositionCommand(Eleva
     }
 
 void MoveToAmpSpeakerScorePositionCommand::Initialize() {
-    m_elevatorSubsystem->MoveToPosition(ElevatorConstants::kAMPScorePositionInches);
+    m_elevatorSubsystem->MoveToPosition(ElevatorConstants::kAMPScorePositionRotations);
     m_shooterSubsystem->PivotToSetPoint(ShooterConstants::kAMPScorePositionDegrees);
 }
 

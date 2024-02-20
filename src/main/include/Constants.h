@@ -94,13 +94,13 @@ constexpr double kElevatorInchesPerTick =
     (kElevatorDrumDiameterInches * M_PI) /
     (kElevatorEncoderTicksPerRevolution * kElevatorGearRatio);
 
-constexpr double kP = 0.05;
+constexpr double kP = 5;
 constexpr double kI = 0.0;
-constexpr double kD = 0.0;
-
+constexpr double kD = 0.1;
+constexpr double kTriggerDeadband = 0.05;
 constexpr double kPullyDiameter = 1.214;
 constexpr int kElevatorEncoderResolution = 8192;  // TODO: 8192 bb
-constexpr double kElevatorSetpointInches = 10.0;   // Placeholder constant
+constexpr double kElevatorSetpointInches = 12.0;  // Placeholder constant
                                                   // position
 constexpr double kGearBoxScale = 0.2045;
 constexpr double kPositionToleranceInches = 1.0 / 2.54;
@@ -108,15 +108,16 @@ constexpr double kEncoderUnitsPerInch = 1 / kElevatorInchesPerTick;
 
 constexpr double kFloorIntakePositionInches =
     0.0;  // Floor intake position (in inches)
-constexpr double kAMPScorePositionInches =
-    24.0;  // AMP/speaker score position (in inches)
-constexpr double kTransitPositionInches = 12.0;  // Transit position (in inches)
-constexpr double kClimb1PositionInches = 36.0;   // Climb 1 position (in inches)
-constexpr double kClimb2PositionInches = 48.0;   // Climb 2 position (in inches)
+constexpr double kAMPScorePositionRotations =
+    0.126;  // AMP/speaker score position (in inches)
+constexpr double kTransitPositionRotations =
+    0.346;  // Transit position (in inches)
+constexpr double kClimb1PositionRotations =
+    0.057;                                      // Climb 1 position (in inches)
+constexpr double kClimb2PositionInches = 48.0;  // Climb 2 position (in inches)
 
-constexpr double kClimbPositionInches = 8.0;
+constexpr double kClimbPositionInches = 7.0;
 }  // namespace ElevatorConstants
-
 
 namespace IntakeConstants {
 constexpr double kP = 0.01;
@@ -140,10 +141,10 @@ namespace FloorIntakeConstants {
 constexpr double kFloorIntakeAngle = 5.0;
 }  // namespace FloorIntakeConstants
 namespace TransitPositionConstants {
-    constexpr double kTransitAngle = 5.0;
+constexpr double kTransitAngle = 5.0;
 }
-namespace ClimbPositionConstants{
-    constexpr double kClimbAngle1 = 5.0;
+namespace ClimbPositionConstants {
+constexpr double kClimbAngle1 = 5.0;
 }
 namespace ModuleConstants {
 // Invert the turning encoder, since the output shaft rotates in the opposite
@@ -228,7 +229,7 @@ constexpr double kDriveDeadband = 0.05;
 }  // namespace OIConstants
 
 namespace CommandConstants {
-    constexpr double kFLoorIntakePostionIntake = 90.0;
-    constexpr double kFloorIntakePositionShooter = 90.0;
-    constexpr double kFLoorIntakePostionElevator = 1;
-}
+constexpr double kFLoorIntakePostionIntake = 90.0;
+constexpr double kFloorIntakePositionShooter = 90.0;
+constexpr double kFLoorIntakePostionElevator = 1;
+}  // namespace CommandConstants

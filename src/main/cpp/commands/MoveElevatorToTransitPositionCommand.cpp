@@ -6,7 +6,7 @@ MoveElevatorToTransitPositionCommand::MoveElevatorToTransitPositionCommand(Eleva
 }
 
 void MoveElevatorToTransitPositionCommand::Initialize() {
-    m_elevatorSubsystem->MoveToPosition(ElevatorConstants::kTransitPositionInches);
+    m_elevatorSubsystem->MoveToPosition(ElevatorConstants::kTransitPositionRotations);
 }
 
 bool MoveElevatorToTransitPositionCommand::IsFinished() {

@@ -10,6 +10,8 @@
 #include <frc2/command/RunCommand.h>
 #include <rev/CANSparkMax.h>
 
+#include <iostream>
+
 #include "Constants.h"
 
 using namespace ElevatorConstants;
@@ -20,6 +22,7 @@ class Elevator : public frc2::Subsystem {
   void Periodic() override;
   void MoveToPosition(double positionInches);
   bool AtTargetPosition();
+  void ManualMove(double speed);
   // m_ElevatorEncoder.GetPosition();
 
   // Helper methods
@@ -28,6 +31,7 @@ class Elevator : public frc2::Subsystem {
   double CalculateTargetHeight(units::degree_t theta2);
   double InchesToRotations(double inches);
   double RotationsToInches(double revolution);
+  bool ToggleManualOverride();
 
   rev::SparkMaxAbsoluteEncoder
   GetkElevatorThroughBoreEncoder();  // these functions are needed to get
@@ -36,9 +40,9 @@ class Elevator : public frc2::Subsystem {
   GetkElevatorPIDController();  // these functions are needed to get private
                                 // class attributes
 
-private:
-  rev::CANSparkMax m_ElevatorMotorLeft{
-      kElevatorLeftCanId, rev::CANSparkMax::MotorType::kBrushless};
+ private:
+  rev::CANSparkMax m_ElevatorMotorLeft{kElevatorLeftCanId,
+                                       rev::CANSparkMax::MotorType::kBrushless};
 
   rev::CANSparkMax m_ElevatorMotorRight{
       kElevatorRightCanId, rev::CANSparkMax::MotorType::kBrushless};
@@ -47,14 +51,17 @@ private:
 
   rev::SparkMaxAbsoluteEncoder m_ElevatorThroughBoreEncoder =
       m_ElevatorMotorRight.GetAbsoluteEncoder(
-          rev::SparkAbsoluteEncoder::Type::kDutyCycle);
+          rev::SparkMaxAbsoluteEncoder::Type::kDutyCycle);
   // Define CANPIDController for direct control through SparkMax
 
-  rev::SparkPIDController m_ElevatorPIDController =
+  rev::SparkMaxPIDController m_ElevatorPIDController =
       m_ElevatorMotorRight.GetPIDController();
 
   double currentPositionInches = 0;  // Current elevator position in inches
   double targetPositionInches = 0;   // Target elevator position in inches
+  double m_TotalRotations = 0;
+  double m_LastEncoderPosition = 0;
+  bool manualOverride = false;
   // trigger: xbox controller button
 
   // go down
