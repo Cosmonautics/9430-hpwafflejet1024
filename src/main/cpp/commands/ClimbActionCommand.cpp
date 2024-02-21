@@ -20,3 +20,7 @@ void ClimbActionCommand::Initialize() {
     // SM feeder motor off
     // SM shooter motor off
 }
+
+void ClimbActionCommand::Execute() {}
+
+bool ClimbActionCommand::IsFinished() {}

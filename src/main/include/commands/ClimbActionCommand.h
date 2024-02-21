@@ -12,6 +12,8 @@ public:
     ClimbActionCommand(Elevator* elevatorSubsystem, Shooter* shooterSubsystem);
 
     void Initialize() override;
+    void Execute() override;
+    bool IsFinished() override;
 
 private:
     Elevator* m_elevatorSubsystem;
