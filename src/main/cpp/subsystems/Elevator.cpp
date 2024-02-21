@@ -94,10 +94,9 @@ void Elevator::ManualMove(double speed) {
     double currentElevatorPosition = m_ElevatorThroughBoreEncoder.GetPosition();
     double currentElevatorRotations =
         RotationsToInches(currentElevatorPosition);
-
     if (currentElevatorRotations > kElevatorLowerSoftLimit &&
         currentElevatorRotations < kElevatorUpperSoftLimit) {
-      m_ElevatorMotorLeft.Set(speed * 0.25);
+      m_ElevatorMotorRight.Set(speed * 0.25);
     }
   }
 }
