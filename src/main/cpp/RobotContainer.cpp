@@ -169,29 +169,39 @@ void RobotContainer::ConfigureButtonBindings() {
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   choreolib::ChoreoTrajectory traj =
-      choreolib::Choreo::GetTrajectory("TestPath");
-  auto command = choreolib::Choreo::ChoreoSwerveCommandFactory(
-      traj,  // The trajectory to follow
-      [this]() {
-        return m_drive.GetPose();
-      },  // Lambda to replace method reference for getting the current pose
-      frc::PIDController(AutoConstants::kPXController, 0.0,
-                         0.0),  // X PID Controller
-      frc::PIDController(AutoConstants::kPYController, 0.0,
-                         0.0),  // Y PID Controller (assuming there's a typo in
-                                // the original and you meant Y here)
-      frc::PIDController(AutoConstants::kPThetaController, 0.0,
-                         0.0),  // Theta PID Controller
-      [this](auto speeds) {
-        m_drive.Drive(frc::Translation2d(speeds.vxMetersPerSecond,
-                                       speeds.vyMetersPerSecond));
-      },  // Lambda to replace the chassis speed consumer
-      [this]() {
-        bool mirror = false;
-        auto alliance = frc::DriverStation::GetAlliance();
-        mirror = (alliance == frc::DriverStation::kRed);
-        // Possibly need to store or use `mirror` here
-      },  // Lambda for optional setup, e.g., mirroring based on alliance color
-      {this}  // Bind the command to the subsystem
-  );
+      choreolib::Choreo::GetTrajectory("NewPath");
+  m_drive.ResetOdometry(traj.GetInitialPose());
+  choreolib::ChoreoControllerFunction controller =
+      choreolib::Choreo::ChoreoSwerveController(
+          frc::PIDController(AutoConstants::kPXController, 0.0, 0.0),
+          frc::PIDController(AutoConstants::kPYController, 0.0, 0.0),
+          frc::PIDController(AutoConstants::kPThetaController, 0.0, 0.0));
+  choreolib::ChoreoSwerveCommand swerveDriveCommand =
+      choreolib::ChoreoSwerveCommand(
+          traj, [this]() { return m_drive.GetPose(); },
+          controller,[this](auto speeds) {
+            m_drive.Drive(units::meters_per_second_t{speeds.vx},
+                          units::meters_per_second_t{speeds.vy}, speeds.omega,
+                          false, true);
+          },
+          [this]() {
+            return frc::DriverStation::GetAlliance() ==
+                   frc::DriverStation::kRed;
+          },
+          {&m_drive});
+
+  auto resetOdometry = [this, traj]() {
+    m_drive.ResetOdometry(traj.GetInitialPose());
+  };
+
+  auto stopRobotDrive = [this]() {
+    m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false);
+  };
+
+  frc2::Command* commandGroup = new frc2::SequentialCommandGroup(
+      frc2::InstantCommand(resetOdometry, {&m_drive}),
+      std::move(swerveDriveCommand),
+      frc2::RunCommand(stopRobotDrive, {&m_drive}));
+
+  return commandGroup;
 }

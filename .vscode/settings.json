@@ -92,6 +92,7 @@
     "typeinfo": "cpp",
     "valarray": "cpp",
     "variant": "cpp",
-    "*.inc": "cpp"
+    "*.inc": "cpp",
+    "xtr1common": "cpp"
   }
 }
