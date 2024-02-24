@@ -78,12 +78,15 @@ RobotContainer::RobotContainer() {
   m_drive.SetDefaultCommand(frc2::RunCommand(
       [this] {
         m_drive.Drive(  // FLAG: x and y might be switched here.
-            -units::meters_per_second_t{frc::ApplyDeadband(
-                m_driverController.GetLeftY(), OIConstants::kDriveDeadband)},
-            -units::meters_per_second_t{frc::ApplyDeadband(
-                m_driverController.GetLeftX(), OIConstants::kDriveDeadband)},
-            -units::radians_per_second_t{frc::ApplyDeadband(
-                m_driverController.GetRightX(), OIConstants::kDriveDeadband)},
+            -units::meters_per_second_t{
+                frc::ApplyDeadband(m_driverController.GetLeftY() * 0.75,
+                                   OIConstants::kDriveDeadband)},
+            -units::meters_per_second_t{
+                frc::ApplyDeadband(m_driverController.GetLeftX() * 0.75,
+                                   OIConstants::kDriveDeadband)},
+            -units::radians_per_second_t{
+                frc::ApplyDeadband(m_driverController.GetRightX() * 0.75,
+                                   OIConstants::kDriveDeadband)},
             true, true);
       },
       {&m_drive}));
@@ -178,8 +181,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
           frc::PIDController(AutoConstants::kPThetaController, 0.0, 0.0));
   choreolib::ChoreoSwerveCommand swerveDriveCommand =
       choreolib::ChoreoSwerveCommand(
-          traj, [this]() { return m_drive.GetPose(); },
-          controller,[this](auto speeds) {
+          traj, [this]() { return m_drive.GetPose(); }, controller,
+          [this](auto speeds) {
             m_drive.Drive(units::meters_per_second_t{speeds.vx},
                           units::meters_per_second_t{speeds.vy}, speeds.omega,
                           false, true);
