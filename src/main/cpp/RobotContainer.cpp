@@ -34,8 +34,8 @@ RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
   m_elevator.SetDefaultCommand(frc2::RunCommand(
       [this] {
-        double rightTriggerValue = m_driverController.GetRightTriggerAxis();
-        double leftTriggerValue = m_driverController.GetLeftTriggerAxis();
+        double rightTriggerValue = m_operatorController.GetRightTriggerAxis();
+        double leftTriggerValue = m_operatorController.GetLeftTriggerAxis();
 
         // Apply deadband to the trigger values
         rightTriggerValue = frc::ApplyDeadband(
@@ -90,7 +90,7 @@ void RobotContainer::ConfigureButtonBindings() {
   frc::Timer holdTimer;
   // Right Bumper
 
-  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kBack)
+  frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kBack)
       .OnTrue(new frc2::InstantCommand(
           [this, &holdTimer] {
             holdTimer.Reset();
@@ -102,12 +102,12 @@ void RobotContainer::ConfigureButtonBindings() {
             holdTimer.Stop();
             if (holdTimer.HasElapsed(0.5_s)) {
               m_elevator.ToggleManualOverride();
-              ControllerUtils::VibrateController(m_driverController, 0.8,
+              ControllerUtils::VibrateController(m_operatorController, 0.8,
                                                  0.3_s);
             }
           },
           {&m_elevator}));
-  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kStart)
+  frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kStart)
       .OnTrue(new frc2::InstantCommand(
           [this, &holdTimer] {
             holdTimer.Reset();
@@ -119,33 +119,33 @@ void RobotContainer::ConfigureButtonBindings() {
             holdTimer.Stop();
             if (holdTimer.HasElapsed(0.5_s)) {
               m_drive.ZeroHeading();
-              ControllerUtils::VibrateController(m_driverController, 0.8,
+              ControllerUtils::VibrateController(m_operatorController, 0.8,
                                                  0.3_s);
             }
           },
           {&m_drive}));
-  frc::ApplyDeadband(m_driverController.GetRightTriggerAxis(),
+  frc::ApplyDeadband(m_operatorController.GetRightTriggerAxis(),
                      ElevatorConstants::kTriggerDeadband);
 
   // X Button (Reload/Pickup Note)
-  /*frc2::JoystickButton(&m_driverController,
+  /*frc2::JoystickButton(&m_operatorController,
   frc::XboxController::Button::kX) .OnTrue(new
   IntakePickUpNoteCommand(&m_intake, true, -0.10)) .OnFalse(new
   IntakePickUpNoteCommand(&m_intake, false, 0));
 
   // B Button (Drop Note)
-  frc2::JoystickButton(&m_driverController,
+  frc2::JoystickButton(&m_operatorController,
   frc::XboxController::Button::kB) .OnTrue(new
   IntakeDropNoteCommand(&m_intake, true, 0.10)) .OnFalse(new
   IntakeDropNoteCommand(&m_intake, false, 0));*/
 
   // B Button (Shoot Note)
-  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kB)
+  frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kB)
       .OnTrue(new ShootMotorsCommand(m_shooter, true, 1))
       .OnFalse(new ShootMotorsCommand(m_shooter, false, 0));
 
   // D-Pad Right (Elevator)
-  frc2::POVButton(&m_driverController, 90)
+  frc2::POVButton(&m_operatorController, 90)
       .OnTrue(
           new MoveToAmpSpeakerScorePositionCommand(&m_elevator, &m_shooter));
 }

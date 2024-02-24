@@ -16,7 +16,6 @@
 
 #include "AHRS.h"
 #include "Constants.h"
-#include "utils/ControllerUtils.h"
 #include "commands/ClimbActionCommand.h"
 #include "commands/ControlIntakeMotorsCommand.h"
 #include "commands/IntakeDropNoteCommand.h"
@@ -33,12 +32,12 @@
 #include "commands/PivotToPositionCommand.h"
 #include "commands/RunConveyorCommand.h"
 #include "commands/ShootMotorsCommand.h"
-
 #include "subsystems/Conveyor.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
 #include "subsystems/Intake.h"
 #include "subsystems/Shooter.h"
+#include "utils/ControllerUtils.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -57,6 +56,8 @@ class RobotContainer {
   // The driver's controller
   frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
 
+  // The driver's controller
+  frc::XboxController m_operatorController{OIConstants::kDriverControllerPort};
   // In RobotContainer.cpp, within the RobotContainer constructor:
   // Enum to keep track of the last pressed trigger
 
