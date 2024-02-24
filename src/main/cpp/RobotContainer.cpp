@@ -107,7 +107,7 @@ void RobotContainer::ConfigureButtonBindings() {
             }
           },
           {&m_elevator}));
-  frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kStart)
+  frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kStart)
       .OnTrue(new frc2::InstantCommand(
           [this, &holdTimer] {
             holdTimer.Reset();
@@ -119,7 +119,7 @@ void RobotContainer::ConfigureButtonBindings() {
             holdTimer.Stop();
             if (holdTimer.HasElapsed(0.5_s)) {
               m_drive.ZeroHeading();
-              ControllerUtils::VibrateController(m_operatorController, 0.8,
+              ControllerUtils::VibrateController(m_driverController, 0.8,
                                                  0.3_s);
             }
           },
