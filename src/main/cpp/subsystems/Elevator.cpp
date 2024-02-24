@@ -49,7 +49,6 @@ void Elevator::MoveToPosition(double positionRotations) {
       targetPositionInches < kElevatorLowerSoftLimit) {
     return;  // Position out of bounds
   }
-  m_ElevatorMotorRight.Set(0);
   m_ElevatorPIDController.SetReference(positionRotations,
                                        rev::ControlType::kPosition);
 }
@@ -92,11 +91,16 @@ bool Elevator::ToggleManualOverride() {
 void Elevator::ManualMove(double speed) {
   if (manualOverride) {
     double currentElevatorPosition = m_ElevatorThroughBoreEncoder.GetPosition();
-    double currentElevatorRotations =
-        RotationsToInches(currentElevatorPosition);
-    if (currentElevatorRotations > kElevatorLowerSoftLimit &&
-        currentElevatorRotations < kElevatorUpperSoftLimit) {
-      m_ElevatorMotorRight.Set(speed * 0.25);
+
+    double speedFactor = 0.01;
+    double targetPositionRotations =
+        currentElevatorPosition + (speed * speedFactor);
+    double targetPositionInches = RotationsToInches(targetPositionRotations);
+
+    if (targetPositionInches > kElevatorLowerSoftLimit &&
+        targetPositionInches < kElevatorUpperSoftLimit) {
+      m_ElevatorPIDController.SetReference(targetPositionRotations,
+                                           rev::ControlType::kPosition);
     }
   }
 }

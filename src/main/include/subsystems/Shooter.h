@@ -42,5 +42,5 @@ class Shooter : public frc2::Subsystem {
       rev::SparkAbsoluteEncoder::Type::kDutyCycle)};
   rev::SparkMaxPIDController m_pivotPIDController =
       m_pivotMotor.GetPIDController();
-  units::degree_t m_targetSetpoint = 0_deg;
+  double m_targetSetpointRotations = 0.0;
 };

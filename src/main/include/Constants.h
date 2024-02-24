@@ -61,15 +61,15 @@ constexpr int kRearRightTurningCanId = 3;
 namespace ShooterConstants {
 constexpr int kShooterLeftCanId = 10;
 constexpr int kShooterRightCanId = 9;
-constexpr int kShooterPivotCanId = 60;
+constexpr int kShooterPivotCanId = 17;
 
 constexpr double kP = 0.1;
 constexpr double kI = 0.0;
 constexpr double kD = 0.0;
 constexpr double kFloorIntakePositionDegrees =
     0.0;  // Floor intake position (in degrees)
-constexpr double kAMPScorePositionDegrees =
-    90.0;  // AMP/speaker score position (in degrees)
+constexpr double kAMPScorePositionRotations =
+    0.75;  // AMP/speaker score position (in degrees)
 constexpr double kTransitPositionDegrees =
     45.0;  // Transit position (in degrees)
 constexpr double kClimb1PositionDegrees =
@@ -109,7 +109,7 @@ constexpr double kEncoderUnitsPerInch = 1 / kElevatorInchesPerTick;
 constexpr double kFloorIntakePositionInches =
     0.0;  // Floor intake position (in inches)
 constexpr double kAMPScorePositionRotations =
-    0.126;  // AMP/speaker score position (in inches)
+    0.426;  // AMP/speaker score position (in inches)
 constexpr double kTransitPositionRotations =
     0.346;  // Transit position (in inches)
 constexpr double kClimb1PositionRotations =
