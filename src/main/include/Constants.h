@@ -63,7 +63,7 @@ constexpr int kShooterLeftCanId = 10;
 constexpr int kShooterRightCanId = 9;
 constexpr int kShooterPivotCanId = 17;
 
-constexpr double kP = 0.1;
+constexpr double kP = 2.0;
 constexpr double kI = 0.0;
 constexpr double kD = 0.0;
 constexpr double kFloorIntakePositionDegrees =

@@ -11,6 +11,9 @@
 using namespace ShooterConstants;
 
 Shooter::Shooter() {
+  m_pivotMotor.RestoreFactoryDefaults();
+  m_pivotMotor.SetInverted(true);
+  m_pivotPIDController.SetOutputRange(-1.0, 1.0);
   m_pivotPIDController.SetFeedbackDevice(m_pivotEncoder);
   m_pivotPIDController.SetP(kP);
   m_pivotPIDController.SetI(kI);
@@ -41,7 +44,7 @@ void Shooter::PivotToSetPoint(double setPointRotations) {
   m_targetSetpointRotations =
       setPointRotations;  // Store the setpoint in rotations for error
                           // calculation
-
+  
   // Set the PID reference using rotations directly
   m_pivotPIDController.SetReference(setPointRotations,
                                     rev::ControlType::kPosition);
@@ -103,7 +106,7 @@ void Shooter::ManualMove(double speed) {
   if (manualOverride) {
     double currentShooterPivotPosition = m_pivotEncoder.GetPosition();
 
-    double speedFactor = 0.001;
+    double speedFactor = 0.01;
     double targetPositionRotations =
         currentShooterPivotPosition + (speed * speedFactor);
 

@@ -173,8 +173,16 @@ void RobotContainer::ConfigureButtonBindings() {
 
   // B Button (Shoot Note)
   frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kB)
-      .OnTrue(new ShootMotorsCommand(m_shooter, true, 1))
-      .OnFalse(new ShootMotorsCommand(m_shooter, false, 0));
+      .OnTrue(new frc2::InstantCommand(
+          [this] { m_shooter.ShootMotors(true, -1); }, {&m_shooter}))
+      .OnFalse(new frc2::InstantCommand(
+          [this] { m_shooter.ShootMotors(false, 0); }, {&m_shooter}));
+
+  frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kA)
+      .OnTrue(new frc2::InstantCommand(
+          [this] { m_shooter.ShootMotors(true, 1); }, {&m_shooter}))
+      .OnFalse(new frc2::InstantCommand(
+          [this] { m_shooter.ShootMotors(false, 0); }, {&m_shooter}));
 
   // D-Pad Right (Elevator)
   frc2::POVButton(&m_operatorController, 90)
