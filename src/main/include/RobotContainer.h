@@ -57,7 +57,7 @@ class RobotContainer {
   frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
 
   // The driver's controller
-  frc::XboxController m_operatorController{OIConstants::kDriverControllerPort};
+  frc::XboxController m_operatorController{OIConstants::kOperatorControllerPort};
   // In RobotContainer.cpp, within the RobotContainer constructor:
   // Enum to keep track of the last pressed trigger
 

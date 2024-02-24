@@ -99,3 +99,22 @@ void Shooter::ShooterPickUpNote(bool isPressed, double speed) {
     m_shooterMotorRight.Set(0);
   }
 }
+void Shooter::ManualMove(double speed) {
+  if (manualOverride) {
+    double currentShooterPivotPosition = m_pivotEncoder.GetPosition();
+
+    double speedFactor = 0.001;
+    double targetPositionRotations =
+        currentShooterPivotPosition + (speed * speedFactor);
+
+    if (IsTargetInRestrictedRange(targetPositionRotations)) {
+      m_pivotPIDController.SetReference(targetPositionRotations,
+                                        rev::ControlType::kPosition);
+    }
+  }
+}
+
+bool Shooter::ToggleManualOverride() {
+  manualOverride = !manualOverride;
+  return manualOverride;
+}

@@ -64,6 +64,36 @@ RobotContainer::RobotContainer() {
       },
       {&m_elevator}));
 
+  m_shooter.SetDefaultCommand(frc2::RunCommand(
+      [this] {
+        double rightTriggerValue = m_operatorController.GetPOV(0);
+        double leftTriggerValue = m_operatorController.GetPOV(4);
+
+        // Apply deadband to the trigger values
+        rightTriggerValue = rightTriggerValue;
+        leftTriggerValue = leftTriggerValue;
+
+        double triggerValue = 0;
+
+        // If right trigger is pressed more than the left, move up (positive
+        // direction)
+        if (rightTriggerValue > leftTriggerValue) {
+          triggerValue = rightTriggerValue;  // Positive direction
+        }
+        // If left trigger is pressed more than the right, move down (negative
+        // direction)
+        else if (leftTriggerValue > rightTriggerValue) {
+          triggerValue = -leftTriggerValue;  // Negative direction
+        }
+        // If both triggers are pressed equally or not at all, don't move
+        // (triggerValue remains 0)
+
+        // Use the triggerValue to control the elevator. Assuming SetSpeed or a
+        // similar method controls the elevator's speed.
+        m_shooter.ManualMove(triggerValue);
+      },
+      {&m_shooter}));
+
   // Configure the button bindings
   ConfigureButtonBindings();
 
@@ -90,23 +120,25 @@ void RobotContainer::ConfigureButtonBindings() {
   frc::Timer holdTimer;
   // Right Bumper
 
-  frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kBack)
+  frc2::JoystickButton(&m_operatorController,
+                       frc::XboxController::Button::kBack)
       .OnTrue(new frc2::InstantCommand(
           [this, &holdTimer] {
             holdTimer.Reset();
             holdTimer.Start();
           },
-          {&m_elevator}))
+          {&m_elevator, &m_shooter}))
       .OnFalse(new frc2::InstantCommand(
           [this, &holdTimer] {
             holdTimer.Stop();
             if (holdTimer.HasElapsed(0.5_s)) {
               m_elevator.ToggleManualOverride();
+              m_shooter.ToggleManualOverride();
               ControllerUtils::VibrateController(m_operatorController, 0.8,
                                                  0.3_s);
             }
           },
-          {&m_elevator}));
+          {&m_elevator, &m_shooter}));
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kStart)
       .OnTrue(new frc2::InstantCommand(
           [this, &holdTimer] {
