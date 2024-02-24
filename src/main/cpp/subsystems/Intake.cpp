@@ -18,6 +18,7 @@ elevator postion and shooter position remain defult to transit positon
 */
 
 Intake::Intake() {
+  m_pidController.SetFeedbackDevice(m_intakePivotAbsoluteEncoder);
   m_pidController.SetP(IntakeConstants::kP);
   m_pidController.SetI(IntakeConstants::kI);
   m_pidController.SetD(IntakeConstants::kD);
@@ -35,30 +36,22 @@ void Intake::IntakeDropNote(bool isPressed, double speed) {
   }
 }
 
-void Intake::PivotToAngle(double intakeAngleDegrees) {
+void Intake::PivotToAngle(double intakeAngleRotations) {
+  // Define minimum and maximum rotation limits within the 0 to 1 range
+  const double minAngleRotations = 0.0; // Example minimum limit, adjust as needed
+  const double maxAngleRotations = 0.3; // Example maximum limit, adjust as needed
 
-  double intakeAngleRadians = intakeAngleDegrees * (M_PI / 180.0);
-
-  intakeAngleRadians = fmod(intakeAngleRadians, 2 * M_PI);
-  if (intakeAngleRadians < 0) {
-    intakeAngleRadians += 2 * M_PI;  
-  }
-
-  double intakeAngleRotations = intakeAngleRadians / (2 * M_PI);
-
-  const double minAngleRotations = 3.0 / 4.0;  
-  const double maxAngleRotations = 1.0;        
-
+  // Clamp the input to ensure it's within the specified limits
   if (intakeAngleRotations < minAngleRotations) {
     intakeAngleRotations = minAngleRotations;
   } else if (intakeAngleRotations > maxAngleRotations) {
-
     intakeAngleRotations = maxAngleRotations;
   }
 
-  m_pidController.SetReference(intakeAngleRotations,
-                               rev::ControlType::kPosition);
+  // Set the target position using PID controller
+  m_pidController.SetReference(intakeAngleRotations, rev::ControlType::kPosition);
 }
+
 
 void Intake::IntakePickUpNote(bool isPressed, double speed) {
   double pickUpSpeed = -0.10;  // pick up is negative speed
