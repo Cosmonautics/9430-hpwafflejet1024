@@ -25,6 +25,8 @@ class Intake : public frc2::Subsystem {
   void PivotToAngle(double intakeAngleRotations);
 
   bool IsAtSetPoint();
+  
+  void StopMotors();
 
  private:
   // 2 motors
@@ -44,7 +46,7 @@ class Intake : public frc2::Subsystem {
           rev::SparkAbsoluteEncoder::Type::kDutyCycle);
   rev::SparkMaxPIDController m_pidController =
       m_intakePivotMotor.GetPIDController();
-      
+
   double m_targetSetpointRotations = 0.0;
   // rev::CANSparkMax m_intakePivotMax;
   //  1 motor for rollers

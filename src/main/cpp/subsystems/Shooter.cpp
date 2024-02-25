@@ -124,3 +124,8 @@ bool Shooter::ToggleManualOverride() {
   manualOverride = !manualOverride;
   return manualOverride;
 }
+
+void Shooter::StopMotors() {
+  m_shooterMotorLeft.Set(0);
+  m_shooterMotorRight.Set(0);
+}
