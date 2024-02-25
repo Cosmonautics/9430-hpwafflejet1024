@@ -12,7 +12,10 @@ DoNoteEjectActionCommand::DoNoteEjectActionCommand(
 void DoNoteEjectActionCommand::Initialize() {}
 
 void DoNoteEjectActionCommand::Execute() {
-  // Put code here 
+  // Set Intake wheel motor to 100%
+  // Set Conveyor motor to 100%
+  // Set shooter motor to ~10%
+  // Set shooter feeder motor to 100% 
 
 }
 
