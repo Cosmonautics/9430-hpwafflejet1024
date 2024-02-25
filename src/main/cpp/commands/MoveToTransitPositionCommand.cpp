@@ -1,7 +1,8 @@
-#include "commands/MoveToTransitPositionCommand.h" // include command header 
+#include "commands/MoveToTransitPositionCommand.h"  // include command header
 
 MoveToTransitPositionCommand::MoveToTransitPositionCommand(
-    Elevator* elevatorSubsystem, Shooter* shooterSubsystem, Intake* intakeSubsystem)   
+    Elevator* elevatorSubsystem, Shooter* shooterSubsystem,
+    Intake* intakeSubsystem)
     : m_elevatorSubsystem(elevatorSubsystem),
       m_shooterSubsystem(shooterSubsystem),
       m_intakeSubsystem(intakeSubsystem) {
@@ -11,20 +12,13 @@ MoveToTransitPositionCommand::MoveToTransitPositionCommand(
 void MoveToTransitPositionCommand::Initialize() {}
 
 void MoveToTransitPositionCommand::Execute() {
-
   m_shooterSubsystem->PivotToSetPoint(
       PositionConstants::kShooterTransitPosition);
-  m_intakeSubsystem->PivotToAngle(
-      PositionConstants::kIntakeTransitPosition);
+  m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeTransitPosition);
 
-  frc2::WaitCommand(0.5_s).Schedule();
+  // frc2::WaitCommand(0.5_s).Schedule();
   m_elevatorSubsystem->MoveToPosition(
       PositionConstants::kElevatorTransitPosition);
-
 }
 
-bool MoveToTransitPositionCommand::IsFinished() {
-  return m_elevatorSubsystem->AtTargetPosition() &&
-         m_shooterSubsystem->IsAtSetPoint() &&
-         m_intakeSubsystem->IsAtSetPoint();
-}
+bool MoveToTransitPositionCommand::IsFinished() { return true; }
