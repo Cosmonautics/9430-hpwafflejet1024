@@ -196,9 +196,11 @@ constexpr double kDriveDeadband = 0.05;
 namespace PositionConstants {
 // Elevator Position Constants
 constexpr double kElevatorTransitPosition = 0.326;
+constexpr double kElevatorShooterPosition = 0.0;
+
 // Shooter Position Constants
 constexpr double kShooterTransitPosition = 0.0;
-
+constexpr double kShooterShooterPosition = 0.0;
 // Intake Position Constants
 constexpr double kIntakeFloorPosition = 0.0;
 
