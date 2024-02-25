@@ -13,6 +13,7 @@ using namespace ShooterConstants;
 Shooter::Shooter() {
   m_pivotMotor.RestoreFactoryDefaults();
   m_pivotMotor.SetInverted(true);
+  m_shooterFeeder.SetInverted(true);
   m_pivotPIDController.SetOutputRange(-1.0, 1.0);
   m_pivotPIDController.SetFeedbackDevice(m_pivotEncoder);
   m_pivotPIDController.SetP(kP);
@@ -29,12 +30,12 @@ void Shooter::PivotToSetPoint(double setPointRotations) {
   if (IsTargetInRestrictedRange(currentAngleRotations) ||
       IsTargetInRestrictedRange(setPointRotations)) {
     bool exitAboveRestrictedRange =
-        (currentAngleRotations <= (145.0 / 360.0)) ||
-        (currentAngleRotations > (145.0 / 360.0) &&
+        (currentAngleRotations <= (100.0 / 360.0)) ||
+        (currentAngleRotations > (100.0 / 360.0) &&
          setPointRotations < currentAngleRotations);
     if (exitAboveRestrictedRange) {
       setPointRotations =
-          (145.0 + 1.0) /
+          (100.0 + 1.0) /
           360.0;  // Adjust setpoint to avoid restricted range, in rotations
     } else {
       setPointRotations = 0.0;  // Reset setpoint if necessary
@@ -52,7 +53,7 @@ void Shooter::PivotToSetPoint(double setPointRotations) {
 
 bool Shooter::IsTargetInRestrictedRange(double targetRotations) {
   // Check if the target (in rotations) is within the restricted range
-  return targetRotations >= (1.0 / 360.0) && targetRotations <= (145.0 / 360.0);
+  return targetRotations >= (1.0 / 360.0) && targetRotations <= (100.0 / 360.0);
 }
 
 bool Shooter::IsAtSetPoint() {
