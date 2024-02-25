@@ -44,7 +44,7 @@ void Shooter::PivotToSetPoint(double setPointRotations) {
   m_targetSetpointRotations =
       setPointRotations;  // Store the setpoint in rotations for error
                           // calculation
-  
+
   // Set the PID reference using rotations directly
   m_pivotPIDController.SetReference(setPointRotations,
                                     rev::ControlType::kPosition);
@@ -91,6 +91,8 @@ void Shooter::ShooterDropNote(bool isPressed, double speed) {
   }
 }
 
+void Shooter::MoveFeeder(double speed) { m_shooterFeeder.Set(speed); }
+
 void Shooter::ShooterPickUpNote(bool isPressed, double speed) {
   double pickUpSpeed = -0.10;  // pick up is negative speed
 
@@ -102,6 +104,7 @@ void Shooter::ShooterPickUpNote(bool isPressed, double speed) {
     m_shooterMotorRight.Set(0);
   }
 }
+
 void Shooter::ManualMove(double speed) {
   if (manualOverride) {
     double currentShooterPivotPosition = m_pivotEncoder.GetPosition();

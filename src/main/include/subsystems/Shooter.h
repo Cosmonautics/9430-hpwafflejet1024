@@ -30,6 +30,7 @@ class Shooter : public frc2::Subsystem {
   bool IsAtSetPoint();
   void ManualMove(double speed);
   bool ToggleManualOverride();
+  void MoveFeeder(double speed);
 
  private:
   rev::CANSparkFlex m_shooterMotorLeft{
@@ -39,11 +40,16 @@ class Shooter : public frc2::Subsystem {
       ShooterConstants::kShooterRightCanId,
       rev::CANSparkLowLevel::MotorType::kBrushless};
   rev::CANSparkMax m_pivotMotor{ShooterConstants::kShooterPivotCanId,
-                                 rev::CANSparkLowLevel::MotorType::kBrushless};
+                                rev::CANSparkLowLevel::MotorType::kBrushless};
   rev::SparkAbsoluteEncoder m_pivotEncoder{m_pivotMotor.GetAbsoluteEncoder(
       rev::SparkAbsoluteEncoder::Type::kDutyCycle)};
   rev::SparkMaxPIDController m_pivotPIDController =
       m_pivotMotor.GetPIDController();
+
+  rev::CANSparkMax m_shooterFeeder{
+      ShooterConstants::kShooterFeederCanId,
+      rev::CANSparkLowLevel::MotorType::kBrushless};
+
   double m_targetSetpointRotations = 0.0;
   bool manualOverride = false;
 };

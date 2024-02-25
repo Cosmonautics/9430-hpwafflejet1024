@@ -62,6 +62,7 @@ namespace ShooterConstants {
 constexpr int kShooterLeftCanId = 10;
 constexpr int kShooterRightCanId = 9;
 constexpr int kShooterPivotCanId = 17;
+constexpr int kShooterFeederCanId = 18;
 
 constexpr double kP = 2.0;
 constexpr double kI = 0.0;
@@ -202,6 +203,6 @@ constexpr double kElevatorShooterPosition = 0.0;
 constexpr double kShooterTransitPosition = 0.0;
 constexpr double kShooterShooterPosition = 0.0;
 // Intake Position Constants
+constexpr double kIntakeTransitPosition = 0.0;
 constexpr double kIntakeFloorPosition = 0.0;
-
 }  // namespace PositionConstants
