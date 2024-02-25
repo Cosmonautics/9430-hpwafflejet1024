@@ -10,7 +10,14 @@ DoSpeakerScoreActionCommand::DoSpeakerScoreActionCommand(
 void DoSpeakerScoreActionCommand::Initialize() {}
 
 void DoSpeakerScoreActionCommand::Execute() {
-  // Put code here 
+  // Check if AMP Score Position status == TRUE
+    // Set shooter motor 100%
+    // (TBD VISION) auto align DT to point at the speaker
+    // (TBD VISION/PATHING) pivot shooter manipulator to proper angle based on distance from goal
+    // Set shooter feeder motor 100% 
+      // Wait ~1 second 
+    // Set shooter motor 0%
+    // Set shooter feeder motor 0% 
 
 }
 
