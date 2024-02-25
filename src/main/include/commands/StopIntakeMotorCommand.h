@@ -20,6 +20,7 @@ class StopIntakeMotorCommand
 
  private:
   Intake* m_intakeSubsystem;
+  bool cmdFinished;
 };
 
 #endif  // STOP_INTAKE_MOTOR_COMMAND_H // (replace this with the name of the

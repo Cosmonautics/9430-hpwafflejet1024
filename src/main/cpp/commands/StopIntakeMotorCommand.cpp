@@ -8,8 +8,15 @@ StopIntakeMotorCommand::StopIntakeMotorCommand(  // Find and Replace
   AddRequirements({intakeSubsystem});
 }
 
-void StopIntakeMotorCommand::Initialize() {}
+void StopIntakeMotorCommand::Initialize() {
+  cmdFinished = false;
+}
 
-void StopIntakeMotorCommand::Execute() { m_intakeSubsystem->StopMotors(); }
+void StopIntakeMotorCommand::Execute() { 
+  m_intakeSubsystem->StopMotors(); 
+  cmdFinished = true;
+}
 
-bool StopIntakeMotorCommand::IsFinished() { return true; }
+bool StopIntakeMotorCommand::IsFinished() { 
+  return cmdFinished; 
+}
