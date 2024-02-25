@@ -197,13 +197,14 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_operatorController,
                        frc::XboxController::Button::kRightBumper)
       .OnTrue(new DoNoteIntakeActionCommand(&m_conveyor, &m_shooter, &m_intake))
-      .OnFalse(
-          new StopNoteIntakeActionCommand(&m_conveyor, &m_shooter, &m_intake));
+      .OnFalse(new StopNoteIntakeEjectActionCommand(&m_conveyor, &m_shooter,
+                                                    &m_intake));
 
   frc2::JoystickButton(&m_operatorController,
                        frc::XboxController::Button::kLeftBumper)
       .OnTrue(new DoNoteEjectActionCommand(&m_conveyor, &m_shooter, &m_intake))
-      .OnFalse(new StopIntakeMotorCommand(&m_intake));
+      .OnFalse(new StopNoteIntakeEjectActionCommand(&m_conveyor, &m_shooter,
+                                                    &m_intake));
 
   frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kB)
       .OnTrue(new DoSpeakerScoreActionCommand(&m_elevator, &m_shooter))
