@@ -57,7 +57,7 @@ void Intake::PivotToAngle(double intakeAngleRotations) {
 }
 
 void Intake::IntakePickUpNote(bool isPressed, double speed) {
-  double pickUpSpeed = -0.10;  // pick up is negative speed
+  double pickUpSpeed = -speed;  // pick up is negative speed
 
   if (isPressed) {
     m_intakeMotorLeft.Set(-pickUpSpeed);
