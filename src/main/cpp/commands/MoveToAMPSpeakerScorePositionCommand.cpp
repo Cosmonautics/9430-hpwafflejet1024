@@ -7,7 +7,7 @@ MoveToAmpSpeakerScorePositionCommand::MoveToAmpSpeakerScorePositionCommand(Eleva
 
 void MoveToAmpSpeakerScorePositionCommand::Initialize() {
     m_elevatorSubsystem->MoveToPosition(ElevatorConstants::kTransitPositionRotations);
-    m_shooterSubsystem->PivotToSetPoint(0.88);
+    m_shooterSubsystem->PivotToSetPoint(ShooterConstants::kAMPScorePositionRotations);
 }
 
 void MoveToAmpSpeakerScorePositionCommand::Execute() {}

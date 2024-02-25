@@ -126,6 +126,7 @@ constexpr double kD = 0.0;
 constexpr int kIntakeLeftCanId = 11;
 constexpr int kIntakeRightCanId = 12;
 constexpr int kIntakePivotCanId = 15;
+constexpr double kFloorIntakeAngle = 0;
 }  // namespace IntakeConstants
 namespace ConveyorConstants {
 static constexpr int kConveyorCanId = 16;
