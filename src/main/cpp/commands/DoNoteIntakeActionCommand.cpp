@@ -13,7 +13,7 @@ DoNoteIntakeActionCommand::DoNoteIntakeActionCommand(  // Find and Replace
 }
 
 void DoNoteIntakeActionCommand::Initialize() {
-  cmdFinished = false;
+  cmdFinished = false; // tests should go here to set target states for completion to return true
 }
 
 void DoNoteIntakeActionCommand::Execute() {
@@ -21,9 +21,9 @@ void DoNoteIntakeActionCommand::Execute() {
   m_conveyorSubsystem->Forward();
   m_shooterSubsystem->ShooterPickUpNote(true, 0.30);
   m_shooterSubsystem->MoveFeeder(1);
-  cmdFinished = true;
+  cmdFinished = true; // should only conditionally set to true if and only if tests for motor states return true
 }
 
 bool DoNoteIntakeActionCommand::IsFinished() { 
-  return cmdFinished; 
+  return cmdFinished; // finished logic should ensure test conditions pass (use motor position/motor state methods)
 }

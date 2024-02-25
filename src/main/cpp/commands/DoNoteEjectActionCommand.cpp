@@ -10,7 +10,7 @@ DoNoteEjectActionCommand::DoNoteEjectActionCommand(
 }
 
 void DoNoteEjectActionCommand::Initialize() {
-  cmdFinished = false;
+  cmdFinished = false; // tests should go here to set target states for completion to return true
 }
 
 void DoNoteEjectActionCommand::Execute() {
@@ -18,9 +18,9 @@ void DoNoteEjectActionCommand::Execute() {
   m_conveyorSubsystem->Reverse();
   m_shooterSubsystem->ShooterDropNote(true, 0.10);
   m_shooterSubsystem->MoveFeeder(-1);
-  cmdFinished = true;
+  cmdFinished = true; // should only conditionally set to true if and only if tests for motor states return true
 }
 
 bool DoNoteEjectActionCommand::IsFinished() {
-  return cmdFinished;
+  return cmdFinished; // finished logic should ensure test conditions pass (use motor position/motor state methods)
 }

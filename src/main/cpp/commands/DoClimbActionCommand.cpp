@@ -33,3 +33,7 @@ bool DoClimbActionCommand::IsFinished() {
   // Return code here
   // return ...;
 }
+
+// tests should go here to set target states for completion to return true
+// should only conditionally set to true if and only if tests for motor states return true
+// finished logic should ensure test conditions pass (use motor position/motor state methods)

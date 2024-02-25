@@ -9,14 +9,14 @@ StopShooterMotorCommand::StopShooterMotorCommand(  // Find and Replace
 }
 
 void StopShooterMotorCommand::Initialize() {
-  cmdFinished = false;
+  cmdFinished = false; // tests should go here to set target states for completion to return true
 }
 
 void StopShooterMotorCommand::Execute() { 
   m_shooterSubsystem->StopMotors(); 
-  cmdFinished = true; 
+  cmdFinished = true; // should only conditionally set to true if and only if tests for motor states return true
 }
 
 bool StopShooterMotorCommand::IsFinished() { 
-  return cmdFinished; 
+  return cmdFinished; // finished logic should ensure test conditions pass (use motor position/motor state methods)
 }
