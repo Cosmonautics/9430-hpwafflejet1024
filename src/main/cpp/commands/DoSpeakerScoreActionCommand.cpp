@@ -11,26 +11,29 @@ void DoSpeakerScoreActionCommand::Initialize() {}
 
 void DoSpeakerScoreActionCommand::Execute() {
   // Check if AMP Score Position status == TRUE // (If it's already set here, it won't move; if not, set it to amp score position)
+  // this code was copied from MoveToAMPSpeakerScorePositionCommand.cpp as an alternative to calling the command from this command. 
+  // (which is probably not possible or bad design) 
   m_shooterSubsystem->PivotToSetPoint(
       PositionConstants::kShooterShooterPosition);
   frc2::WaitCommand(0.8_s).Schedule();
   m_elevatorSubsystem->MoveToPosition(
       PositionConstants::kElevatorShooterPosition);
-    // Set shooter motor 100%
+  
+  // Set shooter motor 100%
   frc2::WaitCommand(0.2_s).Schedule();
   m_shooterSubsystem->ShootMotors(true, 1.0);
-    // (TBD VISION) auto align DT to point at the speaker
-    // (TBD VISION/PATHING) pivot shooter manipulator to proper angle based on distance from goal
+    
+  // (TBD VISION) auto align DT to point at the speaker
+  // (TBD VISION/PATHING) pivot shooter manipulator to proper angle based on distance from goal
   
-    // Set shooter feeder motor 100% 
-  m_shooterSubsystem->MoveFeeder(1.0);
-      // Wait ~1 second 
-  frc2::WaitCommand(1_s).Schedule();
+  m_shooterSubsystem->MoveFeeder(1.0); // Set shooter feeder motor 100% 
+      
+  frc2::WaitCommand(1_s).Schedule(); // Wait ~1 second 
 
-    // Set shooter motor 0%
-  m_shooterSubsystem->ShootMotors(false, 0.0);
-    // Set shooter feeder motor 0% 
-  m_shooterSubsystem->MoveFeeder(0.0);
+    
+  m_shooterSubsystem->ShootMotors(false, 0.0); // Set shooter motor 0%
+    
+  m_shooterSubsystem->MoveFeeder(0.0); // Set shooter feeder motor 0% 
 
 }
 
