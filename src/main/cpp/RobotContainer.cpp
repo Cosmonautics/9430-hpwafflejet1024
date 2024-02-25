@@ -123,40 +123,18 @@ void RobotContainer::ConfigureButtonBindings() {
   frc::Timer holdTimer;
   bool isClimb2 = false;
   bool isClimb1 = false;
-  frc2::JoystickButton(&m_operatorController,
+  /*frc2::JoystickButton(&m_operatorController,
                        frc::XboxController::Button::kBack)
       .OnTrue(new frc2::InstantCommand(
-          [this, &holdTimer] {
-            holdTimer.Reset();
-            holdTimer.Start();
+          [this] {
+
           },
-          {&m_elevator, &m_shooter}))
-      .OnFalse(new frc2::InstantCommand(
-          [this, &holdTimer] {
-            holdTimer.Stop();
-            if (holdTimer.HasElapsed(0.5_s)) {
-              m_elevator.ToggleManualOverride();
-              m_shooter.ToggleManualOverride();
-              ControllerUtils::VibrateController(m_operatorController, 0.8,
-                                                 0.3_s);
-            }
-          },
-          {&m_elevator, &m_shooter}));
+          {&m_elevator, &m_shooter}))*/
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kStart)
       .OnTrue(new frc2::InstantCommand(
-          [this, &holdTimer] {
-            holdTimer.Reset();
-            holdTimer.Start();
-          },
-          {&m_drive}))
-      .OnFalse(new frc2::InstantCommand(
-          [this, &holdTimer] {
-            holdTimer.Stop();
-            if (holdTimer.HasElapsed(0.5_s)) {
-              m_drive.ZeroHeading();
-              ControllerUtils::VibrateController(m_driverController, 0.8,
-                                                 0.3_s);
-            }
+          [this] {
+            m_drive.ZeroHeading();
+            ControllerUtils::VibrateController(m_driverController, 0.8, 0.3_s);
           },
           {&m_drive}));
   frc::ApplyDeadband(m_operatorController.GetRightTriggerAxis(),
