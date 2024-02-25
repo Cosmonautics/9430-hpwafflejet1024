@@ -17,7 +17,7 @@ void DoNoteIntakeActionCommand::Initialize() {}
 void DoNoteIntakeActionCommand::Execute() {
   m_intakeSubsystem->IntakePickUpNote(true, 1);
   m_conveyorSubsystem->Forward();
-  m_shooterSubsystem->ShooterPickUpNote(true, 0.10);
+  m_shooterSubsystem->ShooterPickUpNote(true, 0.30);
   m_shooterSubsystem->MoveFeeder(1);
 }
 
