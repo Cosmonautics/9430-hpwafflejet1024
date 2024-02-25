@@ -1,5 +1,5 @@
-#ifndef COMMAND_TEMPLATE_H
-#define COMMAND_TEMPLATE_H // rename these to the name of the command in all caps followed by _H
+#ifndef DO_NOTE_INTAKE_COMMAND_H
+#define DO_NOTE_INTAKE_COMMAND_H // rename these to the name of the command in all caps followed by _H
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
@@ -22,4 +22,4 @@ private:
     Intake* m_intakeSubsystem;
 };
 
-#endif // COMMAND_TEMPLATE_H // (replace this with the name of the command name)
+#endif // DO_NOTE_INTAKE_COMMAND_H // (replace this with the name of the command name)

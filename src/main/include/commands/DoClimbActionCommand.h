@@ -9,7 +9,7 @@
 
 class DoClimbActionCommand : public frc2::CommandHelper<frc2::Command, DoClimbActionCommand> {
 public:
-    DoClimbActionCommand(Elevator* elevatorSubsystem, Shooter* shooterSubsystem); 
+    DoClimbActionCommand(Elevator* elevatorSubsystem, Shooter* shooterSubsystem, bool isClimb1); 
 
     void Initialize() override;
     void Execute() override;
@@ -18,6 +18,7 @@ public:
 private:
     Elevator* m_elevatorSubsystem; 
     Shooter* m_shooterSubsystem;
+    bool m_isClimb1;
 };
 
 #endif // DO_CLIMB_ACTION_COMMAND_H

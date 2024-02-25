@@ -1,8 +1,8 @@
-#include "commands/DoNoteEjectActionCommand.h" 
+#include "commands/DoNoteEjectActionCommand.h"
 
-DoNoteEjectActionCommand::DoNoteEjectActionCommand( 
+DoNoteEjectActionCommand::DoNoteEjectActionCommand(
     Conveyor* conveyorSubsystem, Shooter* shooterSubsystem,
-    Intake* intakeSubsystem) // add all the relevant subsystems to constructor 
+    Intake* intakeSubsystem)  // add all the relevant subsystems to constructor
     : m_conveyorSubsystem(conveyorSubsystem),
       m_shooterSubsystem(shooterSubsystem),
       m_intakeSubsystem(intakeSubsystem) {
@@ -12,11 +12,13 @@ DoNoteEjectActionCommand::DoNoteEjectActionCommand(
 void DoNoteEjectActionCommand::Initialize() {}
 
 void DoNoteEjectActionCommand::Execute() {
-  // Set Intake wheel motor to 100%
-  // Set Conveyor motor to 100%
-  // Set shooter motor to ~10%
-  // Set shooter feeder motor to 100% 
-
+  m_intakeSubsystem->IntakeDropNote(true, 1);
+  m_conveyorSubsystem->Reverse();
+  m_shooterSubsystem->ShooterDropNote(true, 0.10);
+  m_shooterSubsystem->MoveFeeder(-1);
+  frc2::WaitCommand(2_s).Schedule();
+  m_conveyorSubsystem->Stop();
+  m_shooterSubsystem->StopMotors();
 }
 
 bool DoNoteEjectActionCommand::IsFinished() {
