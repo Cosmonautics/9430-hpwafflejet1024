@@ -23,7 +23,7 @@ This section is written for our drive team as a reference for robot controls. Th
 
 #### Robot Positions
 
-* AMP Score / Speaker Score Position : (*TOGGLE*) Press **D-Pad Right** to switch between AMP Scoring Mode and Speaker Scoring Mode
+* AMP Score / Speaker Score Position : (*TOGGLE*) Press **D-Pad Right** to switch between AMP Scoring Mode and Speaker Scoring Mode -- needs redesign but currently works as designed 
 * Climb : Press **D-Pad Up**
 * Floor Intake Position : **Press D-Pad Left** 
 * Transit Position : Press **D-Pad Down**
