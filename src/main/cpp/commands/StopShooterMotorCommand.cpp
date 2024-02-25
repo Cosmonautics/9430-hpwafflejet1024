@@ -8,8 +8,15 @@ StopShooterMotorCommand::StopShooterMotorCommand(  // Find and Replace
   AddRequirements({shooterSubsystem});
 }
 
-void StopShooterMotorCommand::Initialize() {}
+void StopShooterMotorCommand::Initialize() {
+  cmdFinished = false;
+}
 
-void StopShooterMotorCommand::Execute() { m_shooterSubsystem->StopMotors(); }
+void StopShooterMotorCommand::Execute() { 
+  m_shooterSubsystem->StopMotors(); 
+  cmdFinished = true; 
+}
 
-bool StopShooterMotorCommand::IsFinished() { return true; }
+bool StopShooterMotorCommand::IsFinished() { 
+  return cmdFinished; 
+}

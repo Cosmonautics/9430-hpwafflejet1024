@@ -20,6 +20,7 @@ class StopShooterMotorCommand
 
  private:
   Shooter* m_shooterSubsystem;
+  bool cmdFinished;
 };
 
 #endif  // STOP_SHOOTER_MOTOR_COMMAND_H // (replace this with the name of the
