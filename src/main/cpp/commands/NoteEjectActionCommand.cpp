@@ -1,10 +1,10 @@
-#include "commands/IntakeDropNoteCommand.h"
+#include "commands/NoteEjectActionCommand.h"
 
-IntakeDropNoteCommand::IntakeDropNoteCommand(Intake* intakeSubsystem, bool isPressed, double speed)
+NoteEjectActionCommand::NoteEjectActionCommand(Intake* intakeSubsystem, bool isPressed, double speed)
 : m_intakeSubsystem(intakeSubsystem), m_isPressed(isPressed), m_speed(speed) {
     AddRequirements({intakeSubsystem});
 }
 
-void IntakeDropNoteCommand::Initialize() {
+void NoteEjectActionCommand::Initialize() {
     m_intakeSubsystem->IntakeDropNote(m_isPressed, m_speed);
 }

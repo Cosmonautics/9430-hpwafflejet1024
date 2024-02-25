@@ -1,12 +1,12 @@
-#ifndef INTAKE_DROP_NOTE_COMMAND_H
-#define INTAKE_DROP_NOTE_COMMAND_H
+#ifndef NOTE_EJECT_ACTION_COMMAND_H
+#define NOTE_EJECT_ACTION_COMMAND_H
 
 #include <frc2/command/InstantCommand.h>
 #include "subsystems/Intake.h"
 
-class IntakeDropNoteCommand : public frc2::InstantCommand {
+class NoteEjectActionCommand : public frc2::InstantCommand {
 public:
-    IntakeDropNoteCommand(Intake* intakeSubsystem, bool isPressed, double speed);
+    NoteEjectActionCommand(Intake* intakeSubsystem, bool isPressed, double speed);
     
     void Initialize() override;
     

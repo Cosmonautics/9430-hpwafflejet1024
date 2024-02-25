@@ -1,10 +1,10 @@
-#include "commands/IntakePickUpNoteCommand.h"
+#include "commands/NoteIntakeActionCommand.h"
 
-IntakePickUpNoteCommand::IntakePickUpNoteCommand(Intake* intakeSubsystem, bool isPressed, double speed)
+NoteIntakeActionCommand::NoteIntakeActionCommand(Intake* intakeSubsystem, bool isPressed, double speed)
 : m_intakeSubsystem(intakeSubsystem), m_isPressed(isPressed), m_speed(speed) {
     AddRequirements({intakeSubsystem});
 }
 
-void IntakePickUpNoteCommand::Initialize() {
+void NoteIntakeActionCommand::Initialize() {
     m_intakeSubsystem->IntakePickUpNote(m_isPressed, m_speed);
 }

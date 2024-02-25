@@ -1,14 +1,16 @@
-#ifndef INTAKE_PICK_UP_NOTE_COMMAND_H
-#define INTAKE_PICK_UP_NOTE_COMMAND_H
+#ifndef NOTE_INTAKE_ACTION_COMMAND_H
+#define NOTE_INTAKE_ACTION_COMMAND_H
 
 #include <frc2/command/InstantCommand.h>
 #include "subsystems/Intake.h"
 
-class IntakePickUpNoteCommand : public frc2::InstantCommand {
+class NoteIntakeActionCommand : public frc2::InstantCommand {
 public:
-    IntakePickUpNoteCommand(Intake* intakeSubsystem, bool isPressed, double speed);
+    NoteIntakeActionCommand(Intake* intakeSubsystem, bool isPressed, double speed);
     
     void Initialize() override;
+    void Execute() override;
+    bool IsFinished() override; 
     
 private:
     Intake* m_intakeSubsystem;
