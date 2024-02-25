@@ -8,9 +8,9 @@
 #include "subsystems/Shooter.h" // import all relevant subsystems 
 #include "subsystems/Intake.h" // import all relevant subsystems 
 
-class StopNoteIntakeActionCommand : public frc2::CommandHelper<frc2::Command, StopNoteIntakeActionCommand> {
+class StopNoteIntakeEjectActionCommand : public frc2::CommandHelper<frc2::Command, StopNoteIntakeEjectActionCommand> {
 public:
-    StopNoteIntakeActionCommand(Conveyor* conveyorSubsystem, Shooter* shooterSubsystem, Intake* intakeSubsystem); // Put in all relevant subsystems
+    StopNoteIntakeEjectActionCommand(Conveyor* conveyorSubsystem, Shooter* shooterSubsystem, Intake* intakeSubsystem); // Put in all relevant subsystems
 
     void Initialize() override;
     void Execute() override;

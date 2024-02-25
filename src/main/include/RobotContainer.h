@@ -20,7 +20,7 @@
 #include "commands/DoClimbActionCommand.h"
 #include "commands/DoNoteEjectActionCommand.h"
 #include "commands/DoNoteIntakeActionCommand.h"
-#include "commands/StopNoteIntakeActionCommand.h"
+#include "commands/StopNoteIntakeEjectActionCommand.h"
 #include "commands/DoSpeakerScoreActionCommand.h"
 #include "commands/MoveToAMPSpeakerScorePositionCommand.h"
 #include "commands/MoveToAmpSpeakerScorePositionCommand.h"
