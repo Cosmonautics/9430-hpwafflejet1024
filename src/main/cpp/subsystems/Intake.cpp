@@ -86,3 +86,8 @@ bool Intake::IsAtSetPoint() {
 
   return error <= toleranceRotations;
 }
+
+void Intake::StopMotors() {
+  m_intakeMotorLeft.Set(0);
+  m_intakeMotorRight.Set(0);
+}
