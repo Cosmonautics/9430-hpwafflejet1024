@@ -7,19 +7,19 @@ Conveyor::Conveyor() {
 }
 
 void Conveyor::Periodic() {
-  if (limitSwitch.Get() == true) {
-    Stop();
-  }
+ // if (limitSwitch.Get() == true) {
+    //Stop();
+  //}
 }
 
 void Conveyor::Forward() {
-  if (limitSwitch.Get() == false) {
-    conveyorMotor.Set(0.5);
-  }
+ // if (limitSwitch.Get() == false) {
+    conveyorMotor.Set(1);
+  //}
 }
 
 void Conveyor::Reverse() {
-  conveyorMotor.Set(-0.5);  
+  conveyorMotor.Set(-1);  
 }
 
 void Conveyor::Stop() { conveyorMotor.Set(0); }
