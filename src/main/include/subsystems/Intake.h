@@ -33,12 +33,9 @@ class Intake : public frc2::Subsystem {
   // Design:
   // 1 for pivot angle
 
-  rev::CANSparkFlex m_intakeMotorLeft{
+  rev::CANSparkMax m_intakeMotorLeft{
       IntakeConstants::kIntakeLeftCanId,
-      rev::CANSparkLowLevel::MotorType::kBrushless};
-  rev::CANSparkFlex m_intakeMotorRight{
-      IntakeConstants::kIntakeRightCanId,
-      rev::CANSparkLowLevel::MotorType::kBrushless};
+      rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax m_intakePivotMotor{IntakeConstants::kIntakePivotCanId,
                                       rev::CANSparkMax::MotorType::kBrushless};
   rev::SparkAbsoluteEncoder m_intakePivotAbsoluteEncoder =
