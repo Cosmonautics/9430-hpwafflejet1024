@@ -191,9 +191,15 @@ constexpr int kOperatorControllerPort = 1;
 constexpr double kDriveDeadband = 0.05;
 }  // namespace OIConstants
 
-
-//Position Commands
-//THESE ARE IMPORTANT, AS THEY STORE EXACT POSITIONS FOR EACH SUBSYSTEMS
+// Position Constants
+// THESE ARE IMPORTANT, AS THEY STORE EXACT POSITIONS FOR EACH SUBSYSTEMS
 namespace PositionConstants {
+// Elevator Position Constants
+constexpr double kElevatorTransitPosition = 0.326;
+// Shooter Position Constants
+constexpr double kShooterTransitPosition = 0.0;
+
+// Intake Position Constants
+constexpr double kIntakeFloorPosition = 0.0;
 
 }  // namespace PositionConstants

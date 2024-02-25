@@ -185,9 +185,9 @@ void RobotContainer::ConfigureButtonBindings() {
           [this] { m_shooter.ShootMotors(false, 0); }, {&m_shooter}));
 
   // D-Pad Right (Elevator)
-  frc2::POVButton(&m_operatorController, 90)
+  /*frc2::POVButton(&m_operatorController, 90)
       .OnTrue(
-          new MoveToAmpSpeakerScorePositionCommand(&m_elevator, &m_shooter));
+          new MoveToAmpSpeakerScorePositionCommand(&m_elevator, &m_shooter));*/
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

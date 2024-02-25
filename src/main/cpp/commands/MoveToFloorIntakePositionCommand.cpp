@@ -13,12 +13,12 @@ void MoveToFloorIntakePositionCommand::Initialize() {}
 
 void MoveToFloorIntakePositionCommand::Execute() {
   m_elevatorSubsystem->MoveToPosition(
-      ElevatorConstants::kFloorIntakePositionRotations);
+      PositionConstants::kElevatorTransitPosition);
   m_shooterSubsystem->PivotToSetPoint(
-      ShooterConstants::kFloorIntakePositionRotations);
-  m_intakeSubsystem->PivotToAngle(IntakeConstants::kFloorIntakeAngle);
+      PositionConstants::kShooterTransitPosition);
+  m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeFloorPosition);
 }
 
 bool MoveToFloorIntakePositionCommand::IsFinished() {
-  return m_elevatorSubsystem->AtTargetPosition();
+  return m_elevatorSubsystem->AtTargetPosition() && m_shooterSubsystem->IsAtSetPoint() && m_intakeSubsystem->IsAtSetPoint();
 }
