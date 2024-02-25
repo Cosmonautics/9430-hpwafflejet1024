@@ -80,7 +80,7 @@ void Shooter::ShootMotors(bool isPressed, double speed) {
 }
 
 void Shooter::ShooterDropNote(bool isPressed, double speed) {
-  double dropSpeed = 0.10;  // drop positive speed
+  double dropSpeed = speed;  // drop positive speed
 
   if (isPressed) {
     m_shooterMotorLeft.Set(-dropSpeed);
@@ -94,7 +94,7 @@ void Shooter::ShooterDropNote(bool isPressed, double speed) {
 void Shooter::MoveFeeder(double speed) { m_shooterFeeder.Set(speed); }
 
 void Shooter::ShooterPickUpNote(bool isPressed, double speed) {
-  double pickUpSpeed = -0.10;  // pick up is negative speed
+  double pickUpSpeed = pickUpSpeed;  // pick up is negative speed
 
   if (isPressed) {
     m_shooterMotorLeft.Set(-pickUpSpeed);
@@ -123,4 +123,9 @@ void Shooter::ManualMove(double speed) {
 bool Shooter::ToggleManualOverride() {
   manualOverride = !manualOverride;
   return manualOverride;
+}
+
+void Shooter::StopMotors() {
+  m_shooterMotorLeft.Set(0);
+  m_shooterMotorRight.Set(0);
 }

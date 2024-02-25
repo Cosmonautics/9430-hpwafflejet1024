@@ -57,7 +57,7 @@ void Intake::PivotToAngle(double intakeAngleRotations) {
 }
 
 void Intake::IntakePickUpNote(bool isPressed, double speed) {
-  double pickUpSpeed = -0.10;  // pick up is negative speed
+  double pickUpSpeed = -speed;  // pick up is negative speed
 
   if (isPressed) {
     m_intakeMotorLeft.Set(-pickUpSpeed);
@@ -85,4 +85,9 @@ bool Intake::IsAtSetPoint() {
   double error = std::abs(currentAngleRotations - m_targetSetpointRotations);
 
   return error <= toleranceRotations;
+}
+
+void Intake::StopMotors() {
+  m_intakeMotorLeft.Set(0);
+  m_intakeMotorRight.Set(0);
 }

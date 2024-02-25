@@ -31,6 +31,7 @@ class Shooter : public frc2::Subsystem {
   void ManualMove(double speed);
   bool ToggleManualOverride();
   void MoveFeeder(double speed);
+  void StopMotors();
 
  private:
   rev::CANSparkFlex m_shooterMotorLeft{
