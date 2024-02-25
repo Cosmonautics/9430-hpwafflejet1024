@@ -66,22 +66,10 @@ constexpr int kShooterPivotCanId = 17;
 constexpr double kP = 2.0;
 constexpr double kI = 0.0;
 constexpr double kD = 0.0;
-constexpr double kFloorIntakePositionDegrees =
-    0.0;  // Floor intake position (in degrees)
-constexpr double kAMPScorePositionRotations =
-    0.75;  // AMP/speaker score position (in degrees)
-constexpr double kTransitPositionDegrees =
-    45.0;  // Transit position (in degrees)
-constexpr double kClimb1PositionDegrees =
-    135.0;  // Climb 1 position (in degrees)
-constexpr double kClimb2PositionDegrees =
-    180.0;                                     // Climb 2 position (in degrees)
-constexpr double kTrapPositionDegrees = 90.0;  // Trap position (in degrees)
-
-constexpr double kShooterSetpointDegree = 270.0;
 }  // namespace ShooterConstants
 
 namespace ElevatorConstants {
+
 constexpr int kElevatorLeftCanId = 13;
 constexpr int kElevatorRightCanId = 14;
 
@@ -105,18 +93,6 @@ constexpr double kElevatorSetpointInches = 12.0;  // Placeholder constant
 constexpr double kGearBoxScale = 0.2045;
 constexpr double kPositionToleranceInches = 1.0 / 2.54;
 constexpr double kEncoderUnitsPerInch = 1 / kElevatorInchesPerTick;
-
-constexpr double kFloorIntakePositionInches =
-    0.0;  // Floor intake position (in inches)
-constexpr double kAMPScorePositionRotations =
-    0.426;  // AMP/speaker score position (in inches)
-constexpr double kTransitPositionRotations =
-    0.346;  // Transit position (in inches)
-constexpr double kClimb1PositionRotations =
-    0.057;                                      // Climb 1 position (in inches)
-constexpr double kClimb2PositionInches = 48.0;  // Climb 2 position (in inches)
-
-constexpr double kClimbPositionInches = 7.0;
 }  // namespace ElevatorConstants
 
 namespace IntakeConstants {
@@ -126,27 +102,12 @@ constexpr double kD = 0.0;
 constexpr int kIntakeLeftCanId = 11;
 constexpr int kIntakeRightCanId = 12;
 constexpr int kIntakePivotCanId = 15;
-constexpr double kFloorIntakeAngle = 0;
 }  // namespace IntakeConstants
 namespace ConveyorConstants {
 static constexpr int kConveyorCanId = 16;
 static constexpr int kLimitSwitchChannel =
     0;  // Update this with the actual channel
 }  // namespace ConveyorConstants
-
-namespace ClimbConstants {
-constexpr double kClimbPosition1Inches = 10.0;
-constexpr double kClimbPosition2Inches = 5.0;
-}  // namespace ClimbConstants
-namespace FloorIntakeConstants {
-constexpr double kFloorIntakeAngle = 5.0;
-}  // namespace FloorIntakeConstants
-namespace TransitPositionConstants {
-constexpr double kTransitAngle = 5.0;
-}
-namespace ClimbPositionConstants {
-constexpr double kClimbAngle1 = 5.0;
-}
 namespace ModuleConstants {
 // Invert the turning encoder, since the output shaft rotates in the opposite
 // direction of the steering motor in the MAXSwerve Module.

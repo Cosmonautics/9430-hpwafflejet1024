@@ -13,9 +13,9 @@ void MoveToFloorIntakePositionCommand::Initialize() {}
 
 void MoveToFloorIntakePositionCommand::Execute() {
   m_elevatorSubsystem->MoveToPosition(
-      ElevatorConstants::kFloorIntakePositionInches);
+      ElevatorConstants::kFloorIntakePositionRotations);
   m_shooterSubsystem->PivotToSetPoint(
-      ShooterConstants::kFloorIntakePositionDegrees);
+      ShooterConstants::kFloorIntakePositionRotations);
   m_intakeSubsystem->PivotToAngle(IntakeConstants::kFloorIntakeAngle);
 }
 
