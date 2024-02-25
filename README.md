@@ -14,12 +14,43 @@ To get started, make sure you have calibrated the zero offsets for the absolute 
 
 * SPARK MAX Firmware v1.6.2 - Adds features that are required for swerve
 * REVLib v2023.1.2 - Includes APIs for the new firmware features
+* XBox One Gamepad
+* AHRS Libraries (navX MXP)
+
+## Robot Controls
+This section is written for our drive team as a reference for robot controls. The listed controls are for an XBox One Gamepad, which is required for operation.
+### Operator Guide
+
+#### Robot Positions
+
+* AMP Score / Speaker Score Position : (*TOGGLE*) Press **D-Pad Right** to switch between AMP Scoring Mode and Speaker Scoring Mode
+* Climb : Press **D-Pad Up**
+* Floor Intake Position : **Press D-Pad Left** 
+* Transit Position : Press **D-Pad Down**
+
+#### Robot Actions
+
+* Climb Action : -- Postpone (Press **Y**)
+* Note Intake Action : Press **Right Bumper**
+* Note Eject Action : Press **Left Bumper**
+* Speaker Score Action : Press **B**
+
+### Driver Guide
+
+#### Movement 
+* Left Thumbstick: Moves and strafes the robot relative to the field
+* Right Thumbstick: 
+    * Left: Rotate the robot counterclockwise
+    * Right: Rotate the robot clockwise 
+* SELECT Button: Press to reset robot heading for field relative drive
+    * Face the front of the robot in the same direction of the Driver (the driver and the robot should be facing the same way).
+    * Press the SELECT button and observe haptic feedback. 
+
+
 
 ## Configuration
 
-It is possible that this project will not work for your robot right out of the box. Various things like the CAN IDs, PIDF gains, chassis configuration, etc. must be determined for your own robot!
-
-These values can be adjusted in the `Constants.h` file.
+### Assigned CAN IDs 
 
 # Resources
 
