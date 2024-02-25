@@ -9,15 +9,18 @@ DoNoteEjectActionCommand::DoNoteEjectActionCommand(
   AddRequirements({conveyorSubsystem, shooterSubsystem, intakeSubsystem});
 }
 
-void DoNoteEjectActionCommand::Initialize() {}
+void DoNoteEjectActionCommand::Initialize() {
+  cmdFinished = false;
+}
 
 void DoNoteEjectActionCommand::Execute() {
   m_intakeSubsystem->IntakeDropNote(true, 1);
   m_conveyorSubsystem->Reverse();
   m_shooterSubsystem->ShooterDropNote(true, 0.10);
   m_shooterSubsystem->MoveFeeder(-1);
+  cmdFinished = true;
 }
 
 bool DoNoteEjectActionCommand::IsFinished() {
-  return true;
+  return cmdFinished;
 }
