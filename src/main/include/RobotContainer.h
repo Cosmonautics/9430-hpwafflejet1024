@@ -16,12 +16,19 @@
 
 #include "AHRS.h"
 #include "Constants.h"
+#include "commands/CommandTemplate.h"
+#include "commands/DoClimbActionCommand.h"
+#include "commands/DoNoteEjectActionCommand.h"
+#include "commands/DoNoteIntakeActionCommand.h"
+#include "commands/DoSpeakerScoreActionCommand.h"
+#include "commands/MoveToAMPSpeakerScorePositionCommand.h"
 #include "commands/MoveToAmpSpeakerScorePositionCommand.h"
 #include "commands/MoveToClimbPos1Command.h"
 #include "commands/MoveToClimbPos2Command.h"
 #include "commands/MoveToFloorIntakePositionCommand.h"
 #include "commands/MoveToTransitPositionCommand.h"
-
+#include "commands/StopIntakeMotorCommand.h"
+#include "commands/StopShooterMotorCommand.h"
 #include "subsystems/Conveyor.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
@@ -47,7 +54,8 @@ class RobotContainer {
   frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
 
   // The driver's controller
-  frc::XboxController m_operatorController{OIConstants::kOperatorControllerPort};
+  frc::XboxController m_operatorController{
+      OIConstants::kOperatorControllerPort};
   // In RobotContainer.cpp, within the RobotContainer constructor:
   // Enum to keep track of the last pressed trigger
 

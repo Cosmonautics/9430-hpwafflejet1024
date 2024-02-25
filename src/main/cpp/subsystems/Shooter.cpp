@@ -80,7 +80,7 @@ void Shooter::ShootMotors(bool isPressed, double speed) {
 }
 
 void Shooter::ShooterDropNote(bool isPressed, double speed) {
-  double dropSpeed = speed;  // drop positive speed
+  double dropSpeed = -speed;  // drop positive speed
 
   if (isPressed) {
     m_shooterMotorLeft.Set(-dropSpeed);
