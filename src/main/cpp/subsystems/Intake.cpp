@@ -18,6 +18,9 @@ elevator postion and shooter position remain defult to transit positon
 */
 
 Intake::Intake() {
+  m_intakePivotMotor.RestoreFactoryDefaults();
+  m_intakePivotMotor.SetInverted(true);
+  m_pidController.SetOutputRange(-1.0, 1.0);
   m_pidController.SetFeedbackDevice(m_intakePivotAbsoluteEncoder);
   m_pidController.SetP(IntakeConstants::kP);
   m_pidController.SetI(IntakeConstants::kI);
@@ -29,10 +32,8 @@ void Intake::IntakeDropNote(bool isPressed, double speed) {
 
   if (isPressed) {
     m_intakeMotorLeft.Set(-dropSpeed);
-    m_intakeMotorRight.Set(dropSpeed);
   } else {
     m_intakeMotorLeft.Set(0);
-    m_intakeMotorRight.Set(0);
   }
 }
 
@@ -44,11 +45,11 @@ void Intake::PivotToAngle(double intakeAngleRotations) {
       0.3;  // Example maximum limit, adjust as needed
 
   // Clamp the input to ensure it's within the specified limits
-  if (intakeAngleRotations < minAngleRotations) {
+  /*if (intakeAngleRotations < minAngleRotations) {
     intakeAngleRotations = minAngleRotations;
   } else if (intakeAngleRotations > maxAngleRotations) {
     intakeAngleRotations = maxAngleRotations;
-  }
+  }*/
 
   m_targetSetpointRotations = intakeAngleRotations;
   // Set the target position using PID controller
@@ -60,21 +61,17 @@ void Intake::IntakePickUpNote(bool isPressed, double speed) {
   double pickUpSpeed = -speed;  // pick up is negative speed
 
   if (isPressed) {
-    m_intakeMotorLeft.Set(-pickUpSpeed);
-    m_intakeMotorRight.Set(pickUpSpeed);
+    m_intakeMotorLeft.Set(pickUpSpeed);
   } else {
     m_intakeMotorLeft.Set(0);
-    m_intakeMotorRight.Set(0);
   }
 }
 
 void Intake::ControlIntakeMotors(bool isPressed, double speed) {
   if (isPressed) {
     m_intakeMotorLeft.Set(-speed);
-    m_intakeMotorRight.Set(speed);
   } else {
     m_intakeMotorLeft.Set(0);
-    m_intakeMotorRight.Set(0);
   }
 }
 
@@ -89,5 +86,4 @@ bool Intake::IsAtSetPoint() {
 
 void Intake::StopMotors() {
   m_intakeMotorLeft.Set(0);
-  m_intakeMotorRight.Set(0);
 }
