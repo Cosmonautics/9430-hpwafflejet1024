@@ -7,7 +7,9 @@ DoSpeakerScoreActionCommand::DoSpeakerScoreActionCommand(
   AddRequirements({elevatorSubsystem, shooterSubsystem});
 }
 
-void DoSpeakerScoreActionCommand::Initialize() {}
+void DoSpeakerScoreActionCommand::Initialize() {
+  cmdFinished = false; 
+}
 
 void DoSpeakerScoreActionCommand::Execute() {
   // Check if AMP Score Position status == TRUE // (If it's already set here, it won't move; if not, set it to amp score position)
@@ -35,9 +37,10 @@ void DoSpeakerScoreActionCommand::Execute() {
     
   m_shooterSubsystem->MoveFeeder(0.0); // Set shooter feeder motor 0% 
 
+  cmdFinished = true;
+
 }
 
 bool DoSpeakerScoreActionCommand::IsFinished() {
-  // Return code here
-  // return ...;
+  return cmdFinished;
 }
