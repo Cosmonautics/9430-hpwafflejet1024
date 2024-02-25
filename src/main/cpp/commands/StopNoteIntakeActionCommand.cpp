@@ -12,13 +12,18 @@ StopNoteIntakeActionCommand::StopNoteIntakeActionCommand(  // Find and Replace
   AddRequirements({conveyorSubsystem, shooterSubsystem, intakeSubsystem});
 }
 
-void StopNoteIntakeActionCommand::Initialize() {}
+void StopNoteIntakeActionCommand::Initialize() {
+  cmdFinished = false;
+}
 
 void StopNoteIntakeActionCommand::Execute() {
   m_intakeSubsystem->StopMotors();
   m_conveyorSubsystem->Stop();
   m_shooterSubsystem->StopMotors();
   m_shooterSubsystem->MoveFeeder(0);
+  cmdFinished = true;
 }
 
-bool StopNoteIntakeActionCommand::IsFinished() { return true; }
+bool StopNoteIntakeActionCommand::IsFinished() { 
+  return cmdFinished; 
+}
