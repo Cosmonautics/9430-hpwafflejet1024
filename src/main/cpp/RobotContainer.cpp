@@ -168,6 +168,10 @@ void RobotContainer::ConfigureButtonBindings() {
       .OnTrue(
           new MoveToAMPSpeakerScorePositionCommand(&m_elevator, &m_shooter));
 
+  frc2::POVButton(&m_operatorController, 180)
+      .OnTrue(
+          new MoveToTransitPositionCommand(&m_elevator, &m_shooter, &m_intake));
+
   frc2::POVButton(&m_operatorController, 0)
       .OnTrue(new frc2::InstantCommand(
           [this, &isClimb2, &isClimb1] {
@@ -190,15 +194,15 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_operatorController,
                        frc::XboxController::Button::kRightBumper)
       .OnTrue(new DoNoteIntakeActionCommand(&m_conveyor, &m_shooter, &m_intake))
-      .OnFalse(new StopIntakeMotorCommand(&m_intake));
+      .OnFalse(
+          new StopNoteIntakeActionCommand(&m_conveyor, &m_shooter, &m_intake));
 
   frc2::JoystickButton(&m_operatorController,
                        frc::XboxController::Button::kLeftBumper)
       .OnTrue(new DoNoteEjectActionCommand(&m_conveyor, &m_shooter, &m_intake))
       .OnFalse(new StopIntakeMotorCommand(&m_intake));
 
-  frc2::JoystickButton(&m_operatorController,
-                       frc::XboxController::Button::kB)
+  frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kB)
       .OnTrue(new DoSpeakerScoreActionCommand(&m_elevator, &m_shooter))
       .OnFalse(new StopShooterMotorCommand(&m_shooter));
 }
