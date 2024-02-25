@@ -118,7 +118,8 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureButtonBindings() {
   frc::Timer holdTimer;
-
+  bool isClimb2 = false;
+  bool isClimb1 = false;
   frc2::JoystickButton(&m_operatorController,
                        frc::XboxController::Button::kBack)
       .OnTrue(new frc2::InstantCommand(
@@ -158,16 +159,48 @@ void RobotContainer::ConfigureButtonBindings() {
   frc::ApplyDeadband(m_operatorController.GetRightTriggerAxis(),
                      ElevatorConstants::kTriggerDeadband);
 
-  // X Button (Reload/Pickup Note)
-  /*frc2::JoystickButton(&m_operatorController,
-  frc::XboxController::Button::kX) .OnTrue(new
-  IntakePickUpNoteCommand(&m_intake, true, -0.10)) .OnFalse(new
-  IntakePickUpNoteCommand(&m_intake, false, 0));*/
-
   // D-Pad Left (Floor Intake)
   frc2::POVButton(&m_operatorController, 270)
       .OnTrue(new MoveToFloorIntakePositionCommand(&m_elevator, &m_shooter,
                                                    &m_intake));
+
+  frc2::POVButton(&m_operatorController, 90)
+      .OnTrue(
+          new MoveToAMPSpeakerScorePositionCommand(&m_elevator, &m_shooter));
+
+  frc2::POVButton(&m_operatorController, 0)
+      .OnTrue(new frc2::InstantCommand(
+          [this, &isClimb2, &isClimb1] {
+            if (isClimb2) {
+              (new MoveToClimbPos1Command(&m_elevator, &m_shooter, &m_intake))
+                  ->Schedule();
+              isClimb1 = false;
+            } else {
+              (new MoveToClimbPos2Command(&m_elevator))->Schedule();
+              isClimb1 = true;
+            }
+            isClimb2 = !isClimb2;
+          },
+          {&m_elevator, &m_shooter, &m_intake}));
+
+  /*frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kX)
+      .OnTrue(new DoClimbActionCommand(&m_intake, true, -0.10))
+      .OnFalse(new DoClimbActionCommand(&m_intake, false, 0));*/
+
+  frc2::JoystickButton(&m_operatorController,
+                       frc::XboxController::Button::kRightBumper)
+      .OnTrue(new DoNoteIntakeActionCommand(&m_conveyor, &m_shooter, &m_intake))
+      .OnFalse(new StopIntakeMotorCommand(&m_intake));
+
+  frc2::JoystickButton(&m_operatorController,
+                       frc::XboxController::Button::kLeftBumper)
+      .OnTrue(new DoNoteEjectActionCommand(&m_conveyor, &m_shooter, &m_intake))
+      .OnFalse(new StopIntakeMotorCommand(&m_intake));
+
+  frc2::JoystickButton(&m_operatorController,
+                       frc::XboxController::Button::kB)
+      .OnTrue(new DoSpeakerScoreActionCommand(&m_elevator, &m_shooter))
+      .OnFalse(new StopShooterMotorCommand(&m_shooter));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
