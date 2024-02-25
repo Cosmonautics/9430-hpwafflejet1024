@@ -118,7 +118,6 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureButtonBindings() {
   frc::Timer holdTimer;
-  // Right Bumper
 
   frc2::JoystickButton(&m_operatorController,
                        frc::XboxController::Button::kBack)
@@ -163,31 +162,12 @@ void RobotContainer::ConfigureButtonBindings() {
   /*frc2::JoystickButton(&m_operatorController,
   frc::XboxController::Button::kX) .OnTrue(new
   IntakePickUpNoteCommand(&m_intake, true, -0.10)) .OnFalse(new
-  IntakePickUpNoteCommand(&m_intake, false, 0));
+  IntakePickUpNoteCommand(&m_intake, false, 0));*/
 
-  // B Button (Drop Note)
-  frc2::JoystickButton(&m_operatorController,
-  frc::XboxController::Button::kB) .OnTrue(new
-  IntakeDropNoteCommand(&m_intake, true, 0.10)) .OnFalse(new
-  IntakeDropNoteCommand(&m_intake, false, 0));*/
-
-  // B Button (Shoot Note)
-  frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kB)
-      .OnTrue(new frc2::InstantCommand(
-          [this] { m_shooter.ShootMotors(true, -1); }, {&m_shooter}))
-      .OnFalse(new frc2::InstantCommand(
-          [this] { m_shooter.ShootMotors(false, 0); }, {&m_shooter}));
-
-  frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kA)
-      .OnTrue(new frc2::InstantCommand(
-          [this] { m_shooter.ShootMotors(true, 1); }, {&m_shooter}))
-      .OnFalse(new frc2::InstantCommand(
-          [this] { m_shooter.ShootMotors(false, 0); }, {&m_shooter}));
-
-  // D-Pad Right (Elevator)
-  frc2::POVButton(&m_operatorController, 90)
-      .OnTrue(
-          new MoveToAmpSpeakerScorePositionCommand(&m_elevator, &m_shooter));
+  // D-Pad Left (Floor Intake)
+  frc2::POVButton(&m_operatorController, 270)
+      .OnTrue(new MoveToFloorIntakePositionCommand(&m_elevator, &m_shooter,
+                                                   &m_intake));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

@@ -38,8 +38,10 @@ void Intake::IntakeDropNote(bool isPressed, double speed) {
 
 void Intake::PivotToAngle(double intakeAngleRotations) {
   // Define minimum and maximum rotation limits within the 0 to 1 range
-  const double minAngleRotations = 0.0; // Example minimum limit, adjust as needed
-  const double maxAngleRotations = 0.3; // Example maximum limit, adjust as needed
+  const double minAngleRotations =
+      0.0;  // Example minimum limit, adjust as needed
+  const double maxAngleRotations =
+      0.3;  // Example maximum limit, adjust as needed
 
   // Clamp the input to ensure it's within the specified limits
   if (intakeAngleRotations < minAngleRotations) {
@@ -48,10 +50,11 @@ void Intake::PivotToAngle(double intakeAngleRotations) {
     intakeAngleRotations = maxAngleRotations;
   }
 
+  m_targetSetpointRotations = intakeAngleRotations;
   // Set the target position using PID controller
-  m_pidController.SetReference(intakeAngleRotations, rev::ControlType::kPosition);
+  m_pidController.SetReference(intakeAngleRotations,
+                               rev::ControlType::kPosition);
 }
-
 
 void Intake::IntakePickUpNote(bool isPressed, double speed) {
   double pickUpSpeed = -0.10;  // pick up is negative speed
@@ -73,4 +76,13 @@ void Intake::ControlIntakeMotors(bool isPressed, double speed) {
     m_intakeMotorLeft.Set(0);
     m_intakeMotorRight.Set(0);
   }
+}
+
+bool Intake::IsAtSetPoint() {
+  double currentAngleRotations = m_intakePivotAbsoluteEncoder.GetPosition();
+  constexpr double toleranceRotations = 1.0 / 360.0;  // Tolerance in rotations
+
+  double error = std::abs(currentAngleRotations - m_targetSetpointRotations);
+
+  return error <= toleranceRotations;
 }

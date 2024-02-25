@@ -18,21 +18,20 @@
 #include "Constants.h"
 #include "commands/ClimbActionCommand.h"
 #include "commands/ControlIntakeMotorsCommand.h"
+#include "commands/IntakeDropNoteCommand.h"
+#include "commands/IntakePickUpNoteCommand.h"
+#include "commands/MoveElevatorToClimb2PositionCommand.h"
 #include "commands/MoveElevatorToPositionCommand.h"
+#include "commands/MoveElevatorToTransitPositionCommand.h"
 #include "commands/MoveToAmpSpeakerScorePositionCommand.h"
 #include "commands/MoveToClimb1PositionCommand.h"
-#include "commands/MoveToClimb2PositionCommand.h"
 #include "commands/MoveToFloorIntakePositionCommand.h"
-#include "commands/MoveToTransitPositionCommand.h"
-#include "commands/NoteEjectActionCommand.h"
-#include "commands/NoteIntakeActionCommand.h"
 #include "commands/PivotIntakeToAngleCommand.h"
 #include "commands/PivotShooterToPositionCommand.h"
+#include "commands/PivotShooterToTransitPositionCommand.h"
 #include "commands/PivotToPositionCommand.h"
 #include "commands/RunConveyorCommand.h"
 #include "commands/ShootMotorsCommand.h"
-#include "commands/SpeakerScoreActionCommand.h"
-
 #include "subsystems/Conveyor.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
@@ -69,6 +68,7 @@ class RobotContainer {
   Intake m_intake;
   Shooter m_shooter;
   Elevator m_elevator;
+  Conveyor m_conveyor;
   // Conveyor m_conveyor;
   //  The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;
