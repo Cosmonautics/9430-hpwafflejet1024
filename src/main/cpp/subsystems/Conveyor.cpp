@@ -3,6 +3,7 @@
 #include "subsystems/Conveyor.h"
 
 Conveyor::Conveyor() {
+  conveyorMotor.SetInverted(true);
   conveyorMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 }
 
