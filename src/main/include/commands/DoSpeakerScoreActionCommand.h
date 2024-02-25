@@ -18,6 +18,7 @@ public:
 private:
     Elevator* m_elevatorSubsystem; 
     Shooter* m_shooterSubsystem;
+    bool cmdFinished;
 };
 
 #endif // DO_SPEAKER_SCORE_ACTION_COMMAND_H 
