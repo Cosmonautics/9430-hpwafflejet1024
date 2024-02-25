@@ -38,13 +38,13 @@ This section is written for our drive team as a reference for robot controls. Th
 ### Driver Guide
 
 #### Movement 
-* Left Thumbstick: Moves and strafes the robot relative to the field
-* Right Thumbstick: 
+* **Left Thumbstick**: Moves and strafes the robot relative to the field
+* **Right Thumbstick**: 
     * Left: Rotate the robot counterclockwise
     * Right: Rotate the robot clockwise 
-* SELECT Button: Press to reset robot heading for field relative drive
+* **SELECT**: Press to reset robot heading for field relative drive
     * Face the front of the robot in the same direction of the Driver (the driver and the robot should be facing the same way).
-    * Press the SELECT button and observe haptic feedback. 
+    * Press **SELECT** and observe haptic feedback. 
 
 
 
