@@ -9,7 +9,9 @@ MoveToTransitPositionCommand::MoveToTransitPositionCommand(
   AddRequirements({elevatorSubsystem, shooterSubsystem, intakeSubsystem});
 }
 
-void MoveToTransitPositionCommand::Initialize() {}
+void MoveToTransitPositionCommand::Initialize() {
+  cmdFinished = true; // tests should go here to set target states for completion to return true
+}
 
 void MoveToTransitPositionCommand::Execute() {
   m_shooterSubsystem->PivotToSetPoint(
@@ -19,6 +21,9 @@ void MoveToTransitPositionCommand::Execute() {
   // frc2::WaitCommand(0.5_s).Schedule();
   m_elevatorSubsystem->MoveToPosition(
       PositionConstants::kElevatorTransitPosition);
+  cmdFinished = true; // should only conditionally set to true if and only if tests for motor states return true
 }
 
-bool MoveToTransitPositionCommand::IsFinished() { return true; }
+bool MoveToTransitPositionCommand::IsFinished() { 
+  return cmdFinished; // finished logic should ensure test conditions pass (use motor position/motor state methods)
+}

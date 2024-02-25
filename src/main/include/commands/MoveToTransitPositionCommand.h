@@ -20,6 +20,7 @@ private:
     Elevator* m_elevatorSubsystem;
     Shooter* m_shooterSubsystem;
     Intake* m_intakeSubsystem;
+    bool cmdFinished;
 };
 
 #endif // MOVE_TO_TRANSIT_POSITION_COMMAND_H
