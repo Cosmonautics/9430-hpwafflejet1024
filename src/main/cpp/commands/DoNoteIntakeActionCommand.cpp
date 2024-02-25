@@ -12,13 +12,18 @@ DoNoteIntakeActionCommand::DoNoteIntakeActionCommand(  // Find and Replace
   AddRequirements({conveyorSubsystem, shooterSubsystem, intakeSubsystem});
 }
 
-void DoNoteIntakeActionCommand::Initialize() {}
+void DoNoteIntakeActionCommand::Initialize() {
+  cmdFinished = false;
+}
 
 void DoNoteIntakeActionCommand::Execute() {
   m_intakeSubsystem->IntakePickUpNote(true, 1);
   m_conveyorSubsystem->Forward();
   m_shooterSubsystem->ShooterPickUpNote(true, 0.30);
   m_shooterSubsystem->MoveFeeder(1);
+  cmdFinished = true;
 }
 
-bool DoNoteIntakeActionCommand::IsFinished() { return true; }
+bool DoNoteIntakeActionCommand::IsFinished() { 
+  return cmdFinished; 
+}

@@ -20,6 +20,7 @@ private:
     Conveyor* m_conveyorSubsystem; // Put all relevant subsystems here as pointers
     Shooter* m_shooterSubsystem;
     Intake* m_intakeSubsystem;
+    bool cmdFinished;
 };
 
 #endif // DO_NOTE_INTAKE_COMMAND_H // (replace this with the name of the command name)
