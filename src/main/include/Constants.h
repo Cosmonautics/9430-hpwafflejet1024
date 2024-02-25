@@ -198,11 +198,16 @@ namespace PositionConstants {
 // Elevator Position Constants
 constexpr double kElevatorTransitPosition = 0.326;
 constexpr double kElevatorShooterPosition = 0.0;
+constexpr double kElevatorClimb1Position = 0.0;
+constexpr double kElevatorClimb2Position = 0.0;
 
 // Shooter Position Constants
 constexpr double kShooterTransitPosition = 0.0;
 constexpr double kShooterShooterPosition = 0.0;
+constexpr double kShooterClimb1Position = 0.0;
+
 // Intake Position Constants
 constexpr double kIntakeTransitPosition = 0.0;
 constexpr double kIntakeFloorPosition = 0.0;
+constexpr double kIntakeClimb1Position = 0.0;
 }  // namespace PositionConstants
