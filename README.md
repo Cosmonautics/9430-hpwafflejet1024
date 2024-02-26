@@ -26,12 +26,14 @@ This section is written for our drive team as a reference for robot controls. Th
 * AMP Score / Speaker Score Position : (*TOGGLE*) Press **D-Pad Right** to switch between AMP Scoring Mode and Speaker Scoring Mode -- needs redesign but currently works as designed 
 * Climb : Press **D-Pad Up**
 * Floor Intake Position : **Press D-Pad Left** 
-* Transit Position : Press **D-Pad Down**
+* Transit Position : Press **D-Pad Down** -- Works as designed
 
 #### Robot Actions
 
 * Climb Action : -- Postpone (Press **Y**)
 * Note Intake Action : Press **Right Bumper**
+    * Conveyor goes the wrong way
+    * Shooter motors are not moving 
 * Note Eject Action : Press **Left Bumper**
 * Speaker Score Action : Press **B**
 
@@ -42,9 +44,9 @@ This section is written for our drive team as a reference for robot controls. Th
 * **Right Thumbstick**: 
     * Left: Rotate the robot counterclockwise
     * Right: Rotate the robot clockwise 
-* **SELECT**: Press to reset robot heading for field relative drive
+* **START**: Press to reset robot heading for field relative drive
     * Face the front of the robot in the same direction of the Driver (the driver and the robot should be facing the same way).
-    * Press **SELECT** and observe haptic feedback. 
+    * Press **START** and observe haptic feedback. 
 
 
 
