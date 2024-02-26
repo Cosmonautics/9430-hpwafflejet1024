@@ -10,7 +10,8 @@ DoClimbActionCommand::DoClimbActionCommand(Elevator* elevatorSubsystem,
 }
 
 void DoClimbActionCommand::Initialize() {
-  cmdFinished = false;
+  cmdFinished = false; // tests should go here to set target states for completion to return true
+
 }
 
 void DoClimbActionCommand::Execute() {
@@ -29,13 +30,10 @@ void DoClimbActionCommand::Execute() {
   // Wait for ~2 seconds
   // Set shooter feeder motor 0%
   // Set shooter motor 0%
-  cmdFinished = true;
+  cmdFinished = true; // should only conditionally set to true if and only if tests for motor states return true
 }
 
 bool DoClimbActionCommand::IsFinished() {
-  return cmdFinished;
+  return cmdFinished; // finished logic should ensure test conditions pass (use motor position/motor state methods)
 }
 
-// tests should go here to set target states for completion to return true
-// should only conditionally set to true if and only if tests for motor states return true
-// finished logic should ensure test conditions pass (use motor position/motor state methods)
