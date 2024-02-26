@@ -97,7 +97,7 @@ constexpr double kEncoderUnitsPerInch = 1 / kElevatorInchesPerTick;
 }  // namespace ElevatorConstants
 
 namespace IntakeConstants {
-constexpr double kP = 2;
+constexpr double kP = 1;
 constexpr double kI = 0.0;
 constexpr double kD = 0.0;
 constexpr int kIntakeLeftCanId = 11;

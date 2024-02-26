@@ -19,7 +19,7 @@ elevator postion and shooter position remain defult to transit positon
 
 Intake::Intake() {
   m_intakePivotMotor.RestoreFactoryDefaults();
-  m_intakePivotMotor.SetInverted(false);
+  m_intakePivotMotor.SetInverted(true);
   m_pidController.SetOutputRange(-1.0, 1.0);
   m_pidController.SetFeedbackDevice(m_intakePivotAbsoluteEncoder);
   m_pidController.SetP(IntakeConstants::kP);
@@ -37,7 +37,7 @@ void Intake::IntakeDropNote(bool isPressed, double speed) {
   }
 }
 
-void Intake::PivotToAngle(double intakeAngleRotations) {
+void Intake::PivotToAngle(double intakeAngleRotations, bool clockwise) {
   // Define minimum and maximum rotation limits within the 0 to 1 range
   const double minAngleRotations =
       0.0;  // Example minimum limit, adjust as needed
@@ -84,6 +84,4 @@ bool Intake::IsAtSetPoint() {
   return error <= toleranceRotations;
 }
 
-void Intake::StopMotors() {
-  m_intakeMotorLeft.Set(0);
-}
+void Intake::StopMotors() { m_intakeMotorLeft.Set(0); }
