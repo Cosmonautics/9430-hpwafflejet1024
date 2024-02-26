@@ -19,6 +19,7 @@ private:
     Elevator* m_elevatorSubsystem; 
     Shooter* m_shooterSubsystem;
     bool m_isClimb1;
+    bool cmdFinished;
 };
 
 #endif // DO_CLIMB_ACTION_COMMAND_H
