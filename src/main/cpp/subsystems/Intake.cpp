@@ -37,7 +37,7 @@ void Intake::IntakeDropNote(bool isPressed, double speed) {
   }
 }
 
-void Intake::PivotToAngle(double intakeAngleRotations) {
+void Intake::PivotToAngle(double intakeAngleRotations, bool clockwise) {
   // Define minimum and maximum rotation limits within the 0 to 1 range
   const double minAngleRotations =
       0.0;  // Example minimum limit, adjust as needed
@@ -84,6 +84,4 @@ bool Intake::IsAtSetPoint() {
   return error <= toleranceRotations;
 }
 
-void Intake::StopMotors() {
-  m_intakeMotorLeft.Set(0);
-}
+void Intake::StopMotors() { m_intakeMotorLeft.Set(0); }

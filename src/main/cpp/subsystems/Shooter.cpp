@@ -95,7 +95,7 @@ void Shooter::ShooterDropNote(bool isPressed, double speed) {
 void Shooter::MoveFeeder(double speed) { m_shooterFeeder.Set(speed); }
 
 void Shooter::ShooterPickUpNote(bool isPressed, double speed) {
-  double pickUpSpeed = pickUpSpeed;  // pick up is negative speed
+  double pickUpSpeed = speed;  // pick up is negative speed
 
   if (isPressed) {
     m_shooterMotorLeft.Set(-pickUpSpeed);

@@ -121,42 +121,18 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureButtonBindings() {
   frc::Timer holdTimer;
-  bool isClimb2 = false;
-  bool isClimb1 = false;
-  frc2::JoystickButton(&m_operatorController,
+  /*frc2::JoystickButton(&m_operatorController,
                        frc::XboxController::Button::kBack)
       .OnTrue(new frc2::InstantCommand(
-          [this, &holdTimer] {
-            holdTimer.Reset();
-            holdTimer.Start();
+          [this] {
+
           },
-          {&m_elevator, &m_shooter}))
-      .OnFalse(new frc2::InstantCommand(
-          [this, &holdTimer] {
-            holdTimer.Stop();
-            if (holdTimer.HasElapsed(0.5_s)) {
-              m_elevator.ToggleManualOverride();
-              m_shooter.ToggleManualOverride();
-              ControllerUtils::VibrateController(m_operatorController, 0.8,
-                                                 0.3_s);
-            }
-          },
-          {&m_elevator, &m_shooter}));
+          {&m_elevator, &m_shooter}))*/
   frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kStart)
       .OnTrue(new frc2::InstantCommand(
-          [this, &holdTimer] {
-            holdTimer.Reset();
-            holdTimer.Start();
-          },
-          {&m_drive}))
-      .OnFalse(new frc2::InstantCommand(
-          [this, &holdTimer] {
-            holdTimer.Stop();
-            if (holdTimer.HasElapsed(0.5_s)) {
-              m_drive.ZeroHeading();
-              ControllerUtils::VibrateController(m_driverController, 0.8,
-                                                 0.3_s);
-            }
+          [this] {
+            m_drive.ZeroHeading();
+            ControllerUtils::VibrateController(m_driverController, 0.8, 0.3_s);
           },
           {&m_drive}));
   frc::ApplyDeadband(m_operatorController.GetRightTriggerAxis(),
@@ -177,7 +153,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::POVButton(&m_operatorController, 0)
       .OnTrue(new frc2::InstantCommand(
-          [this, &isClimb2, &isClimb1] {
+          [this] {
             if (isClimb2) {
               (new MoveToClimbPos1Command(&m_elevator, &m_shooter, &m_intake))
                   ->Schedule();
@@ -195,13 +171,13 @@ void RobotContainer::ConfigureButtonBindings() {
       .OnFalse(new DoClimbActionCommand(&m_intake, false, 0));*/
 
   frc2::JoystickButton(&m_operatorController,
-                       frc::XboxController::Button::kRightBumper)
+                       frc::XboxController::Button::kLeftBumper)
       .OnTrue(new DoNoteIntakeActionCommand(&m_conveyor, &m_shooter, &m_intake))
       .OnFalse(new StopNoteIntakeEjectActionCommand(&m_conveyor, &m_shooter,
                                                     &m_intake));
 
   frc2::JoystickButton(&m_operatorController,
-                       frc::XboxController::Button::kLeftBumper)
+                       frc::XboxController::Button::kRightBumper)
       .OnTrue(new DoNoteEjectActionCommand(&m_conveyor, &m_shooter, &m_intake))
       .OnFalse(new StopNoteIntakeEjectActionCommand(&m_conveyor, &m_shooter,
                                                     &m_intake));
@@ -209,6 +185,9 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kB)
       .OnTrue(new DoSpeakerScoreActionCommand(&m_elevator, &m_shooter))
       .OnFalse(new StopShooterMotorCommand(&m_shooter));
+
+  frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kY)
+      .OnTrue(new DoClimbActionCommand(&m_elevator, &m_shooter, isClimb1));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

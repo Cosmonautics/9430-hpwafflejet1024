@@ -14,7 +14,7 @@ void MoveToFloorIntakePositionCommand::Initialize() {}
 void MoveToFloorIntakePositionCommand::Execute() {
   m_shooterSubsystem->PivotToSetPoint(
       PositionConstants::kShooterTransitPosition);
-  m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeFloorPosition);
+  //m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeFloorPosition,false);
   //frc2::WaitCommand(0.5_s).Execute();
   m_elevatorSubsystem->MoveToPosition(
       PositionConstants::kElevatorTransitPosition);

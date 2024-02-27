@@ -10,19 +10,42 @@ DoClimbActionCommand::DoClimbActionCommand(Elevator* elevatorSubsystem,
 }
 
 void DoClimbActionCommand::Initialize() {
+<<<<<<< HEAD
   cmdFinished = false; // tests should go here to set target states for completion to return true
 
+=======
+  cmdFinished = false;
+  timer = new frc::Timer();
+  timer->Reset();
+>>>>>>> 30d79ce42a16e89629f0ea1d4d1bc85216debe2e
 }
 
 void DoClimbActionCommand::Execute() {
   if (m_isClimb1) {
-    
+    m_elevatorSubsystem->MoveToPosition(
+        PositionConstants::kShooterShooterPosition);
+    m_shooterSubsystem->PivotToSetPoint(
+        PositionConstants::kElevatorShooterPosition);
+    while (!timer->HasElapsed(1_s)) {
+    }
+    m_shooterSubsystem->ShootMotors(true, 0.30);
+    m_shooterSubsystem->MoveFeeder(-0.50);
+    while (!timer->HasElapsed(3_s)) {
+    }
+    m_shooterSubsystem->MoveFeeder(0);
+    m_shooterSubsystem->ShootMotors(false, 0);
+    cmdFinished = true;
   }
+
   // Execute when Y is pressed; if Y is pressed again, stop the climb sequence
+<<<<<<< HEAD
   // Set EL brake piston to lock position
   
+=======
+  // Set EL brake piston to lock position INGORE For NOW
+>>>>>>> 30d79ce42a16e89629f0ea1d4d1bc85216debe2e
   // Move elevator to climb position (SM carriage to the top)
-  // Move shooter to trap position
+  // Move shooter to trap position (thigh highs)
   // Wait for elevator to get done moving
   // Set shooter to AMP scoring mode (TBD may be tweaked)
   // basically, repeat the same code in AMP scoring mode.
@@ -34,7 +57,16 @@ void DoClimbActionCommand::Execute() {
   cmdFinished = true; // should only conditionally set to true if and only if tests for motor states return true
 }
 
+<<<<<<< HEAD
 bool DoClimbActionCommand::IsFinished() {
   return cmdFinished; // finished logic should ensure test conditions pass (use motor position/motor state methods)
 }
 
+=======
+bool DoClimbActionCommand::IsFinished() { return cmdFinished; }
+
+// tests should go here to set target states for completion to return true
+// should only conditionally set to true if and only if tests for motor states
+// return true finished logic should ensure test conditions pass (use motor
+// position/motor state methods)
+>>>>>>> 30d79ce42a16e89629f0ea1d4d1bc85216debe2e
