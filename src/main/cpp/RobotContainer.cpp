@@ -155,12 +155,12 @@ void RobotContainer::ConfigureButtonBindings() {
       .OnTrue(new frc2::InstantCommand(
           [this] {
             if (!isClimb2) {
+              isClimb1 = true;
               (new MoveToClimbPos1Command(&m_elevator, &m_shooter, &m_intake))
                   ->Schedule();
-              isClimb1 = true;
             } else {
-              (new MoveToClimbPos2Command(&m_elevator))->Schedule();
               isClimb1 = false;
+              (new MoveToClimbPos2Command(&m_elevator))->Schedule();
             }
             isClimb2 = !isClimb2;
           },
