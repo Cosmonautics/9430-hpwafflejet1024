@@ -20,6 +20,7 @@ void DoClimbActionCommand::Execute() {
   }
   // Execute when Y is pressed; if Y is pressed again, stop the climb sequence
   // Set EL brake piston to lock position
+  
   // Move elevator to climb position (SM carriage to the top)
   // Move shooter to trap position
   // Wait for elevator to get done moving

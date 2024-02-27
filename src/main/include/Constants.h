@@ -63,6 +63,8 @@ constexpr int kShooterLeftCanId = 10;
 constexpr int kShooterRightCanId = 9;
 constexpr int kShooterPivotCanId = 17;
 constexpr int kShooterFeederCanId = 18;
+constexpr double kShooterForwardSoftLimit = 0.989;
+constexpr double kShooterReverseSoftLimit = 0.370;
 
 constexpr double kP = 2.0;
 constexpr double kI = 0.0;
