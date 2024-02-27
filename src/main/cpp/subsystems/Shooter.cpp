@@ -27,21 +27,21 @@ void Shooter::PivotToSetPoint(double setPointRotations) {
       m_pivotEncoder
           .GetPosition();  // Assuming this returns rotations in 0-1 range
 
-  if (IsTargetInRestrictedRange(currentAngleRotations) ||
-      IsTargetInRestrictedRange(setPointRotations)) {
-    bool exitAboveRestrictedRange =
-        (currentAngleRotations <= (100.0 / 360.0)) ||
-        (currentAngleRotations > (100.0 / 360.0) &&
-         setPointRotations < currentAngleRotations);
-    if (exitAboveRestrictedRange) {
-      setPointRotations =
-          (100.0 + 1.0) /
-          360.0;  // Adjust setpoint to avoid restricted range, in rotations
-    } else {
-      setPointRotations = 0.0;  // Reset setpoint if necessary
+  /*  if (IsTargetInRestrictedRange(currentAngleRotations) ||
+        IsTargetInRestrictedRange(setPointRotations)) {
+      bool exitAboveRestrictedRange =
+          (currentAngleRotations <= (100.0 / 360.0)) ||
+          (currentAngleRotations > (100.0 / 360.0) &&
+           setPointRotations < currentAngleRotations);
+      if (exitAboveRestrictedRange) {
+        setPointRotations =
+            (100.0 + 1.0) /
+            360.0;  // Adjust setpoint to avoid restricted range, in rotations
+      } else {
+        setPointRotations = 0.0;  // Reset setpoint if necessary
+      }
     }
-  }
-
+  */
   m_targetSetpointRotations =
       setPointRotations;  // Store the setpoint in rotations for error
                           // calculation
