@@ -18,7 +18,7 @@ void DoSpeakerScoreActionCommand::Initialize() {
 
 void DoSpeakerScoreActionCommand::Execute() {
   timer->Start();
-  m_shooterSubsystem->ShootMotors(true, 1.0);
+  m_shooterSubsystem->ShootMotors(true, -1.0);
   // Check if AMP Score Position status == TRUE // (If it's already set here, it
   // won't move; if not, set it to amp score position) this code was copied from
   // MoveToAMPSpeakerScorePositionCommand.cpp as an alternative to calling the
