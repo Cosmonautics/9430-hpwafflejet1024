@@ -18,9 +18,9 @@ void DoClimbActionCommand::Initialize() {
 void DoClimbActionCommand::Execute() {
   if (m_isClimb1) {
     m_elevatorSubsystem->MoveToPosition(
-        PositionConstants::kShooterShooterPosition);
-    m_shooterSubsystem->PivotToSetPoint(
         PositionConstants::kElevatorShooterPosition);
+    m_shooterSubsystem->PivotToSetPoint(
+        PositionConstants::kShooterShooterPosition);
     while (!timer->HasElapsed(1_s)) {
       //wait / do nothing
     }
