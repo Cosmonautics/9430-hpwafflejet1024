@@ -41,20 +41,14 @@ void Elevator::ConfigureMotors() {
   m_ElevatorPIDController.SetI(kI);
   m_ElevatorPIDController.SetD(kD);
   m_ElevatorPIDController.SetOutputRange(-1.0, 1.0);
-  m_ElevatorMotorRight.SetSoftLimit(
-      rev::CANSparkBase::SoftLimitDirection::kForward,
-      ElevatorConstants::kElevatorForwardSoftLimit);
-  m_ElevatorMotorRight.SetSoftLimit(
-      rev::CANSparkBase::SoftLimitDirection::kReverse,
-      ElevatorConstants::kElevatorReverseSoftLimit);
-  m_ElevatorMotorRight.EnableSoftLimit(
-      rev::CANSparkBase::SoftLimitDirection::kForward, true);
-  m_ElevatorMotorRight.EnableSoftLimit(
-      rev::CANSparkBase::SoftLimitDirection::kReverse, true);
 }
 
 void Elevator::MoveToPosition(double positionRotations) {
   double targetPositionInches = RotationsToInches(positionRotations);
+  if (targetPositionInches > kElevatorUpperSoftLimit ||
+      targetPositionInches < kElevatorLowerSoftLimit) {
+    return;  // Position out of bounds
+  }
   m_ElevatorPIDController.SetReference(positionRotations,
                                        rev::ControlType::kPosition);
 }
@@ -103,7 +97,10 @@ void Elevator::ManualMove(double speed) {
         currentElevatorPosition + (speed * speedFactor);
     double targetPositionInches = RotationsToInches(targetPositionRotations);
 
-    m_ElevatorPIDController.SetReference(targetPositionRotations,
-                                         rev::ControlType::kPosition);
+    if (targetPositionInches > kElevatorLowerSoftLimit &&
+        targetPositionInches < kElevatorUpperSoftLimit) {
+      m_ElevatorPIDController.SetReference(targetPositionRotations,
+                                           rev::ControlType::kPosition);
+    }
   }
 }
