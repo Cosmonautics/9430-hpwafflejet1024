@@ -21,16 +21,17 @@ void DoClimbActionCommand::Execute() {
         PositionConstants::kShooterShooterPosition);
     m_shooterSubsystem->PivotToSetPoint(
         PositionConstants::kElevatorShooterPosition);
-    if (timer->HasElapsed(1_s)) {
-      m_shooterSubsystem->ShootMotors(true, 0.30);
-      m_shooterSubsystem->MoveFeeder(-0.50);
-      if (timer->HasElapsed(3_s)) {
-        m_shooterSubsystem->MoveFeeder(0);
-        m_shooterSubsystem->ShootMotors(false, 0);
-      }
-      cmdFinished = true;
+    while (!timer->HasElapsed(1_s)) {
     }
+    m_shooterSubsystem->ShootMotors(true, 0.30);
+    m_shooterSubsystem->MoveFeeder(-0.50);
+    while (!timer->HasElapsed(3_s)) {
+    }
+    m_shooterSubsystem->MoveFeeder(0);
+    m_shooterSubsystem->ShootMotors(false, 0);
+    cmdFinished = true;
   }
+
   // Execute when Y is pressed; if Y is pressed again, stop the climb sequence
   // Set EL brake piston to lock position INGORE For NOW
   // Move elevator to climb position (SM carriage to the top)

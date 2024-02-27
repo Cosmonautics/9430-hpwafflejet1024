@@ -16,11 +16,10 @@
 
 #include "AHRS.h"
 #include "Constants.h"
-//#include "commands/CommandTemplate.h"
+// #include "commands/CommandTemplate.h"
 #include "commands/DoClimbActionCommand.h"
 #include "commands/DoNoteEjectActionCommand.h"
 #include "commands/DoNoteIntakeActionCommand.h"
-#include "commands/StopNoteIntakeEjectActionCommand.h"
 #include "commands/DoSpeakerScoreActionCommand.h"
 #include "commands/MoveToAMPSpeakerScorePositionCommand.h"
 #include "commands/MoveToAmpSpeakerScorePositionCommand.h"
@@ -29,6 +28,7 @@
 #include "commands/MoveToFloorIntakePositionCommand.h"
 #include "commands/MoveToTransitPositionCommand.h"
 #include "commands/StopIntakeMotorCommand.h"
+#include "commands/StopNoteIntakeEjectActionCommand.h"
 #include "commands/StopShooterMotorCommand.h"
 #include "subsystems/Conveyor.h"
 #include "subsystems/DriveSubsystem.h"
@@ -73,4 +73,7 @@ class RobotContainer {
   frc::SendableChooser<frc2::Command*> m_chooser;
 
   void ConfigureButtonBindings();
+
+  bool isClimb2 = false;
+  bool isClimb1 = false;
 };

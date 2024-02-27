@@ -121,8 +121,6 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureButtonBindings() {
   frc::Timer holdTimer;
-  bool isClimb2 = false;
-  bool isClimb1 = false;
   /*frc2::JoystickButton(&m_operatorController,
                        frc::XboxController::Button::kBack)
       .OnTrue(new frc2::InstantCommand(
@@ -155,7 +153,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::POVButton(&m_operatorController, 0)
       .OnTrue(new frc2::InstantCommand(
-          [this, &isClimb2, &isClimb1] {
+          [this] {
             if (isClimb2) {
               (new MoveToClimbPos1Command(&m_elevator, &m_shooter, &m_intake))
                   ->Schedule();
@@ -187,6 +185,9 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kB)
       .OnTrue(new DoSpeakerScoreActionCommand(&m_elevator, &m_shooter))
       .OnFalse(new StopShooterMotorCommand(&m_shooter));
+
+  frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kY)
+      .OnTrue(new DoClimbActionCommand(&m_elevator, &m_shooter, isClimb1));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
