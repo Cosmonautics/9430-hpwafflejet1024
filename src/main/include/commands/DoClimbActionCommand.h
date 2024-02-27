@@ -11,8 +11,7 @@
 class DoClimbActionCommand
     : public frc2::CommandHelper<frc2::Command, DoClimbActionCommand> {
  public:
-  DoClimbActionCommand(Elevator* elevatorSubsystem, Shooter* shooterSubsystem,
-                       bool isClimb1);
+  DoClimbActionCommand(Elevator* elevatorSubsystem, Shooter* shooterSubsystem);
 
   void Initialize() override;
   void Execute() override;
@@ -21,7 +20,6 @@ class DoClimbActionCommand
  private:
   Elevator* m_elevatorSubsystem;
   Shooter* m_shooterSubsystem;
-  bool m_isClimb1;
   bool cmdFinished;
 
   frc::Timer* timer;
