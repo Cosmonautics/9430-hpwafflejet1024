@@ -38,8 +38,8 @@ void DoSpeakerScoreActionCommand::Execute() {
   if (timer->HasElapsed(2_s)) {
     // After 2 seconds, move the feeder and mark the command as complete
     m_shooterSubsystem->MoveFeeder(-1.0);  // Set shooter feeder motor 100%
-    cmdFinished = true;
     timer->Stop();
+    cmdFinished = true;
   }
 
   // frc2::WaitCommand(1_s).Schedule(); // Wait ~1 second

@@ -22,14 +22,15 @@ void DoClimbActionCommand::Execute() {
     m_shooterSubsystem->PivotToSetPoint(
         PositionConstants::kElevatorShooterPosition);
     while (!timer->HasElapsed(1_s)) {
+      //wait / do nothing
     }
     m_shooterSubsystem->ShootMotors(true, 0.30);
     m_shooterSubsystem->MoveFeeder(-0.50);
     while (!timer->HasElapsed(3_s)) {
+      //wait / do nothing
     }
     m_shooterSubsystem->MoveFeeder(0);
     m_shooterSubsystem->ShootMotors(false, 0);
-    cmdFinished = true;
   }
 
   // Execute when Y is pressed; if Y is pressed again, stop the climb sequence
@@ -44,7 +45,8 @@ void DoClimbActionCommand::Execute() {
   // Wait for ~2 seconds
   // Set shooter feeder motor 0%
   // Set shooter motor 0%
-  cmdFinished = true; // should only conditionally set to true if and only if tests for motor states return true
+  cmdFinished = true;  // should only conditionally set to true if and only if
+                       // tests for motor states return true
 }
 
 bool DoClimbActionCommand::IsFinished() { return cmdFinished; }

@@ -154,13 +154,13 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::POVButton(&m_operatorController, 0)
       .OnTrue(new frc2::InstantCommand(
           [this] {
-            if (isClimb2) {
+            if (!isClimb2) {
               (new MoveToClimbPos1Command(&m_elevator, &m_shooter, &m_intake))
                   ->Schedule();
-              isClimb1 = false;
+              isClimb1 = true;
             } else {
               (new MoveToClimbPos2Command(&m_elevator))->Schedule();
-              isClimb1 = true;
+              isClimb1 = false;
             }
             isClimb2 = !isClimb2;
           },
