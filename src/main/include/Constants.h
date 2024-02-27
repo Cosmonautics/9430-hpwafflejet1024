@@ -64,7 +64,7 @@ constexpr int kShooterRightCanId = 9;
 constexpr int kShooterPivotCanId = 17;
 constexpr int kShooterFeederCanId = 18;
 constexpr double kShooterForwardSoftLimit = 0.989;
-constexpr double kShooterReverseSoftLimit = 0.370;
+constexpr double kShooterReverseSoftLimit = 0.330;
 
 constexpr double kP = 2.0;
 constexpr double kI = 0.0;
@@ -72,14 +72,13 @@ constexpr double kD = 0.0;
 }  // namespace ShooterConstants
 
 namespace ElevatorConstants {
-constexpr double kElevatorUpperSoftLimit = 0.969;
+
 constexpr double kElevatorForwardSoftLimit = 0.767;
 constexpr double kElevatorReverseSoftLimit = 0.045;
 constexpr int kElevatorLeftCanId = 13;
 constexpr int kElevatorRightCanId = 14;
 
-constexpr double kElevatorUpperSoftLimit = 17.0;
-constexpr double kElevatorLowerSoftLimit = 0.0;
+constexpr double kElevatorUpperSoftLimit = 0.969;
 constexpr double kElevatorGearRatio = 1.0;
 constexpr double kElevatorDrumDiameterInches = 1.214;
 constexpr double kElevatorEncoderTicksPerRevolution = 42.0;

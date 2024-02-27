@@ -55,10 +55,6 @@ void Elevator::ConfigureMotors() {
 
 void Elevator::MoveToPosition(double positionRotations) {
   double targetPositionInches = RotationsToInches(positionRotations);
-  if (targetPositionInches > kElevatorUpperSoftLimit ||
-      targetPositionInches < kElevatorLowerSoftLimit) {
-    return;  // Position out of bounds
-  }
   m_ElevatorPIDController.SetReference(positionRotations,
                                        rev::ControlType::kPosition);
 }
@@ -107,10 +103,7 @@ void Elevator::ManualMove(double speed) {
         currentElevatorPosition + (speed * speedFactor);
     double targetPositionInches = RotationsToInches(targetPositionRotations);
 
-    if (targetPositionInches > kElevatorLowerSoftLimit &&
-        targetPositionInches < kElevatorUpperSoftLimit) {
-      m_ElevatorPIDController.SetReference(targetPositionRotations,
-                                           rev::ControlType::kPosition);
-    }
+    m_ElevatorPIDController.SetReference(targetPositionRotations,
+                                         rev::ControlType::kPosition);
   }
 }
