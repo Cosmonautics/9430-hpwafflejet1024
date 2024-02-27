@@ -10,14 +10,9 @@ DoClimbActionCommand::DoClimbActionCommand(Elevator* elevatorSubsystem,
 }
 
 void DoClimbActionCommand::Initialize() {
-<<<<<<< HEAD
-  cmdFinished = false; // tests should go here to set target states for completion to return true
-
-=======
   cmdFinished = false;
   timer = new frc::Timer();
   timer->Reset();
->>>>>>> 30d79ce42a16e89629f0ea1d4d1bc85216debe2e
 }
 
 void DoClimbActionCommand::Execute() {
@@ -38,12 +33,7 @@ void DoClimbActionCommand::Execute() {
   }
 
   // Execute when Y is pressed; if Y is pressed again, stop the climb sequence
-<<<<<<< HEAD
-  // Set EL brake piston to lock position
-  
-=======
   // Set EL brake piston to lock position INGORE For NOW
->>>>>>> 30d79ce42a16e89629f0ea1d4d1bc85216debe2e
   // Move elevator to climb position (SM carriage to the top)
   // Move shooter to trap position (thigh highs)
   // Wait for elevator to get done moving
@@ -57,16 +47,9 @@ void DoClimbActionCommand::Execute() {
   cmdFinished = true; // should only conditionally set to true if and only if tests for motor states return true
 }
 
-<<<<<<< HEAD
-bool DoClimbActionCommand::IsFinished() {
-  return cmdFinished; // finished logic should ensure test conditions pass (use motor position/motor state methods)
-}
-
-=======
 bool DoClimbActionCommand::IsFinished() { return cmdFinished; }
 
 // tests should go here to set target states for completion to return true
 // should only conditionally set to true if and only if tests for motor states
 // return true finished logic should ensure test conditions pass (use motor
 // position/motor state methods)
->>>>>>> 30d79ce42a16e89629f0ea1d4d1bc85216debe2e
