@@ -41,6 +41,16 @@ void Elevator::ConfigureMotors() {
   m_ElevatorPIDController.SetI(kI);
   m_ElevatorPIDController.SetD(kD);
   m_ElevatorPIDController.SetOutputRange(-1.0, 1.0);
+  m_ElevatorMotorRight.SetSoftLimit(
+      rev::CANSparkBase::SoftLimitDirection::kForward,
+      ElevatorConstants::kElevatorForwardSoftLimit);
+  m_ElevatorMotorRight.SetSoftLimit(
+      rev::CANSparkBase::SoftLimitDirection::kReverse,
+      ElevatorConstants::kElevatorReverseSoftLimit);
+  m_ElevatorMotorRight.EnableSoftLimit(
+      rev::CANSparkBase::SoftLimitDirection::kForward, true);
+  m_ElevatorMotorRight.EnableSoftLimit(
+      rev::CANSparkBase::SoftLimitDirection::kReverse, true);
 }
 
 void Elevator::MoveToPosition(double positionRotations) {

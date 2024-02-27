@@ -72,7 +72,9 @@ constexpr double kD = 0.0;
 }  // namespace ShooterConstants
 
 namespace ElevatorConstants {
-
+constexpr double kElevatorUpperSoftLimit = 0.969;
+constexpr double kElevatorForwardSoftLimit = 0.767;
+constexpr double kElevatorReverseSoftLimit = 0.045;
 constexpr int kElevatorLeftCanId = 13;
 constexpr int kElevatorRightCanId = 14;
 
