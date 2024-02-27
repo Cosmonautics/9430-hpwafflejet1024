@@ -75,5 +75,5 @@ class RobotContainer {
   void ConfigureButtonBindings();
 
   bool isClimb2 = false;
-  bool isClimb1 = false;
+  bool isClimb1 = true;
 };

@@ -4,9 +4,9 @@ DoClimbActionCommand::DoClimbActionCommand(Elevator* elevatorSubsystem,
                                            Shooter* shooterSubsystem,
                                            bool isClimb1)
     : m_elevatorSubsystem(elevatorSubsystem),
-      m_shooterSubsystem(shooterSubsystem) {
+      m_shooterSubsystem(shooterSubsystem),
+      m_isClimb1(isClimb1) {
   AddRequirements({elevatorSubsystem, shooterSubsystem});
-  m_isClimb1 = isClimb1;
 }
 
 void DoClimbActionCommand::Initialize() {
@@ -25,7 +25,7 @@ void DoClimbActionCommand::Execute() {
     while (!timer->HasElapsed(1_s)) {
       // wait / do nothing
     }
-    m_shooterSubsystem->ShootMotors(true, 0.30);
+    m_shooterSubsystem->ShootMotors(true, -0.30);
     m_shooterSubsystem->MoveFeeder(-0.50);
     while (!timer->HasElapsed(3_s)) {
       // wait / do nothing
