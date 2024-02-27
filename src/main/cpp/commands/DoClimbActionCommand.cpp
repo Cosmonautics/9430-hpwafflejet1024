@@ -18,20 +18,15 @@ void DoClimbActionCommand::Initialize() {
 void DoClimbActionCommand::Execute() {
   if (m_isClimb1) {
     m_elevatorSubsystem->MoveToPosition(
-        PositionConstants::kShooterClimb1Position);
+        PositionConstants::kShooterShooterPosition);
     m_shooterSubsystem->PivotToSetPoint(
-        PositionConstants::kElevatorClimbPosition);
+        PositionConstants::kElevatorShooterPosition);
     if (timer->HasElapsed(1_s)) {
-      m_shooterSubsystem->PivotToSetPoint(
-          PositionConstants::kElevatorShooterPosition);
-
-      if (timer->HasElapsed(2_s)) {
-        m_shooterSubsystem->ShootMotors(true, 0.30);
-        m_shooterSubsystem->MoveFeeder(-0.50);
-        if (timer->HasElapsed(4_s)) {
-          m_shooterSubsystem->MoveFeeder(0);
-          m_shooterSubsystem->ShootMotors(false, 0);
-        }
+      m_shooterSubsystem->ShootMotors(true, 0.30);
+      m_shooterSubsystem->MoveFeeder(-0.50);
+      if (timer->HasElapsed(3_s)) {
+        m_shooterSubsystem->MoveFeeder(0);
+        m_shooterSubsystem->ShootMotors(false, 0);
       }
       cmdFinished = true;
     }
