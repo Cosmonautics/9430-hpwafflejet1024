@@ -19,6 +19,13 @@ Shooter::Shooter() {
   m_pivotPIDController.SetP(kP);
   m_pivotPIDController.SetI(kI);
   m_pivotPIDController.SetD(kD);
+  m_pivotMotor.SetSoftLimit(rev::CANSparkBase::SoftLimitDirection::kForward,
+                            ShooterConstants::kShooterForwardSoftLimit);
+  m_pivotMotor.SetSoftLimit(rev::CANSparkBase::SoftLimitDirection::kReverse, ShooterConstants::kShooterReverseSoftLimit);
+  m_pivotMotor.EnableSoftLimit(rev::CANSparkBase::SoftLimitDirection::kForward,
+                               true);
+  m_pivotMotor.EnableSoftLimit(rev::CANSparkBase::SoftLimitDirection::kReverse,
+                               true);
 }
 
 void Shooter::PivotToSetPoint(double setPointRotations) {

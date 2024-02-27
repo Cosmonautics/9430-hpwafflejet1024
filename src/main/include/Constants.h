@@ -76,8 +76,9 @@ namespace ElevatorConstants {
 constexpr int kElevatorLeftCanId = 13;
 constexpr int kElevatorRightCanId = 14;
 
-constexpr double kElevatorUpperSoftLimit = 17.0;
-constexpr double kElevatorLowerSoftLimit = 0.0;
+constexpr double kElevatorUpperSoftLimit = 0.969;
+constexpr double kElevatorForwardSoftLimit = 0.767;
+constexpr double kElevatorReverseSoftLimit = 0.045;
 constexpr double kElevatorGearRatio = 1.0;
 constexpr double kElevatorDrumDiameterInches = 1.214;
 constexpr double kElevatorEncoderTicksPerRevolution = 42.0;
