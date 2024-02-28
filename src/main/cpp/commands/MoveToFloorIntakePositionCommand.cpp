@@ -14,10 +14,10 @@ void MoveToFloorIntakePositionCommand::Initialize() {}
 void MoveToFloorIntakePositionCommand::Execute() {
   m_shooterSubsystem->PivotToSetPoint(
       PositionConstants::kShooterTransitPosition);
-  m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeFloorPosition,false);
+  m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeFloorPosition,true);
   //frc2::WaitCommand(0.5_s).Execute();
   m_elevatorSubsystem->MoveToPosition(
-      PositionConstants::kElevatorTransitPosition);
+      PositionConstants::kElevatorTransitPosition,false);
 }
 
 bool MoveToFloorIntakePositionCommand::IsFinished() {

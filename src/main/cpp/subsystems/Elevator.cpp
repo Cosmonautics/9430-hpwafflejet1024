@@ -53,13 +53,23 @@ void Elevator::ConfigureMotors() {
       rev::CANSparkBase::SoftLimitDirection::kReverse, true);
 }
 
-void Elevator::MoveToPosition(double positionRotations) {
+void Elevator::MoveToPosition(double positionRotations, bool isClimb) {
+  if (isClimb) {
+    m_ElevatorPIDController.SetP(1.0);
+  } else {
+    m_ElevatorPIDController.SetP(ElevatorConstants::kP);
+  }
   double targetPositionInches = RotationsToInches(positionRotations);
   m_ElevatorPIDController.SetReference(positionRotations,
                                        rev::ControlType::kPosition);
 }
 
 void Elevator::Periodic() { UpdatePosition(); }
+
+void Elevator::SetToBrakeMode() {
+  m_ElevatorMotorLeft.SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
+  m_ElevatorMotorRight.SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
+}
 
 void Elevator::UpdatePosition() {
   double currentPositionRotations = m_ElevatorThroughBoreEncoder.GetPosition();

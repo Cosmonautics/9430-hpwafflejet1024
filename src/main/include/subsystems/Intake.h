@@ -22,7 +22,7 @@ class Intake : public frc2::Subsystem {
 
   void ControlIntakeMotors(bool isPressed, double speed);
 
-  void PivotToAngle(double intakeAngleRotations, bool clockwise);
+  void PivotToAngle(double intakeAngleRotations, bool movingDown);
 
   bool IsAtSetPoint();
   

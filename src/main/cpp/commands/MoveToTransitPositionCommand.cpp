@@ -20,7 +20,7 @@ void MoveToTransitPositionCommand::Execute() {
 
   // frc2::WaitCommand(0.5_s).Schedule();
   m_elevatorSubsystem->MoveToPosition(
-      PositionConstants::kElevatorTransitPosition);
+      PositionConstants::kElevatorTransitPosition,false);
   cmdFinished = true; // should only conditionally set to true if and only if tests for motor states return true
 }
 

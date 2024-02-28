@@ -14,7 +14,7 @@ void MoveToAMPSpeakerScorePositionCommand::Execute() {
       PositionConstants::kShooterShooterPosition);
  // frc2::WaitCommand(0.8_s).Schedule();
   m_elevatorSubsystem->MoveToPosition(
-      PositionConstants::kElevatorShooterPosition);
+      PositionConstants::kElevatorShooterPosition,false);
 }
 
 bool MoveToAMPSpeakerScorePositionCommand::IsFinished() {

@@ -25,14 +25,16 @@ Intake::Intake() {
   m_pidController.SetP(IntakeConstants::kP);
   m_pidController.SetI(IntakeConstants::kI);
   m_pidController.SetD(IntakeConstants::kD);
-  m_intakePivotMotor.SetSoftLimit(rev::CANSparkBase::SoftLimitDirection::kForward,
-                            IntakeConstants::kIntakeForwardSoftLimit);
-  m_intakePivotMotor.SetSoftLimit(rev::CANSparkBase::SoftLimitDirection::kReverse,
-                            IntakeConstants::kIntakeReverseSoftLimit);
-  m_intakePivotMotor.EnableSoftLimit(rev::CANSparkBase::SoftLimitDirection::kForward,
-                               true);
-  m_intakePivotMotor.EnableSoftLimit(rev::CANSparkBase::SoftLimitDirection::kReverse,
-                               true);
+  m_intakePivotMotor.SetSoftLimit(
+      rev::CANSparkBase::SoftLimitDirection::kForward,
+      IntakeConstants::kIntakeForwardSoftLimit);
+  m_intakePivotMotor.SetSoftLimit(
+      rev::CANSparkBase::SoftLimitDirection::kReverse,
+      IntakeConstants::kIntakeReverseSoftLimit);
+  m_intakePivotMotor.EnableSoftLimit(
+      rev::CANSparkBase::SoftLimitDirection::kForward, true);
+  m_intakePivotMotor.EnableSoftLimit(
+      rev::CANSparkBase::SoftLimitDirection::kReverse, true);
 }
 
 void Intake::IntakeDropNote(bool isPressed, double speed) {
@@ -45,19 +47,12 @@ void Intake::IntakeDropNote(bool isPressed, double speed) {
   }
 }
 
-void Intake::PivotToAngle(double intakeAngleRotations, bool clockwise) {
-  // Define minimum and maximum rotation limits within the 0 to 1 range
-  const double minAngleRotations =
-      0.0;  // Example minimum limit, adjust as needed
-  const double maxAngleRotations =
-      0.3;  // Example maximum limit, adjust as needed
-
-  // Clamp the input to ensure it's within the specified limits
-  /*if (intakeAngleRotations < minAngleRotations) {
-    intakeAngleRotations = minAngleRotations;
-  } else if (intakeAngleRotations > maxAngleRotations) {
-    intakeAngleRotations = maxAngleRotations;
-  }*/
+void Intake::PivotToAngle(double intakeAngleRotations, bool movingDown) {
+  if (movingDown) {
+    m_pidController.SetP(1);
+  } else {
+    m_pidController.SetP(IntakeConstants::kP);
+  }
 
   m_targetSetpointRotations = intakeAngleRotations;
   // Set the target position using PID controller

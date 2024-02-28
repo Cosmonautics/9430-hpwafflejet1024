@@ -18,7 +18,7 @@ void MoveToClimbPos1Command::Execute() {
                                   false);
   //frc2::WaitCommand(0.5_s).Schedule();
   m_elevatorSubsystem->MoveToPosition(
-      PositionConstants::kElevatorClimb1Position);
+      PositionConstants::kElevatorClimb1Position,false);
 }
 
 bool MoveToClimbPos1Command::IsFinished() {

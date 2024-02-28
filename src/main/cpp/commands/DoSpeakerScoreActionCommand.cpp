@@ -27,7 +27,7 @@ void DoSpeakerScoreActionCommand::Execute() {
       PositionConstants::kShooterShooterPosition);
   // frc2::WaitCommand(0.8_s).Schedule();
   m_elevatorSubsystem->MoveToPosition(
-      PositionConstants::kElevatorShooterPosition);
+      PositionConstants::kElevatorShooterPosition, false);
 
   // Set shooter motor 100%
   // frc2::WaitCommand(0.2_s).Schedule();
