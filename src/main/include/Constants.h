@@ -73,7 +73,7 @@ constexpr double kD = 0.0;
 
 namespace ElevatorConstants {
 
-constexpr double kElevatorForwardSoftLimit = 0.767;
+constexpr double kElevatorForwardSoftLimit = 0.989;
 constexpr double kElevatorReverseSoftLimit = 0.045;
 constexpr int kElevatorLeftCanId = 13;
 constexpr int kElevatorRightCanId = 14;
@@ -100,12 +100,15 @@ constexpr double kEncoderUnitsPerInch = 1 / kElevatorInchesPerTick;
 }  // namespace ElevatorConstants
 
 namespace IntakeConstants {
-constexpr double kP = 1;
+constexpr double kP = 4.0;
 constexpr double kI = 0.0;
 constexpr double kD = 0.0;
 constexpr int kIntakeLeftCanId = 11;
 // constexpr int kIntakeRightCanId = 12;
 constexpr int kIntakePivotCanId = 12;
+
+constexpr double kIntakeForwardSoftLimit = 0.691;
+constexpr double kIntakeReverseSoftLimit = 0.430;
 }  // namespace IntakeConstants
 namespace ConveyorConstants {
 static constexpr int kConveyorCanId = 16;
@@ -203,7 +206,7 @@ constexpr double kElevatorTransitPosition = 0.345;
 constexpr double kElevatorShooterPosition = 0.108;
 constexpr double kElevatorClimb1Position = 0.062;
 constexpr double kElevatorClimb2Position = 0.108;
-constexpr double kElevatorClimbPosition = 0.062;
+constexpr double kElevatorClimbPosition = 0.959;
 
 // Shooter Position Constants
 constexpr double kShooterTransitPosition = 0.335;
@@ -211,8 +214,8 @@ constexpr double kShooterShooterPosition = 0.974;
 constexpr double kShooterClimb1Position = 0.0;  // zero this is intended
 
 // Intake Position Constants
-constexpr double kIntakeTransitPosition = 0.290;
-constexpr double kIntakeFloorPosition = 0.557;
-constexpr double kIntakeClimb1Position = 0.397;
+constexpr double kIntakeTransitPosition = 0.436;
+constexpr double kIntakeFloorPosition = 0.689;
+constexpr double kIntakeClimb1Position = 0.537;
 
 }  // namespace PositionConstants

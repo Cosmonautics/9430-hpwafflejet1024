@@ -25,6 +25,14 @@ Intake::Intake() {
   m_pidController.SetP(IntakeConstants::kP);
   m_pidController.SetI(IntakeConstants::kI);
   m_pidController.SetD(IntakeConstants::kD);
+  m_intakePivotMotor.SetSoftLimit(rev::CANSparkBase::SoftLimitDirection::kForward,
+                            IntakeConstants::kIntakeForwardSoftLimit);
+  m_intakePivotMotor.SetSoftLimit(rev::CANSparkBase::SoftLimitDirection::kReverse,
+                            IntakeConstants::kIntakeReverseSoftLimit);
+  m_intakePivotMotor.EnableSoftLimit(rev::CANSparkBase::SoftLimitDirection::kForward,
+                               true);
+  m_intakePivotMotor.EnableSoftLimit(rev::CANSparkBase::SoftLimitDirection::kReverse,
+                               true);
 }
 
 void Intake::IntakeDropNote(bool isPressed, double speed) {
