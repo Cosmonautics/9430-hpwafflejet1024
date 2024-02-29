@@ -88,4 +88,4 @@ bool Intake::IsAtSetPoint() {
   return error <= toleranceRotations;
 }
 
-void Intake::StopMotors() { m_intakeMotorLeft.Set(0); }
+void Intake::StopMotors() { m_intakeMotorLeft.Set(0); } // opening brace should start new line, end brace should be on new line 

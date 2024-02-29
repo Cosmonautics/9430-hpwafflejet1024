@@ -89,7 +89,7 @@ void Shooter::ShootMotors(bool isPressed, double speed) {
   }
 }
 
-void Shooter::InvertMotor(bool invert) {
+void Shooter::InvertMotor(bool invert) { // not clear what motor will be inverted by function name alone 
     m_pivotMotor.SetInverted(invert);
 }
 
@@ -105,7 +105,7 @@ void Shooter::ShooterDropNote(bool isPressed, double speed) {
   }
 }
 
-void Shooter::MoveFeeder(double speed) { m_shooterFeeder.Set(speed); }
+void Shooter::MoveFeeder(double speed) { m_shooterFeeder.Set(speed); } // all braces should start new lines, end braces should end on new lines 
 
 void Shooter::ShooterPickUpNote(bool isPressed, double speed) {
   double pickUpSpeed = speed;  // pick up is negative speed

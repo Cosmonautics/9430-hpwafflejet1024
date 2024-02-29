@@ -57,7 +57,7 @@ void Elevator::ConfigureMotors() {
 
 void Elevator::MoveToPosition(double positionRotations, bool isClimb) {
   if (isClimb) {
-    m_ElevatorPIDController.SetP(1.0);
+    m_ElevatorPIDController.SetP(1.0); // once elevator moves to climb position, it will have a constant P value set to 1.0 
   } else {
     m_ElevatorPIDController.SetP(ElevatorConstants::kP);
   }
