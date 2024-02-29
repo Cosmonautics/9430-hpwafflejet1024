@@ -15,6 +15,7 @@ public:
     void Initialize() override;
     void Execute() override;
     bool IsFinished() override;
+    frc::Timer* timer;
 
 private:
     Elevator* m_elevatorSubsystem;
