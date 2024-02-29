@@ -89,6 +89,10 @@ void Shooter::ShootMotors(bool isPressed, double speed) {
   }
 }
 
+void Shooter::InvertMotor(bool invert) {
+    m_pivotMotor.SetInverted(invert);
+}
+
 void Shooter::ShooterDropNote(bool isPressed, double speed) {
   double dropSpeed = -speed;  // drop positive speed
 

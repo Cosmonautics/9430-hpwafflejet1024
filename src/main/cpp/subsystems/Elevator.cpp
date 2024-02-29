@@ -25,7 +25,9 @@ void Elevator::ConfigureMotors() {
   m_ElevatorMotorLeft.RestoreFactoryDefaults();
   m_ElevatorMotorRight.RestoreFactoryDefaults();
   m_ElevatorMotorLeft.Follow(m_ElevatorMotorRight, true);
-
+  
+  m_ElevatorMotorLeft.SetSmartCurrentLimit(40);
+  m_ElevatorMotorRight.SetSmartCurrentLimit(40);
   // Configure PID controller on SparkMax
   // m_ElevatorPIDController.SetPositionPIDWrappingEnabled(true);
   try {
