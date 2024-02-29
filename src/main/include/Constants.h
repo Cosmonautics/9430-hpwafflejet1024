@@ -211,6 +211,8 @@ constexpr double kElevatorClimbPosition = 0.959;
 // Shooter Position Constants
 constexpr double kShooterTransitPosition = 0.335;
 constexpr double kShooterShooterPosition = 0.974;
+constexpr double kShooterPreShooterPosition = 0.974;
+constexpr double kShooterAMPPosition = 0.974;
 constexpr double kShooterClimb1Position = 0.0;  // zero this is intended
 
 // Intake Position Constants
