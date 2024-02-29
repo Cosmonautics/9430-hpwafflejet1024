@@ -18,8 +18,6 @@ void DoClimbActionCommand::Execute() {
   m_shooterSubsystem->InvertMotor(true);
   m_elevatorSubsystem->MoveToPosition(PositionConstants::kElevatorClimbPosition,
                                       true);
-  m_shooterSubsystem->PivotToSetPoint(
-      PositionConstants::kShooterShooterPosition);
   while (!timer->HasElapsed(3.5_s)) {
     // wait / do nothing
   }
