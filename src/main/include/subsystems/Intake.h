@@ -21,27 +21,31 @@ class Intake : public frc2::Subsystem {
   void IntakeDropNote(bool isPressed, double speed);
 
   void ControlIntakeMotors(bool isPressed, double speed);
- 
-  void PivotToAngle(double IntakeAngle);
- 
+
+  void PivotToAngle(double intakeAngleRotations, bool movingDown);
+
+  bool IsAtSetPoint();
+  
+  void StopMotors();
+
  private:
   // 2 motors
   // Design:
   // 1 for pivot angle
 
-  rev::CANSparkFlex m_intakeMotorLeft{
+  rev::CANSparkMax m_intakeMotorLeft{
       IntakeConstants::kIntakeLeftCanId,
-      rev::CANSparkLowLevel::MotorType::kBrushless};
-  rev::CANSparkFlex m_intakeMotorRight{
-      IntakeConstants::kIntakeRightCanId,
-      rev::CANSparkLowLevel::MotorType::kBrushless};
-      rev::CANSparkMax m_intakePivotMotor{IntakeConstants::kIntakePivotCanId, rev::CANSparkMax::MotorType::kBrushless};
-      rev::SparkAbsoluteEncoder m_intakePivotAbsoluteEncoder = m_intakePivotMotor.GetAbsoluteEncoder(rev::SparkAbsoluteEncoder::Type::kDutyCycle);
-      rev::SparkMaxPIDController m_pidController =
+      rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax m_intakePivotMotor{IntakeConstants::kIntakePivotCanId,
+                                      rev::CANSparkMax::MotorType::kBrushless};
+  rev::SparkAbsoluteEncoder m_intakePivotAbsoluteEncoder =
+      m_intakePivotMotor.GetAbsoluteEncoder(
+          rev::SparkAbsoluteEncoder::Type::kDutyCycle);
+  rev::SparkMaxPIDController m_pidController =
       m_intakePivotMotor.GetPIDController();
- 
- 
- // rev::CANSparkMax m_intakePivotMax;
+
+  double m_targetSetpointRotations = 0.0;
+  // rev::CANSparkMax m_intakePivotMax;
   //  1 motor for rollers
   // rev::CANSparkFlex m_intakeRollersFlex;
   //  m_intakePivotMax(IntakeConstants::kIntakeRightCanId,rev::CANSparkMaxLowLevel::MotorType::kBrushless),

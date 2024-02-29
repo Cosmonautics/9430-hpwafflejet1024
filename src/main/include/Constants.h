@@ -61,32 +61,24 @@ constexpr int kRearRightTurningCanId = 3;
 namespace ShooterConstants {
 constexpr int kShooterLeftCanId = 10;
 constexpr int kShooterRightCanId = 9;
-constexpr int kShooterPivotCanId = 60;
+constexpr int kShooterPivotCanId = 17;
+constexpr int kShooterFeederCanId = 18;
+constexpr double kShooterForwardSoftLimit = 0.955;
+constexpr double kShooterReverseSoftLimit = 0.158;
 
-constexpr double kP = 0.1;
+constexpr double kP = 2.0;
 constexpr double kI = 0.0;
 constexpr double kD = 0.0;
-constexpr double kFloorIntakePositionDegrees =
-    0.0;  // Floor intake position (in degrees)
-constexpr double kAMPScorePositionDegrees =
-    90.0;  // AMP/speaker score position (in degrees)
-constexpr double kTransitPositionDegrees =
-    45.0;  // Transit position (in degrees)
-constexpr double kClimb1PositionDegrees =
-    135.0;  // Climb 1 position (in degrees)
-constexpr double kClimb2PositionDegrees =
-    180.0;                                     // Climb 2 position (in degrees)
-constexpr double kTrapPositionDegrees = 90.0;  // Trap position (in degrees)
-
-constexpr double kShooterSetpointDegree = 270.0;
 }  // namespace ShooterConstants
 
 namespace ElevatorConstants {
+
+constexpr double kElevatorForwardSoftLimit = 0.989;
+constexpr double kElevatorReverseSoftLimit = 0.045;
 constexpr int kElevatorLeftCanId = 13;
 constexpr int kElevatorRightCanId = 14;
 
-constexpr double kElevatorUpperSoftLimit = 17.0;
-constexpr double kElevatorLowerSoftLimit = 0.0;
+constexpr double kElevatorUpperSoftLimit = 0.969;
 constexpr double kElevatorGearRatio = 1.0;
 constexpr double kElevatorDrumDiameterInches = 1.214;
 constexpr double kElevatorEncoderTicksPerRevolution = 42.0;
@@ -105,47 +97,24 @@ constexpr double kElevatorSetpointInches = 12.0;  // Placeholder constant
 constexpr double kGearBoxScale = 0.2045;
 constexpr double kPositionToleranceInches = 1.0 / 2.54;
 constexpr double kEncoderUnitsPerInch = 1 / kElevatorInchesPerTick;
-
-constexpr double kFloorIntakePositionInches =
-    0.0;  // Floor intake position (in inches)
-constexpr double kAMPScorePositionRotations =
-    0.126;  // AMP/speaker score position (in inches)
-constexpr double kTransitPositionRotations =
-    0.346;  // Transit position (in inches)
-constexpr double kClimb1PositionRotations =
-    0.057;                                      // Climb 1 position (in inches)
-constexpr double kClimb2PositionInches = 48.0;  // Climb 2 position (in inches)
-
-constexpr double kClimbPositionInches = 7.0;
 }  // namespace ElevatorConstants
 
 namespace IntakeConstants {
-constexpr double kP = 0.01;
+constexpr double kP = 4.0;
 constexpr double kI = 0.0;
 constexpr double kD = 0.0;
 constexpr int kIntakeLeftCanId = 11;
-constexpr int kIntakeRightCanId = 12;
-constexpr int kIntakePivotCanId = 15;
+// constexpr int kIntakeRightCanId = 12;
+constexpr int kIntakePivotCanId = 12;
+
+constexpr double kIntakeForwardSoftLimit = 0.691;
+constexpr double kIntakeReverseSoftLimit = 0.430;
 }  // namespace IntakeConstants
 namespace ConveyorConstants {
 static constexpr int kConveyorCanId = 16;
 static constexpr int kLimitSwitchChannel =
     0;  // Update this with the actual channel
 }  // namespace ConveyorConstants
-
-namespace ClimbConstants {
-constexpr double kClimbPosition1Inches = 10.0;
-constexpr double kClimbPosition2Inches = 5.0;
-}  // namespace ClimbConstants
-namespace FloorIntakeConstants {
-constexpr double kFloorIntakeAngle = 5.0;
-}  // namespace FloorIntakeConstants
-namespace TransitPositionConstants {
-constexpr double kTransitAngle = 5.0;
-}
-namespace ClimbPositionConstants {
-constexpr double kClimbAngle1 = 5.0;
-}
 namespace ModuleConstants {
 // Invert the turning encoder, since the output shaft rotates in the opposite
 // direction of the steering motor in the MAXSwerve Module.
@@ -225,11 +194,32 @@ extern const frc::TrapezoidProfile<units::radians>::Constraints
 
 namespace OIConstants {
 constexpr int kDriverControllerPort = 0;
+constexpr int kOperatorControllerPort = 1;
 constexpr double kDriveDeadband = 0.05;
 }  // namespace OIConstants
 
-namespace CommandConstants {
-constexpr double kFLoorIntakePostionIntake = 90.0;
-constexpr double kFloorIntakePositionShooter = 90.0;
-constexpr double kFLoorIntakePostionElevator = 1;
-}  // namespace CommandConstants
+// Position Constants
+// THESE ARE IMPORTANT, AS THEY STORE EXACT POSITIONS FOR EACH SUBSYSTEMS
+namespace PositionConstants {
+// Elevator Position Constants
+constexpr double kElevatorTransitPosition = 0.345;
+constexpr double kElevatorShooterPosition = 0.108;
+constexpr double kElevatorClimb1Position = 0.062;
+constexpr double kElevatorClimb2Position = 0.108;
+constexpr double kElevatorClimbPosition = 0.511;
+
+// Shooter Position Constants
+constexpr double kShooterTransitPosition = 0.240;
+constexpr double kShooterShooterPosition = 0.910;
+constexpr double kShooterPreShooterPosition = 0.935;
+constexpr double kShooterAMPPosition = 0.875;
+constexpr double kShooterClimb1Position = 0.423;  // zero this is intended
+
+
+
+// Intake Position Constants
+constexpr double kIntakeTransitPosition = 0.436;
+constexpr double kIntakeFloorPosition = 0.689;
+constexpr double kIntakeClimb1Position = 0.537;
+
+}  // namespace PositionConstants

@@ -11,46 +11,72 @@
 using namespace ShooterConstants;
 
 Shooter::Shooter() {
+  m_pivotMotor.RestoreFactoryDefaults();
+  m_pivotMotor.SetInverted(true);
+  m_shooterFeeder.SetInverted(true);
+  m_pivotMotor.SetSmartCurrentLimit(20);
+  m_pivotPIDController.SetOutputRange(-1.0, 1.0);
+  m_pivotPIDController.SetFeedbackDevice(m_pivotEncoder);
   m_pivotPIDController.SetP(kP);
   m_pivotPIDController.SetI(kI);
   m_pivotPIDController.SetD(kD);
+  m_pivotMotor.SetSoftLimit(rev::CANSparkBase::SoftLimitDirection::kForward,
+                            ShooterConstants::kShooterForwardSoftLimit);
+  m_pivotMotor.SetSoftLimit(rev::CANSparkBase::SoftLimitDirection::kReverse,
+                            ShooterConstants::kShooterReverseSoftLimit);
+  m_pivotMotor.EnableSoftLimit(rev::CANSparkBase::SoftLimitDirection::kForward,
+                               true);
+  m_pivotMotor.EnableSoftLimit(rev::CANSparkBase::SoftLimitDirection::kReverse,
+                               true);
 }
 
-void Shooter::PivotToSetPoint(double setPoint) {
-  double currentAngle =m_pivotEncoder.GetPosition() * (180.0 / M_PI);
-  if (IsTargetInRestrictedRange(setPoint) ||
-      IsTargetInRestrictedRange(currentAngle)) {
-    auto exitAbove145 = (currentAngle <= 145.0) ||
-                        (currentAngle > 145.0 && setPoint < currentAngle);
-    if (exitAbove145) {
-      setPoint = 145.0 + 1.0;
-    } else {
-      setPoint = 0.0;
+void Shooter::PivotToSetPoint(double setPointRotations) {
+  // Ensure setPointRotations is in the 0-1 range, representing a full rotation
+  double currentAngleRotations =
+      m_pivotEncoder
+          .GetPosition();  // Assuming this returns rotations in 0-1 range
+
+  /*  if (IsTargetInRestrictedRange(currentAngleRotations) ||
+        IsTargetInRestrictedRange(setPointRotations)) {
+      bool exitAboveRestrictedRange =
+          (currentAngleRotations <= (100.0 / 360.0)) ||
+          (currentAngleRotations > (100.0 / 360.0) &&
+           setPointRotations < currentAngleRotations);
+      if (exitAboveRestrictedRange) {
+        setPointRotations =
+            (100.0 + 1.0) /
+            360.0;  // Adjust setpoint to avoid restricted range, in rotations
+      } else {
+        setPointRotations = 0.0;  // Reset setpoint if necessary
+      }
     }
-  }
-  m_targetSetpoint = units::degree_t(setPoint);
-  double targetPosition = setPoint * (M_PI / 180.0);
-  m_pivotPIDController.SetReference(targetPosition,
+  */
+  m_targetSetpointRotations =
+      setPointRotations;  // Store the setpoint in rotations for error
+                          // calculation
+
+  // Set the PID reference using rotations directly
+  m_pivotPIDController.SetReference(setPointRotations,
                                     rev::ControlType::kPosition);
 }
 
-bool Shooter::IsTargetInRestrictedRange(double target) {
-  return target >= 1.0 && target <= 145.0;
+bool Shooter::IsTargetInRestrictedRange(double targetRotations) {
+  // Check if the target (in rotations) is within the restricted range
+  return targetRotations >= (1.0 / 360.0) && targetRotations <= (100.0 / 360.0);
 }
 
 bool Shooter::IsAtSetPoint() {
-  auto currentAngle =
-      units::degree_t(m_pivotEncoder.GetPosition() * (180.0 / M_PI));
-  // Assuming you have a method or a way to get the target setpoint for
-  // comparison and a tolerance for how close to the setpoint is acceptable
-  constexpr auto tolerance = 1_deg;  // Specify an appropriate tolerance
+  // Get current angle in rotations for comparison
+  double currentAngleRotations = m_pivotEncoder.GetPosition();
+  constexpr double toleranceRotations = 1.0 / 360.0;  // Tolerance in rotations
 
   // Calculate the difference between the current angle and the target setpoint
-  auto error = std::abs((currentAngle - m_targetSetpoint).to<double>());
+  // in rotations
+  double error = std::abs(currentAngleRotations - m_targetSetpointRotations);
 
   // Check if the current position is within the tolerance of the target
   // setpoint
-  return error <= tolerance.to<double>();
+  return error <= toleranceRotations;
 }
 
 void Shooter::ShootMotors(bool isPressed, double speed) {
@@ -63,8 +89,12 @@ void Shooter::ShootMotors(bool isPressed, double speed) {
   }
 }
 
+void Shooter::InvertMotor(bool invert) { // not clear what motor will be inverted by function name alone 
+    m_pivotMotor.SetInverted(invert);
+}
+
 void Shooter::ShooterDropNote(bool isPressed, double speed) {
-  double dropSpeed = 0.10;  // drop positive speed
+  double dropSpeed = -speed;  // drop positive speed
 
   if (isPressed) {
     m_shooterMotorLeft.Set(-dropSpeed);
@@ -75,14 +105,41 @@ void Shooter::ShooterDropNote(bool isPressed, double speed) {
   }
 }
 
+void Shooter::MoveFeeder(double speed) { m_shooterFeeder.Set(speed); } // all braces should start new lines, end braces should end on new lines 
+
 void Shooter::ShooterPickUpNote(bool isPressed, double speed) {
-  double pickUpSpeed = -0.10;  // pick up is negative speed
+  double pickUpSpeed = speed;  // pick up is negative speed
 
   if (isPressed) {
-    m_shooterMotorLeft.Set(-pickUpSpeed);
+    m_shooterMotorLeft.Set(-pickUpSpeed); // motorLeft should be inverted from motorRight so you don't have to negate values 
     m_shooterMotorRight.Set(pickUpSpeed);
   } else {
     m_shooterMotorLeft.Set(0);
     m_shooterMotorRight.Set(0);
   }
+}
+
+void Shooter::ManualMove(double speed) {
+  if (manualOverride) {
+    double currentShooterPivotPosition = m_pivotEncoder.GetPosition();
+
+    double speedFactor = 0.01;
+    double targetPositionRotations =
+        currentShooterPivotPosition + (speed * speedFactor);
+
+    if (IsTargetInRestrictedRange(targetPositionRotations)) {
+      m_pivotPIDController.SetReference(targetPositionRotations,
+                                        rev::ControlType::kPosition);
+    }
+  }
+}
+
+bool Shooter::ToggleManualOverride() {
+  manualOverride = !manualOverride;
+  return manualOverride;
+}
+
+void Shooter::StopMotors() {
+  m_shooterMotorLeft.Set(0);
+  m_shooterMotorRight.Set(0);
 }

@@ -3,6 +3,7 @@
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc2/command/WaitCommand.h>
 #include "subsystems/Elevator.h"
 #include "subsystems/Shooter.h"
 #include "subsystems/Intake.h"

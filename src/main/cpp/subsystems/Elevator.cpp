@@ -25,7 +25,9 @@ void Elevator::ConfigureMotors() {
   m_ElevatorMotorLeft.RestoreFactoryDefaults();
   m_ElevatorMotorRight.RestoreFactoryDefaults();
   m_ElevatorMotorLeft.Follow(m_ElevatorMotorRight, true);
-
+  
+  m_ElevatorMotorLeft.SetSmartCurrentLimit(40);
+  m_ElevatorMotorRight.SetSmartCurrentLimit(40);
   // Configure PID controller on SparkMax
   // m_ElevatorPIDController.SetPositionPIDWrappingEnabled(true);
   try {
@@ -41,20 +43,35 @@ void Elevator::ConfigureMotors() {
   m_ElevatorPIDController.SetI(kI);
   m_ElevatorPIDController.SetD(kD);
   m_ElevatorPIDController.SetOutputRange(-1.0, 1.0);
+  m_ElevatorMotorRight.SetSoftLimit(
+      rev::CANSparkBase::SoftLimitDirection::kForward,
+      ElevatorConstants::kElevatorForwardSoftLimit);
+  m_ElevatorMotorRight.SetSoftLimit(
+      rev::CANSparkBase::SoftLimitDirection::kReverse,
+      ElevatorConstants::kElevatorReverseSoftLimit);
+  m_ElevatorMotorRight.EnableSoftLimit(
+      rev::CANSparkBase::SoftLimitDirection::kForward, true);
+  m_ElevatorMotorRight.EnableSoftLimit(
+      rev::CANSparkBase::SoftLimitDirection::kReverse, true);
 }
 
-void Elevator::MoveToPosition(double positionRotations) {
-  double targetPositionInches = RotationsToInches(positionRotations);
-  if (targetPositionInches > kElevatorUpperSoftLimit ||
-      targetPositionInches < kElevatorLowerSoftLimit) {
-    return;  // Position out of bounds
+void Elevator::MoveToPosition(double positionRotations, bool isClimb) {
+  if (isClimb) {
+    m_ElevatorPIDController.SetP(1.0); // once elevator moves to climb position, it will have a constant P value set to 1.0 
+  } else {
+    m_ElevatorPIDController.SetP(ElevatorConstants::kP);
   }
-  m_ElevatorMotorRight.Set(0);
+  double targetPositionInches = RotationsToInches(positionRotations);
   m_ElevatorPIDController.SetReference(positionRotations,
                                        rev::ControlType::kPosition);
 }
 
 void Elevator::Periodic() { UpdatePosition(); }
+
+void Elevator::SetToBrakeMode() {
+  m_ElevatorMotorLeft.SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
+  m_ElevatorMotorRight.SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
+}
 
 void Elevator::UpdatePosition() {
   double currentPositionRotations = m_ElevatorThroughBoreEncoder.GetPosition();
@@ -92,11 +109,13 @@ bool Elevator::ToggleManualOverride() {
 void Elevator::ManualMove(double speed) {
   if (manualOverride) {
     double currentElevatorPosition = m_ElevatorThroughBoreEncoder.GetPosition();
-    double currentElevatorRotations =
-        RotationsToInches(currentElevatorPosition);
-    if (currentElevatorRotations > kElevatorLowerSoftLimit &&
-        currentElevatorRotations < kElevatorUpperSoftLimit) {
-      m_ElevatorMotorRight.Set(speed * 0.25);
-    }
+
+    double speedFactor = 0.01;
+    double targetPositionRotations =
+        currentElevatorPosition + (speed * speedFactor);
+    double targetPositionInches = RotationsToInches(targetPositionRotations);
+
+    m_ElevatorPIDController.SetReference(targetPositionRotations,
+                                         rev::ControlType::kPosition);
   }
 }

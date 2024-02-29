@@ -3,12 +3,14 @@
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc2/command/WaitCommand.h>
 #include "subsystems/Elevator.h"
 #include "subsystems/Shooter.h"
+#include "subsystems/Intake.h"
 
-class MoveToAmpSpeakerScorePositionCommand : public frc2::CommandHelper<frc2::Command, MoveToAmpSpeakerScorePositionCommand> {
+class MoveToAMPSpeakerScorePositionCommand : public frc2::CommandHelper<frc2::Command, MoveToAMPSpeakerScorePositionCommand> {
 public:
-    MoveToAmpSpeakerScorePositionCommand(Elevator* elevatorSubsystem, Shooter* shooterSubsystem);
+    MoveToAMPSpeakerScorePositionCommand(Elevator* elevatorSubsystem, Shooter* shooterSubsystem);
 
     void Initialize() override;
     void Execute() override;
@@ -19,4 +21,4 @@ private:
     Shooter* m_shooterSubsystem;
 };
 
-#endif // MOVE_ELEVATOR_TO_AMP_SCORE_POSITION_COMMAND_H
+#endif // MOVE_TO_AMP_SPEAKER_SCORE_POSITION_COMMAND_H

@@ -18,9 +18,24 @@ elevator postion and shooter position remain defult to transit positon
 */
 
 Intake::Intake() {
+  m_intakePivotMotor.RestoreFactoryDefaults();
+  m_intakePivotMotor.SetInverted(true);
+  m_intakeMotorLeft.SetSmartCurrentLimit(40);
+  m_pidController.SetOutputRange(-1.0, 1.0);
+  m_pidController.SetFeedbackDevice(m_intakePivotAbsoluteEncoder);
   m_pidController.SetP(IntakeConstants::kP);
   m_pidController.SetI(IntakeConstants::kI);
   m_pidController.SetD(IntakeConstants::kD);
+  m_intakePivotMotor.SetSoftLimit(
+      rev::CANSparkBase::SoftLimitDirection::kForward,
+      IntakeConstants::kIntakeForwardSoftLimit);
+  m_intakePivotMotor.SetSoftLimit(
+      rev::CANSparkBase::SoftLimitDirection::kReverse,
+      IntakeConstants::kIntakeReverseSoftLimit);
+  m_intakePivotMotor.EnableSoftLimit(
+      rev::CANSparkBase::SoftLimitDirection::kForward, true);
+  m_intakePivotMotor.EnableSoftLimit(
+      rev::CANSparkBase::SoftLimitDirection::kReverse, true);
 }
 
 void Intake::IntakeDropNote(bool isPressed, double speed) {
@@ -28,56 +43,49 @@ void Intake::IntakeDropNote(bool isPressed, double speed) {
 
   if (isPressed) {
     m_intakeMotorLeft.Set(-dropSpeed);
-    m_intakeMotorRight.Set(dropSpeed);
   } else {
     m_intakeMotorLeft.Set(0);
-    m_intakeMotorRight.Set(0);
   }
 }
 
-void Intake::PivotToAngle(double intakeAngleDegrees) {
-
-  double intakeAngleRadians = intakeAngleDegrees * (M_PI / 180.0);
-
-  intakeAngleRadians = fmod(intakeAngleRadians, 2 * M_PI);
-  if (intakeAngleRadians < 0) {
-    intakeAngleRadians += 2 * M_PI;  
+void Intake::PivotToAngle(double intakeAngleRotations, bool movingDown) {
+  if (movingDown) {
+    m_pidController.SetP(1);
+  } else {
+    m_pidController.SetP(IntakeConstants::kP);
   }
 
-  double intakeAngleRotations = intakeAngleRadians / (2 * M_PI);
-
-  const double minAngleRotations = 3.0 / 4.0;  
-  const double maxAngleRotations = 1.0;        
-
-  if (intakeAngleRotations < minAngleRotations) {
-    intakeAngleRotations = minAngleRotations;
-  } else if (intakeAngleRotations > maxAngleRotations) {
-
-    intakeAngleRotations = maxAngleRotations;
-  }
-
+  m_targetSetpointRotations = intakeAngleRotations;
+  // Set the target position using PID controller
   m_pidController.SetReference(intakeAngleRotations,
                                rev::ControlType::kPosition);
 }
 
 void Intake::IntakePickUpNote(bool isPressed, double speed) {
-  double pickUpSpeed = -0.10;  // pick up is negative speed
+  double pickUpSpeed = -speed;  // pick up is negative speed
 
   if (isPressed) {
-    m_intakeMotorLeft.Set(-pickUpSpeed);
-    m_intakeMotorRight.Set(pickUpSpeed);
+    m_intakeMotorLeft.Set(pickUpSpeed);
   } else {
     m_intakeMotorLeft.Set(0);
-    m_intakeMotorRight.Set(0);
   }
 }
 
 void Intake::ControlIntakeMotors(bool isPressed, double speed) {
   if (isPressed) {
     m_intakeMotorLeft.Set(-speed);
-    m_intakeMotorRight.Set(speed);
   } else {
     m_intakeMotorLeft.Set(0);
-    m_intakeMotorRight.Set(0);
   }
 }
+
+bool Intake::IsAtSetPoint() {
+  double currentAngleRotations = m_intakePivotAbsoluteEncoder.GetPosition();
+  constexpr double toleranceRotations = 1.0 / 360.0;  // Tolerance in rotations
+
+  double error = std::abs(currentAngleRotations - m_targetSetpointRotations);
+
+  return error <= toleranceRotations;
+}
+
+void Intake::StopMotors() { m_intakeMotorLeft.Set(0); } // opening brace should start new line, end brace should be on new line 

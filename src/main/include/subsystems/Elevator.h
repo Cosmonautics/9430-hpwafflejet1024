@@ -20,7 +20,7 @@ class Elevator : public frc2::Subsystem {
  public:
   Elevator();
   void Periodic() override;
-  void MoveToPosition(double positionInches);
+  void MoveToPosition(double positionInches, bool isClimb);
   bool AtTargetPosition();
   void ManualMove(double speed);
   // m_ElevatorEncoder.GetPosition();
@@ -33,6 +33,7 @@ class Elevator : public frc2::Subsystem {
   double RotationsToInches(double revolution);
   bool ToggleManualOverride();
 
+  void SetToBrakeMode();
   rev::SparkMaxAbsoluteEncoder
   GetkElevatorThroughBoreEncoder();  // these functions are needed to get
                                      // private class attributes

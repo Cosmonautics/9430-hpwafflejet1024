@@ -1,18 +1,24 @@
-#include "commands/MoveToAmpSpeakerScorePositionCommand.h"
+#include "commands/MoveToAMPSpeakerScorePositionCommand.h"
 
-MoveToAmpSpeakerScorePositionCommand::MoveToAmpSpeakerScorePositionCommand(Elevator* elevatorSubsystem, Shooter* shooterSubsystem)
-: m_elevatorSubsystem(elevatorSubsystem), m_shooterSubsystem(shooterSubsystem) {
-    AddRequirements({elevatorSubsystem, shooterSubsystem});
-    }
-
-void MoveToAmpSpeakerScorePositionCommand::Initialize() {
-    m_elevatorSubsystem->MoveToPosition(ElevatorConstants::kAMPScorePositionRotations);
-    m_shooterSubsystem->PivotToSetPoint(ShooterConstants::kAMPScorePositionDegrees);
+MoveToAMPSpeakerScorePositionCommand::MoveToAMPSpeakerScorePositionCommand(
+    Elevator* elevatorSubsystem, Shooter* shooterSubsystem)
+    : m_elevatorSubsystem(elevatorSubsystem),
+      m_shooterSubsystem(shooterSubsystem) {
+  AddRequirements({elevatorSubsystem, shooterSubsystem});
 }
 
-void MoveToAmpSpeakerScorePositionCommand::Execute() {}
+void MoveToAMPSpeakerScorePositionCommand::Initialize() {}
 
-bool MoveToAmpSpeakerScorePositionCommand::IsFinished() {
-    return m_elevatorSubsystem->AtTargetPosition();
-    return m_shooterSubsystem->IsAtSetPoint();
+void MoveToAMPSpeakerScorePositionCommand::Execute() {
+  m_shooterSubsystem->InvertMotor(true);
+  m_shooterSubsystem->PivotToSetPoint(
+      PositionConstants::kShooterPreShooterPosition);
+  // frc2::WaitCommand(0.8_s).Schedule();
+  m_elevatorSubsystem->MoveToPosition(
+      PositionConstants::kElevatorShooterPosition, false);
+}
+
+bool MoveToAMPSpeakerScorePositionCommand::IsFinished() {
+  return m_elevatorSubsystem->AtTargetPosition() &&
+         m_shooterSubsystem->IsAtSetPoint();
 }

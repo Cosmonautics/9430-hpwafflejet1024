@@ -93,6 +93,6 @@
     "valarray": "cpp",
     "variant": "cpp",
     "*.inc": "cpp",
-    "xtr1common": "cpp"
+    "movetoclimbpos2command": "c"
   }
 }

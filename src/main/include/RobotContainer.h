@@ -16,29 +16,26 @@
 
 #include "AHRS.h"
 #include "Constants.h"
-#include "utils/ControllerUtils.h"
-#include "commands/ClimbActionCommand.h"
-#include "commands/ControlIntakeMotorsCommand.h"
-#include "commands/IntakeDropNoteCommand.h"
-#include "commands/IntakePickUpNoteCommand.h"
-#include "commands/MoveElevatorToClimb2PositionCommand.h"
-#include "commands/MoveElevatorToPositionCommand.h"
-#include "commands/MoveElevatorToTransitPositionCommand.h"
-#include "commands/MoveToAmpSpeakerScorePositionCommand.h"
-#include "commands/MoveToClimb1PositionCommand.h"
+// #include "commands/CommandTemplate.h"
+#include "commands/DoClimbActionCommand.h"
+#include "commands/DoNoteEjectActionCommand.h"
+#include "commands/DoNoteIntakeActionCommand.h"
+#include "commands/DoSpeakerScoreActionCommand.h"
+#include "commands/DoAMPScoreActionCommand.h"
+#include "commands/MoveToAMPSpeakerScorePositionCommand.h"
+#include "commands/MoveToClimbPos1Command.h"
+#include "commands/MoveToClimbPos2Command.h"
 #include "commands/MoveToFloorIntakePositionCommand.h"
-#include "commands/PivotIntakeToAngleCommand.h"
-#include "commands/PivotShooterToPositionCommand.h"
-#include "commands/PivotShooterToTransitPositionCommand.h"
-#include "commands/PivotToPositionCommand.h"
-#include "commands/RunConveyorCommand.h"
-#include "commands/ShootMotorsCommand.h"
-
+#include "commands/MoveToTransitPositionCommand.h"
+#include "commands/StopIntakeMotorCommand.h"
+#include "commands/StopNoteIntakeEjectActionCommand.h"
+#include "commands/StopShooterMotorCommand.h"
 #include "subsystems/Conveyor.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
 #include "subsystems/Intake.h"
 #include "subsystems/Shooter.h"
+#include "utils/ControllerUtils.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -57,6 +54,9 @@ class RobotContainer {
   // The driver's controller
   frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
 
+  // The driver's controller
+  frc::XboxController m_operatorController{
+      OIConstants::kOperatorControllerPort};
   // In RobotContainer.cpp, within the RobotContainer constructor:
   // Enum to keep track of the last pressed trigger
 
@@ -67,9 +67,13 @@ class RobotContainer {
   Intake m_intake;
   Shooter m_shooter;
   Elevator m_elevator;
+  Conveyor m_conveyor;
   // Conveyor m_conveyor;
   //  The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;
 
   void ConfigureButtonBindings();
+
+  bool isClimb2 = false;
+  bool isClimb1 = false;
 };
