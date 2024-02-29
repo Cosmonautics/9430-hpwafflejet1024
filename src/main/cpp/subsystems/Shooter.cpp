@@ -111,7 +111,7 @@ void Shooter::ShooterPickUpNote(bool isPressed, double speed) {
   double pickUpSpeed = speed;  // pick up is negative speed
 
   if (isPressed) {
-    m_shooterMotorLeft.Set(-pickUpSpeed);
+    m_shooterMotorLeft.Set(-pickUpSpeed); // motorLeft should be inverted from motorRight so you don't have to negate values 
     m_shooterMotorRight.Set(pickUpSpeed);
   } else {
     m_shooterMotorLeft.Set(0);
