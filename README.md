@@ -23,19 +23,17 @@ This section is written for our drive team as a reference for robot controls. Th
 
 #### Robot Positions
 
-* AMP Score / Speaker Score Position : (*TOGGLE*) Press **D-Pad Right** to switch between AMP Scoring Mode and Speaker Scoring Mode -- needs redesign but currently works as designed 
-* Climb : Press **D-Pad Up**
-* Floor Intake Position : **Press D-Pad Left** 
-* Transit Position : Press **D-Pad Down** -- Works as designed
+* AMP Score / Speaker Score Position : (*TOGGLE*) Press **D-Pad Right** to move shooter to its vertical shooter position.
+* Climb : Press **D-Pad Up** to prepare the robot for the *Climb Action*
+* Floor Intake Position : **Press D-Pad Left** to prepare the robot to feed in notes from the ground
+* Transit Position : Press **D-Pad Down** to prepare the robot for manueverability. 
 
 #### Robot Actions
 
-* Climb Action : -- Postpone (Press **Y**)
-* Note Intake Action : Press **Right Bumper**
-    * Conveyor goes the wrong way
-    * Shooter motors are not moving 
-* Note Eject Action : Press **Left Bumper**
-* Speaker Score Action : Press **B**
+* Climb Action : -- Press **Y** to perform the climb action once the robot is in *Climb Position*.
+* Note Feed In Action : Press **Left Bumper** to intake a note from the ground while the robot is in floor intake position.
+* Note Eject Action : Press **A**
+* Speaker Score Action : Press **Right Bumper**
 
 ### Driver Guide
 
