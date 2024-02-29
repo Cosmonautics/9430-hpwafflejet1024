@@ -35,9 +35,6 @@ void DoAMPScoreActionCommand::Execute() {
   // (TBD VISION) auto align DT to point at the speaker
   // (TBD VISION/PATHING) pivot shooter manipulator to proper angle based on
   // distance from goal
-  while (!timer->HasElapsed(3_s)) {
-    // After 2 seconds, move the feeder and mark the command as complete
-  }
   m_shooterSubsystem->MoveFeeder(-1.0);  // Set shooter feeder motor 100%
   m_shooterSubsystem->ShooterDropNote(true, 0.10);
   while (!timer->HasElapsed(5_s)) {
