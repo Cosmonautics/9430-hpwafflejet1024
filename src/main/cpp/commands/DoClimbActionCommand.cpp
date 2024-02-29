@@ -15,6 +15,7 @@ void DoClimbActionCommand::Initialize() {
 
 void DoClimbActionCommand::Execute() {
   timer->Start();
+  m_shooterSubsystem->InvertMotor(true);
   m_elevatorSubsystem->MoveToPosition(PositionConstants::kElevatorClimbPosition,
                                       true);
   m_shooterSubsystem->PivotToSetPoint(

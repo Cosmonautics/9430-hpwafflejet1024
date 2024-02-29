@@ -12,13 +12,14 @@ MoveToClimbPos1Command::MoveToClimbPos1Command(Elevator* elevatorSubsystem,
 void MoveToClimbPos1Command::Initialize() {}
 
 void MoveToClimbPos1Command::Execute() {
+  m_shooterSubsystem->InvertMotor(true);
   m_shooterSubsystem->PivotToSetPoint(
       PositionConstants::kShooterShooterPosition);
   m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeClimb1Position,
                                   false);
-  //frc2::WaitCommand(0.5_s).Schedule();
+  // frc2::WaitCommand(0.5_s).Schedule();
   m_elevatorSubsystem->MoveToPosition(
-      PositionConstants::kElevatorClimb1Position,false);
+      PositionConstants::kElevatorClimb1Position, false);
 }
 
 bool MoveToClimbPos1Command::IsFinished() {

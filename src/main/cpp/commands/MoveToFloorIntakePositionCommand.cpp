@@ -12,6 +12,7 @@ MoveToFloorIntakePositionCommand::MoveToFloorIntakePositionCommand(
 void MoveToFloorIntakePositionCommand::Initialize() {}
 
 void MoveToFloorIntakePositionCommand::Execute() {
+  m_shooterSubsystem->InvertMotor(true);
   m_shooterSubsystem->PivotToSetPoint(
       PositionConstants::kShooterTransitPosition);
   m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeFloorPosition,true);

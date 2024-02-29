@@ -159,11 +159,12 @@ void RobotContainer::ConfigureButtonBindings() {
               isClimb1 = true;
               (new MoveToClimbPos1Command(&m_elevator, &m_shooter, &m_intake))
                   ->Schedule();
-            } else {
+            } /*else {
               isClimb1 = true;
               (new MoveToClimbPos2Command(&m_elevator))->Schedule();
             }
-            isClimb2 = !isClimb2;
+            isClimb2 = !isClimb2;*/
+            // USE ABOVE FOR WHEN WE DO USE CLIMB 2
           },
           {&m_elevator, &m_shooter, &m_intake}));
 
@@ -177,13 +178,16 @@ void RobotContainer::ConfigureButtonBindings() {
       .OnFalse(new StopNoteIntakeEjectActionCommand(&m_conveyor, &m_shooter,
                                                     &m_intake));
 
-  frc2::JoystickButton(&m_operatorController,
-                       frc::XboxController::Button::kB)
+  frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kB)
+      .OnTrue(new DoAMPScoreActionCommand(&m_elevator, &m_shooter));
+
+  frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kA)
       .OnTrue(new DoNoteEjectActionCommand(&m_conveyor, &m_shooter, &m_intake))
       .OnFalse(new StopNoteIntakeEjectActionCommand(&m_conveyor, &m_shooter,
                                                     &m_intake));
 
-  frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kRightBumper)
+  frc2::JoystickButton(&m_operatorController,
+                       frc::XboxController::Button::kRightBumper)
       .OnTrue(new DoSpeakerScoreActionCommand(&m_elevator, &m_shooter));
 
   frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kY)
