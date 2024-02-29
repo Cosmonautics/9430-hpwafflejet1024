@@ -4,7 +4,7 @@
 
 Conveyor::Conveyor() {
   conveyorMotor.SetInverted(true);
-  conveyorMotor.SetSmartCurrentLimit(30);
+  conveyorMotor.SetSmartCurrentLimit(40);
   conveyorMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 }
 

@@ -20,7 +20,7 @@ elevator postion and shooter position remain defult to transit positon
 Intake::Intake() {
   m_intakePivotMotor.RestoreFactoryDefaults();
   m_intakePivotMotor.SetInverted(true);
-  m_intakeMotorLeft.SetSmartCurrentLimit(30);
+  m_intakeMotorLeft.SetSmartCurrentLimit(20);
   m_pidController.SetOutputRange(-1.0, 1.0);
   m_pidController.SetFeedbackDevice(m_intakePivotAbsoluteEncoder);
   m_pidController.SetP(IntakeConstants::kP);
