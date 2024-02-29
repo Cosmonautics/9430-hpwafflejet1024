@@ -23,15 +23,16 @@ void DoClimbActionCommand::Execute() {
   while (!timer->HasElapsed(3.5_s)) {
     // wait / do nothing
   }
-  m_shooterSubsystem->ShootMotors(true, -0.30);
-  m_shooterSubsystem->MoveFeeder(-0.50);
+  //UNCOMMENT FOR NEXT
+  //m_shooterSubsystem->ShootMotors(true, -0.30);
+  //m_shooterSubsystem->MoveFeeder(-0.50);
 
   m_elevatorSubsystem->SetToBrakeMode();
-  while (!timer->HasElapsed(5.5_s)) {
+  /*while (!timer->HasElapsed(5.5_s)) {
     // wait / do nothing
-  }
-  m_shooterSubsystem->MoveFeeder(0);
-  m_shooterSubsystem->ShootMotors(false, 0);
+  }*/
+  //m_shooterSubsystem->MoveFeeder(0);
+  //m_shooterSubsystem->ShootMotors(false, 0);
   // Execute when Y is pressed; if Y is pressed again, stop the climb sequence
   // Set EL brake piston to lock position INGORE For NOW
   // Move elevator to climb position (SM carriage to the top)

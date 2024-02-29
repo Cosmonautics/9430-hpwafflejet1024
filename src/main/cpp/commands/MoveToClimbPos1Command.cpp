@@ -14,7 +14,7 @@ void MoveToClimbPos1Command::Initialize() {}
 void MoveToClimbPos1Command::Execute() {
   m_shooterSubsystem->InvertMotor(true);
   m_shooterSubsystem->PivotToSetPoint(
-      PositionConstants::kShooterShooterPosition);
+      PositionConstants::kShooterClimb1Position);
   m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeClimb1Position,
                                   false);
   // frc2::WaitCommand(0.5_s).Schedule();

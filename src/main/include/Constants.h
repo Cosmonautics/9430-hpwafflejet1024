@@ -63,8 +63,8 @@ constexpr int kShooterLeftCanId = 10;
 constexpr int kShooterRightCanId = 9;
 constexpr int kShooterPivotCanId = 17;
 constexpr int kShooterFeederCanId = 18;
-constexpr double kShooterForwardSoftLimit = 0.989;
-constexpr double kShooterReverseSoftLimit = 0.330;
+constexpr double kShooterForwardSoftLimit = 0.955;
+constexpr double kShooterReverseSoftLimit = 0.158;
 
 constexpr double kP = 2.0;
 constexpr double kI = 0.0;
@@ -206,14 +206,16 @@ constexpr double kElevatorTransitPosition = 0.345;
 constexpr double kElevatorShooterPosition = 0.108;
 constexpr double kElevatorClimb1Position = 0.062;
 constexpr double kElevatorClimb2Position = 0.108;
-constexpr double kElevatorClimbPosition = 0.959;
+constexpr double kElevatorClimbPosition = 0.511;
 
 // Shooter Position Constants
-constexpr double kShooterTransitPosition = 0.335;
-constexpr double kShooterShooterPosition = 0.974;
-constexpr double kShooterPreShooterPosition = 0.974;
-constexpr double kShooterAMPPosition = 0.974;
-constexpr double kShooterClimb1Position = 0.0;  // zero this is intended
+constexpr double kShooterTransitPosition = 0.240;
+constexpr double kShooterShooterPosition = 0.910;
+constexpr double kShooterPreShooterPosition = 0.935;
+constexpr double kShooterAMPPosition = 0.880;
+constexpr double kShooterClimb1Position = 0.423;  // zero this is intended
+
+
 
 // Intake Position Constants
 constexpr double kIntakeTransitPosition = 0.436;
