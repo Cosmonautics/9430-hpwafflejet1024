@@ -207,7 +207,7 @@ constexpr double kElevatorShooterPosition = 0.108;
 constexpr double kElevatorAMPPosition = 0.197;
 constexpr double kElevatorClimb1Position = 0.062;
 constexpr double kElevatorClimb2Position = 0.108;
-constexpr double kElevatorClimbPosition = 0.511;
+constexpr double kElevatorClimbPosition = 0.700;
 
 // Shooter Position Constants
 constexpr double kShooterTransitPosition = 0.240;
@@ -219,6 +219,6 @@ constexpr double kShooterClimb1Position = 0.423;  // zero this is intended
 // Intake Position Constants
 constexpr double kIntakeTransitPosition = 0.026;
 constexpr double kIntakeFloorPosition = 0.260;
-constexpr double kIntakeClimb1Position = 0.026;
+constexpr double kIntakeClimb1Position = 0.260;
 
 }  // namespace PositionConstants

@@ -50,7 +50,7 @@ void Intake::IntakeDropNote(bool isPressed, double speed) {
 
 void Intake::PivotToAngle(double intakeAngleRotations, bool movingDown) {
   if (movingDown) {
-    m_pidController.SetP(1.3);
+    m_pidController.SetP(1.1);
   } else {
     m_pidController.SetP(IntakeConstants::kP);
   }
