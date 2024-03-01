@@ -15,7 +15,7 @@ void MoveToFloorIntakePositionCommand::Execute() {
   m_shooterSubsystem->InvertMotor(true);
   m_shooterSubsystem->PivotToSetPoint(
       PositionConstants::kShooterTransitPosition);
-  m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeFloorPosition,true);
+  //m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeFloorPosition,true);
   //frc2::WaitCommand(0.5_s).Execute();
   m_elevatorSubsystem->MoveToPosition(
       PositionConstants::kElevatorTransitPosition,false);
