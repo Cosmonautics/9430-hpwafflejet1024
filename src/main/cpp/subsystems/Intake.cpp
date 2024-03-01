@@ -19,7 +19,7 @@ elevator postion and shooter position remain defult to transit positon
 
 Intake::Intake() {
   m_intakePivotMotor.RestoreFactoryDefaults();
-  m_intakePivotMotor.SetInverted(true);
+  m_intakePivotMotor.SetInverted(false);
   m_intakeMotorLeft.SetSmartCurrentLimit(40);
   m_pidController.SetOutputRange(-1.0, 1.0);
   m_pidController.SetFeedbackDevice(m_intakePivotAbsoluteEncoder);
@@ -50,7 +50,7 @@ void Intake::IntakeDropNote(bool isPressed, double speed) {
 
 void Intake::PivotToAngle(double intakeAngleRotations, bool movingDown) {
   if (movingDown) {
-    m_pidController.SetP(1);
+    m_pidController.SetP(1.3);
   } else {
     m_pidController.SetP(IntakeConstants::kP);
   }
@@ -88,4 +88,6 @@ bool Intake::IsAtSetPoint() {
   return error <= toleranceRotations;
 }
 
-void Intake::StopMotors() { m_intakeMotorLeft.Set(0); } // opening brace should start new line, end brace should be on new line 
+void Intake::StopMotors() {
+  m_intakeMotorLeft.Set(0);
+}  // opening brace should start new line, end brace should be on new line

@@ -18,9 +18,9 @@ void MoveToTransitPositionCommand::Execute() {
   m_shooterSubsystem->InvertMotor(true);
   m_shooterSubsystem->PivotToSetPoint(
       PositionConstants::kShooterTransitPosition);
-  /* m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeTransitPosition,
+   m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeTransitPosition,
                                    false);
- */
+
   // frc2::WaitCommand(0.5_s).Schedule();
   m_elevatorSubsystem->MoveToPosition(
       PositionConstants::kElevatorTransitPosition, false);

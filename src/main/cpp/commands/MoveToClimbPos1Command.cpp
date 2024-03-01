@@ -23,8 +23,8 @@ void MoveToClimbPos1Command::Execute() {
   while (!timer->HasElapsed(1_s)) {
     // after 1 second, move the intake 
   }
-  /*m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeClimb1Position,
-                                  false);*/
+  m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeClimb1Position,
+                                  false);
   while(!timer->HasElapsed(0.5_s)) {
     // after .5 seconds, move the elevator 
   }
