@@ -108,7 +108,7 @@ constexpr int kIntakeLeftCanId = 11;
 constexpr int kIntakePivotCanId = 12;
 
 constexpr double kIntakeForwardSoftLimit = 0.275;
-constexpr double kIntakeReverseSoftLimit = 0.015;
+constexpr double kIntakeReverseSoftLimit = 0.005;
 }  // namespace IntakeConstants
 namespace ConveyorConstants {
 static constexpr int kConveyorCanId = 16;
