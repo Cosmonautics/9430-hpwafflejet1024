@@ -17,7 +17,7 @@ void DoSourceIntakeActionCommand::Initialize() {}
 
 void DoSourceIntakeActionCommand::Execute() {
   m_shooterSubsystem->InvertMotor(true);
-  m_shooterSubsystem->PivotToSetPoint(PositionConstants::kShooterAMPPosition);
+  m_shooterSubsystem->PivotToSetPoint(PositionConstants::kShooterIntakeSourcePosition);
   // frc2::WaitCommand(0.8_s).Schedule();
   m_elevatorSubsystem->MoveToPosition(
       PositionConstants::kElevatorSourceIntakePosition, false);
