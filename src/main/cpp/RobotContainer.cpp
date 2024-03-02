@@ -188,6 +188,9 @@ void RobotContainer::ConfigureButtonBindings() {
       .OnTrue(new DoNoteEjectActionCommand(&m_conveyor, &m_shooter, &m_intake))
       .OnFalse(new StopNoteIntakeEjectActionCommand(&m_conveyor, &m_shooter,
                                                     &m_intake));
+  frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kX)
+      .OnTrue(new DoSourceIntakeActionCommand(&m_elevator, &m_shooter))
+      .OnFalse(new StopSourceIntakeActionCommand(&m_elevator, &m_shooter));
 
   frc2::JoystickButton(&m_operatorController,
                        frc::XboxController::Button::kRightBumper)
@@ -239,35 +242,21 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       startPose, waypoints, endPose, config);*/
   auto generatedTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
       // Start at the first point
-      frc::Pose2d{0.98_m, 10.06_m, 0.00_deg},
+      frc::Pose2d{2.00_m, 6.10_m, -4.40_deg},
       // Pass through these waypoints
-      {frc::Translation2d{1.28_m, 10.06_m},
-       frc::Translation2d{1.54_m, 10.08_m},
-       frc::Translation2d{1.80_m, 10.08_m},
-       frc::Translation2d{2.06_m, 10.08_m},
-       frc::Translation2d{2.32_m, 10.08_m},
-       frc::Translation2d{2.58_m, 10.08_m},
-       frc::Translation2d{2.86_m, 10.10_m},
-       frc::Translation2d{3.12_m, 10.10_m},
-       frc::Translation2d{3.38_m, 10.10_m},
-       frc::Translation2d{3.66_m, 10.12_m},
-       frc::Translation2d{3.92_m, 10.12_m},
-       frc::Translation2d{4.18_m, 10.12_m},
-       frc::Translation2d{4.44_m, 10.12_m},
-       frc::Translation2d{4.70_m, 10.12_m},
-       frc::Translation2d{4.96_m, 10.12_m},
-       frc::Translation2d{5.22_m, 10.14_m},
-       frc::Translation2d{5.48_m, 10.18_m},
-       frc::Translation2d{5.74_m, 10.18_m},
-       frc::Translation2d{6.00_m, 10.18_m},
-       frc::Translation2d{6.26_m, 10.22_m},
-       frc::Translation2d{6.52_m, 10.26_m},
-       frc::Translation2d{6.78_m, 10.26_m}},
+      {frc::Translation2d{2.26_m, 6.12_m}, frc::Translation2d{2.52_m, 6.12_m},
+       frc::Translation2d{2.78_m, 6.12_m}, frc::Translation2d{3.04_m, 6.12_m},
+       frc::Translation2d{3.30_m, 6.12_m}, frc::Translation2d{3.56_m, 6.12_m},
+       frc::Translation2d{3.84_m, 6.12_m}, frc::Translation2d{4.10_m, 6.06_m},
+       frc::Translation2d{4.36_m, 6.00_m}, frc::Translation2d{4.62_m, 6.04_m},
+       frc::Translation2d{4.88_m, 6.08_m}, frc::Translation2d{5.14_m, 6.14_m},
+       frc::Translation2d{5.40_m, 6.18_m}, frc::Translation2d{5.66_m, 6.22_m},
+       frc::Translation2d{5.92_m, 6.26_m}},
       // End at the last point
-      frc::Pose2d{7.04_m, 10.26_m, -180.00_deg},
+      frc::Pose2d{6.20_m, 6.26_m, -4.0_deg},
       // Pass the config
       config);
-      
+
   frc::ProfiledPIDController<units::radians> thetaController{
       AutoConstants::kPThetaController, 0, 0,
       AutoConstants::kThetaControllerConstraints};
@@ -292,7 +281,9 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
   // no auto
   return new frc2::SequentialCommandGroup(
-      std::move(swerveControllerCommand),
+      DoSpeakerScoreActionCommand(&m_elevator, &m_shooter),
+      // frc2::WaitCommand(4_s),
+      // std::move(swerveControllerCommand),
       frc2::InstantCommand(
           [this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false); },
           {}));

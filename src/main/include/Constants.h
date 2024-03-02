@@ -204,6 +204,7 @@ namespace PositionConstants {
 // Elevator Position Constants
 constexpr double kElevatorTransitPosition = 0.345;
 constexpr double kElevatorShooterPosition = 0.108;
+constexpr double kElevatorSourceIntakePosition = 0.075;
 constexpr double kElevatorAMPPosition = 0.197;
 constexpr double kElevatorClimb1Position = 0.062;
 constexpr double kElevatorClimb2Position = 0.108;
