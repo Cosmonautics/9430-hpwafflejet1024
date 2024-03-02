@@ -240,22 +240,32 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   // Generate the trajectory
   /*auto generatedTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
       startPose, waypoints, endPose, config);*/
-  auto generatedTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
-      // Start at the first point
-      frc::Pose2d{2.00_m, 6.10_m, -4.40_deg},
-      // Pass through these waypoints
-      {frc::Translation2d{2.26_m, 6.12_m}, frc::Translation2d{2.52_m, 6.12_m},
-       frc::Translation2d{2.78_m, 6.12_m}, frc::Translation2d{3.04_m, 6.12_m},
-       frc::Translation2d{3.30_m, 6.12_m}, frc::Translation2d{3.56_m, 6.12_m},
-       frc::Translation2d{3.84_m, 6.12_m}, frc::Translation2d{4.10_m, 6.06_m},
-       frc::Translation2d{4.36_m, 6.00_m}, frc::Translation2d{4.62_m, 6.04_m},
-       frc::Translation2d{4.88_m, 6.08_m}, frc::Translation2d{5.14_m, 6.14_m},
-       frc::Translation2d{5.40_m, 6.18_m}, frc::Translation2d{5.66_m, 6.22_m},
-       frc::Translation2d{5.92_m, 6.26_m}},
-      // End at the last point
-      frc::Pose2d{6.20_m, 6.26_m, -4.0_deg},
-      // Pass the config
-      config);
+ auto generatedTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
+  // Start at the first point
+  frc::Pose2d{0.78_m, 6.22_m, 0.00_deg},
+  // Pass through these waypoints
+  {
+    frc::Translation2d{1.04_m, 6.22_m},
+    frc::Translation2d{1.30_m, 6.22_m},
+    frc::Translation2d{1.56_m, 6.22_m},
+    frc::Translation2d{1.84_m, 6.22_m},
+    frc::Translation2d{2.08_m, 6.10_m},
+    frc::Translation2d{2.24_m, 5.88_m},
+    frc::Translation2d{2.42_m, 5.70_m},
+    frc::Translation2d{2.60_m, 5.50_m},
+    frc::Translation2d{2.76_m, 5.30_m},
+    frc::Translation2d{2.90_m, 5.08_m},
+    frc::Translation2d{3.04_m, 4.86_m},
+    frc::Translation2d{3.26_m, 4.66_m},
+    frc::Translation2d{3.46_m, 4.48_m},
+    frc::Translation2d{3.62_m, 4.28_m},
+    frc::Translation2d{3.70_m, 4.04_m},
+    frc::Translation2d{3.82_m, 3.82_m}
+  },
+  // End at the last point
+  frc::Pose2d{3.90_m, 3.58_m, 0.00_deg},
+  // Pass the config
+  config);
 
   frc::ProfiledPIDController<units::radians> thetaController{
       AutoConstants::kPThetaController, 0, 0,
@@ -282,8 +292,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   // no auto
   return new frc2::SequentialCommandGroup(
       DoSpeakerScoreActionCommand(&m_elevator, &m_shooter),
-      // frc2::WaitCommand(4_s),
-      // std::move(swerveControllerCommand),
+       frc2::WaitCommand(5_s),
+       std::move(swerveControllerCommand),
       frc2::InstantCommand(
           [this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false); },
           {}));
