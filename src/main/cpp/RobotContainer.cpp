@@ -208,93 +208,40 @@ void RobotContainer::ConfigureButtonBindings() {
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
-  // Set up config for trajectory
-  frc::TrajectoryConfig config(AutoConstants::kMaxSpeed,
-                               AutoConstants::kMaxAcceleration);
-  // Add kinematics to ensure max speed is actually obeyed
-  config.SetKinematics(m_drive.kDriveKinematics);
-  // Retrieve trajectory data from NetworkTable
-  /* auto inst = nt::NetworkTableInstance::GetDefault();
-   auto trajectoryEntry = inst.GetEntry("TrajectoryTablePoints");
-   std::string jsonData = trajectoryEntry.GetString("");
-   std::string decoded = base64_decode(jsonData);
-   std::vector<frc::Pose2d> trajectoryPoints =
-       ParseTrajectoryJson(nlohmann::json::parse(decoded));
+  choreolib::ChoreoTrajectory traj =
+      choreolib::Choreo::GetTrajectory("NewPath");
+  m_drive.ResetOdometry(traj.GetInitialPose());
+  choreolib::ChoreoControllerFunction controller =
+      choreolib::Choreo::ChoreoSwerveController(
+          frc::PIDController(AutoConstants::kPXController, 0.0, 0.0),
+          frc::PIDController(AutoConstants::kPYController, 0.0, 0.0),
+          frc::PIDController(AutoConstants::kPThetaController, 0.0, 0.0));
+  choreolib::ChoreoSwerveCommand swerveDriveCommand =
+      choreolib::ChoreoSwerveCommand(
+          traj, [this]() { return m_drive.GetPose(); }, controller,
+          [this](auto speeds) {
+            m_drive.Drive(units::meters_per_second_t{speeds.vx},
+                          units::meters_per_second_t{speeds.vy}, speeds.omega,
+                          false, true);
+          },
+          [this]() {
+            return frc::DriverStation::GetAlliance() ==
+                   frc::DriverStation::kRed;
+          },
+          {&m_drive});
 
-   // Ensure trajectoryPoints has at least start and end points
-   if (trajectoryPoints.size() < 2) {
-     // Handle error: insufficient points
-     return nullptr;  // or some default command
-   }
+  auto resetOdometry = [this, traj]() {
+    m_drive.ResetOdometry(traj.GetInitialPose());
+  };
 
-   // Extract start and end pose
-   frc::Pose2d startPose = trajectoryPoints.front();
-   frc::Pose2d endPose = trajectoryPoints.back();
+  auto stopRobotDrive = [this]() {
+    m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false);
+  };
 
-   // Extract waypoints, omitting the first and last
-   std::vector<frc::Translation2d> waypoints;
-   for (size_t i = 1; i < trajectoryPoints.size() - 1; i++) {
-     waypoints.push_back(trajectoryPoints[i].Translation());
-   }
- */
-  // Generate the trajectory
-  /*auto generatedTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
-      startPose, waypoints, endPose, config);*/
- auto generatedTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
-  // Start at the first point
-  frc::Pose2d{0.78_m, 6.22_m, 0.00_deg},
-  // Pass through these waypoints
-  {
-    frc::Translation2d{1.04_m, 6.22_m},
-    frc::Translation2d{1.30_m, 6.22_m},
-    frc::Translation2d{1.56_m, 6.22_m},
-    frc::Translation2d{1.84_m, 6.22_m},
-    frc::Translation2d{2.08_m, 6.10_m},
-    frc::Translation2d{2.24_m, 5.88_m},
-    frc::Translation2d{2.42_m, 5.70_m},
-    frc::Translation2d{2.60_m, 5.50_m},
-    frc::Translation2d{2.76_m, 5.30_m},
-    frc::Translation2d{2.90_m, 5.08_m},
-    frc::Translation2d{3.04_m, 4.86_m},
-    frc::Translation2d{3.26_m, 4.66_m},
-    frc::Translation2d{3.46_m, 4.48_m},
-    frc::Translation2d{3.62_m, 4.28_m},
-    frc::Translation2d{3.70_m, 4.04_m},
-    frc::Translation2d{3.82_m, 3.82_m}
-  },
-  // End at the last point
-  frc::Pose2d{3.90_m, 3.58_m, 0.00_deg},
-  // Pass the config
-  config);
+  frc2::Command* commandGroup = new frc2::SequentialCommandGroup(
+      frc2::InstantCommand(resetOdometry, {&m_drive}),
+      std::move(swerveDriveCommand),
+      frc2::RunCommand(stopRobotDrive, {&m_drive}));
 
-  frc::ProfiledPIDController<units::radians> thetaController{
-      AutoConstants::kPThetaController, 0, 0,
-      AutoConstants::kThetaControllerConstraints};
-
-  thetaController.EnableContinuousInput(units::radian_t{-std::numbers::pi},
-                                        units::radian_t{std::numbers::pi});
-
-  frc2::SwerveControllerCommand<4> swerveControllerCommand(
-      generatedTrajectory, [this]() { return m_drive.GetPose(); },
-
-      m_drive.kDriveKinematics,
-
-      frc::PIDController{AutoConstants::kPXController, 0, 0},
-      frc::PIDController{AutoConstants::kPYController, 0, 0}, thetaController,
-
-      [this](auto moduleStates) { m_drive.SetModuleStates(moduleStates); },
-
-      {&m_drive});
-
-  // Reset odometry to the starting pose of the trajectory.
-  m_drive.ResetOdometry(generatedTrajectory.InitialPose());
-
-  // no auto
-  return new frc2::SequentialCommandGroup(
-      DoSpeakerScoreActionCommand(&m_elevator, &m_shooter),
-       frc2::WaitCommand(5_s),
-       std::move(swerveControllerCommand),
-      frc2::InstantCommand(
-          [this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false); },
-          {}));
+  return commandGroup;
 }
