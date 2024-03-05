@@ -210,16 +210,24 @@ void RobotContainer::ConfigureButtonBindings() {
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   choreolib::ChoreoTrajectory traj =
       choreolib::Choreo::GetTrajectory("NewPath");
+
   m_drive.ResetOdometry(traj.GetInitialPose());
+
+  frc::PIDController thetaController =
+      frc::PIDController(AutoConstants::kPThetaController, 0.0, 0.0);
+
+  thetaController.EnableContinuousInput(-M_PI, M_PI);
+
   choreolib::ChoreoControllerFunction controller =
       choreolib::Choreo::ChoreoSwerveController(
           frc::PIDController(AutoConstants::kPXController, 0.0, 0.0),
           frc::PIDController(AutoConstants::kPYController, 0.0, 0.0),
-          frc::PIDController(AutoConstants::kPThetaController, 0.0, 0.0));
+          thetaController);
+
   choreolib::ChoreoSwerveCommand swerveDriveCommand =
       choreolib::ChoreoSwerveCommand(
           traj, [this]() { return m_drive.GetPose(); }, controller,
-          [this](auto speeds) {
+          [this](frc::ChassisSpeeds speeds) {
             m_drive.Drive(units::meters_per_second_t{speeds.vx},
                           units::meters_per_second_t{speeds.vy}, speeds.omega,
                           false, true);
@@ -239,8 +247,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   };
 
   frc2::Command* commandGroup = new frc2::SequentialCommandGroup(
-      frc2::InstantCommand(resetOdometry, {&m_drive}),
-      std::move(swerveDriveCommand),
+      frc2::InstantCommand(resetOdometry, {&m_drive}), swerveDriveCommand,
       frc2::RunCommand(stopRobotDrive, {&m_drive}));
 
   return commandGroup;
