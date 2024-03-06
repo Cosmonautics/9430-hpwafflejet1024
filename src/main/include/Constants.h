@@ -56,14 +56,65 @@ constexpr int kFrontLeftTurningCanId = 5;
 constexpr int kRearLeftTurningCanId = 1;
 constexpr int kFrontRightTurningCanId = 7;
 constexpr int kRearRightTurningCanId = 3;
-
-constexpr int kShooterLeftCanId = 10;
-constexpr int kShooterRightCanId = 9;
-
-constexpr int kIntakeLeftCanId = 11;
-constexpr int kIntakeRightCanId = 12;
 }  // namespace DriveConstants
 
+namespace ShooterConstants {
+constexpr int kShooterLeftCanId = 10;
+constexpr int kShooterRightCanId = 9;
+constexpr int kShooterPivotCanId = 17;
+constexpr int kShooterFeederCanId = 18;
+constexpr double kShooterForwardSoftLimit = 0.955;
+constexpr double kShooterReverseSoftLimit = 0.158;
+
+constexpr double kP = 2.0;
+constexpr double kI = 0.0;
+constexpr double kD = 0.0;
+}  // namespace ShooterConstants
+
+namespace ElevatorConstants {
+
+constexpr double kElevatorForwardSoftLimit = 0.989;
+constexpr double kElevatorReverseSoftLimit = 0.045;
+constexpr int kElevatorLeftCanId = 13;
+constexpr int kElevatorRightCanId = 14;
+
+constexpr double kElevatorUpperSoftLimit = 0.969;
+constexpr double kElevatorGearRatio = 1.0;
+constexpr double kElevatorDrumDiameterInches = 1.214;
+constexpr double kElevatorEncoderTicksPerRevolution = 42.0;
+constexpr double kElevatorInchesPerTick =
+    (kElevatorDrumDiameterInches * M_PI) /
+    (kElevatorEncoderTicksPerRevolution * kElevatorGearRatio);
+
+constexpr double kP = 5;
+constexpr double kI = 0.0;
+constexpr double kD = 0.1;
+constexpr double kTriggerDeadband = 0.05;
+constexpr double kPullyDiameter = 1.214;
+constexpr int kElevatorEncoderResolution = 8192;  // TODO: 8192 bb
+constexpr double kElevatorSetpointInches = 12.0;  // Placeholder constant
+                                                  // position
+constexpr double kGearBoxScale = 0.2045;
+constexpr double kPositionToleranceInches = 1.0 / 2.54;
+constexpr double kEncoderUnitsPerInch = 1 / kElevatorInchesPerTick;
+}  // namespace ElevatorConstants
+
+namespace IntakeConstants {
+constexpr double kP = 4.0;
+constexpr double kI = 0.0;
+constexpr double kD = 0.0;
+constexpr int kIntakeLeftCanId = 11;
+// constexpr int kIntakeRightCanId = 12;
+constexpr int kIntakePivotCanId = 12;
+
+constexpr double kIntakeForwardSoftLimit = 0.275;
+constexpr double kIntakeReverseSoftLimit = 0.005;
+}  // namespace IntakeConstants
+namespace ConveyorConstants {
+static constexpr int kConveyorCanId = 16;
+static constexpr int kLimitSwitchChannel =
+    0;  // Update this with the actual channel
+}  // namespace ConveyorConstants
 namespace ModuleConstants {
 // Invert the turning encoder, since the output shaft rotates in the opposite
 // direction of the steering motor in the MAXSwerve Module.
@@ -143,5 +194,33 @@ extern const frc::TrapezoidProfile<units::radians>::Constraints
 
 namespace OIConstants {
 constexpr int kDriverControllerPort = 0;
+constexpr int kOperatorControllerPort = 1;
 constexpr double kDriveDeadband = 0.05;
 }  // namespace OIConstants
+
+// Position Constants
+// THESE ARE IMPORTANT, AS THEY STORE EXACT POSITIONS FOR EACH SUBSYSTEMS
+namespace PositionConstants {
+// Elevator Position Constants
+constexpr double kElevatorTransitPosition = 0.345;
+constexpr double kElevatorShooterPosition = 0.108;
+constexpr double kElevatorSourceIntakePosition = 0.460;
+constexpr double kElevatorAMPPosition = 0.197;
+constexpr double kElevatorClimb1Position = 0.062;
+constexpr double kElevatorClimb2Position = 0.108;
+constexpr double kElevatorClimbPosition = 0.700;
+
+// Shooter Position Constants
+constexpr double kShooterTransitPosition = 0.240;
+constexpr double kShooterShooterPosition = 0.846;
+constexpr double kShooterPreShooterPosition = 0.935;
+constexpr double kShooterAMPPosition = 0.875;
+constexpr double kShooterIntakeSourcePosition = 0.884;
+constexpr double kShooterClimb1Position = 0.423;  // zero this is intended
+
+// Intake Position Constants
+constexpr double kIntakeTransitPosition = 0.026;
+constexpr double kIntakeFloorPosition = 0.260;
+constexpr double kIntakeClimb1Position = 0.260;
+
+}  // namespace PositionConstants
