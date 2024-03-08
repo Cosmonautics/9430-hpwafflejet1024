@@ -17,6 +17,7 @@ class LimelightSubsystem : public frc2::Subsystem {
   void SetLEDOn();
   void SetLEDOff();
   void SetLEDBlink();
+  double CalculateDistanceToTarget();
 
  private:
   std::shared_ptr<nt::NetworkTable> limelightTable;

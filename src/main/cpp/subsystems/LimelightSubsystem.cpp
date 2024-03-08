@@ -5,7 +5,7 @@ LimelightSubsystem::LimelightSubsystem() {
 }
 
 void LimelightSubsystem::Periodic() {
-    //perdiodic stuff if neccessary
+  // perdiodic stuff if neccessary
 }
 
 bool LimelightSubsystem::HasTarget() {
@@ -30,4 +30,16 @@ void LimelightSubsystem::SetLEDOff() { limelightTable->PutNumber(ledMode, 1); }
 
 void LimelightSubsystem::SetLEDBlink() {
   limelightTable->PutNumber(ledMode, 2);
+}
+double LimelightSubsystem::CalculateDistanceToTarget() {
+  double targetOffsetAngle_Vertical = limelightTable->GetNumber(ty, 0.0);
+  double limelightMountAngleDegrees = 25.0;  // Customize based on your setup
+  double limelightLensHeightInches = 20.0;   // Customize based on your setup
+  double goalHeightInches = 60.0;            // Customize based on your setup
+
+  double angleToGoalDegrees =
+      limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+  double angleToGoalRadians = angleToGoalDegrees * (M_PI / 180.0);
+  return (goalHeightInches - limelightLensHeightInches) /
+         tan(angleToGoalRadians);
 }
