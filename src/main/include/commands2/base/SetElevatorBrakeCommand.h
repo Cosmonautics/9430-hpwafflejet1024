@@ -1,5 +1,5 @@
-#ifndef MEC_H
-#define MEC_H  // rename these to the name of the command in all
+#ifndef SEBC_H
+#define SEBC_H  // rename these to the name of the command in all
                // caps followed by _H
 
 #include <frc2/command/Command.h>
