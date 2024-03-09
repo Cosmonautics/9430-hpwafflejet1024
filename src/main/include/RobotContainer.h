@@ -46,6 +46,13 @@
  * scheduler calls).  Instead, the structure of the robot (including subsystems,
  * commands, and button mappings) should be declared here.
  */
+
+enum class AutonomousOption {
+  DoNothing,
+  ShootNote,
+  GetAndShootFirstThree,
+};
+
 class RobotContainer {
  public:
   RobotContainer();
@@ -72,9 +79,10 @@ class RobotContainer {
   Conveyor m_conveyor;
   // Conveyor m_conveyor;
   //  The chooser for the autonomous routines
-  frc::SendableChooser<frc2::Command*> m_chooser;
+  frc::SendableChooser<AutonomousOption> m_chooser;
 
   void ConfigureButtonBindings();
+  void ConfigureAutoChooser();
 
   bool isClimb2 = false;
   bool isClimb1 = false;
