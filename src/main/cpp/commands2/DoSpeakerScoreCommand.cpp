@@ -10,7 +10,6 @@ DoAMPScoreCommand::DoAMPScoreCommand(Elevator* elevatorSubsystem,
       MoveElevatorCommand(elevatorSubsystem, kElevatorShooterPosition, false),
       frc2::WaitCommand(1.5_s),
       MoveShooterFeederWheelsCommand(shooterSubsystem, -1.0),
-      MoveShooterWheelsCommand(shooterSubsystem, -0.10),
       frc2::WaitCommand(0.5_s),
       MoveShooterFeederWheelsCommand(shooterSubsystem, 0.0),
       MoveShooterWheelsCommand(shooterSubsystem, 0.0));

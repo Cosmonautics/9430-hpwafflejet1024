@@ -161,7 +161,7 @@ void RobotContainer::ConfigureButtonBindings() {
           [this] {
             if (!isClimb2) {
               isClimb1 = true;
-              (new MoveToClimbPos1Command(&m_elevator, &m_shooter, &m_intake))
+              (new DoClimb1Command(&m_elevator, &m_shooter, &m_intake))
                   ->Schedule();
             } /*else {
               isClimb1 = true;
@@ -183,7 +183,7 @@ void RobotContainer::ConfigureButtonBindings() {
                                                     &m_intake));
 
   frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kB)
-      .OnTrue(new DoAMPScoreActionCommand(&m_elevator, &m_shooter));
+      .OnTrue(new DoAMPScoreCommand(&m_elevator, &m_shooter));
 
   frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kA)
       .OnTrue(new DoNoteEjectActionCommand(&m_conveyor, &m_shooter, &m_intake))
@@ -195,7 +195,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::JoystickButton(&m_operatorController,
                        frc::XboxController::Button::kRightBumper)
-      .OnTrue(new DoSpeakerScoreActionCommand(&m_elevator, &m_shooter));
+      .OnTrue(new DoSpeakerScoreCommand(&m_elevator, &m_shooter));
 
   frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kY)
       .OnTrue(new frc2::InstantCommand(
@@ -266,8 +266,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
       return new frc2::SequentialCommandGroup(
           DoSpeakerScoreActionCommand(&m_elevator, &m_shooter),
-          frc2::InstantCommand(resetOdometry, {&m_drive}),
-          swerveDriveCommand, 
+          frc2::InstantCommand(resetOdometry, {&m_drive}), swerveDriveCommand,
           frc2::RunCommand(stopRobotDrive, {&m_drive}));
       break;
     }
