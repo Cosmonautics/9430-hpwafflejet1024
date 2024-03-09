@@ -1,6 +1,6 @@
-#ifndef COMMAND_TEMPLATE_H
-#define COMMAND_TEMPLATE_H  // rename these to the name of the command in all
-                            // caps followed by _H
+#ifndef MSWC_H
+#define MSWC_H  // rename these to the name of the command in all
+                // caps followed by _H
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>

@@ -1,5 +1,5 @@
-#ifndef COMMAND_TEMPLATE_H
-#define COMMAND_TEMPLATE_H  // rename these to the name of the command in all
+#ifndef PSC_H
+#define PSC_H  // rename these to the name of the command in all
                             // caps followed by _H
 
 #include <frc2/command/Command.h>
