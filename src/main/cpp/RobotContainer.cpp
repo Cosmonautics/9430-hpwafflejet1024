@@ -265,8 +265,9 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       };
 
       return new frc2::SequentialCommandGroup(
+          DoSpeakerScoreActionCommand(&m_elevator, &m_shooter),
           frc2::InstantCommand(resetOdometry, {&m_drive}),
-          std::move(swerveDriveCommand),
+          swerveDriveCommand, 
           frc2::RunCommand(stopRobotDrive, {&m_drive}));
       break;
     }
