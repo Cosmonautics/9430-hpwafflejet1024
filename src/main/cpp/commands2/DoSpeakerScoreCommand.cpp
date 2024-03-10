@@ -1,8 +1,8 @@
-#include "commands2/DoAMPScoreCommand.h"
+#include "commands2/DoSpeakerScoreCommand.h"
 
 using namespace PositionConstants;
 
-DoAMPScoreCommand::DoAMPScoreCommand(Elevator* elevatorSubsystem,
+DoSpeakerScoreCommand::DoSpeakerScoreCommand(Elevator* elevatorSubsystem,
                                      Shooter* shooterSubsystem) {
   AddCommands(
       MoveShooterWheelsCommand(shooterSubsystem, -1.0),

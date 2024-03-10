@@ -1,8 +1,8 @@
-#include "commands2/DoSpeakerScoreCommand.h"
+#include "commands2/DoAMPScoreCommand.h"
 
 using namespace PositionConstants;
 
-DoSpeakerScoreCommand::DoSpeakerScoreCommand(Elevator* elevatorSubsystem,
+DoAMPScoreCommand::DoAMPScoreCommand(Elevator* elevatorSubsystem,
                                      Shooter* shooterSubsystem) {
   AddCommands(
       PivotShooterCommand(shooterSubsystem, kShooterAMPPosition),
