@@ -16,10 +16,12 @@ void MoveToTransitPositionCommand::Initialize() {
 
 void MoveToTransitPositionCommand::Execute() {
   m_shooterSubsystem->InvertMotor(true);
+  m_shooterSubsystem->StopMotors();
+  m_shooterSubsystem->MoveFeeder(0.0);
   m_shooterSubsystem->PivotToSetPoint(
       PositionConstants::kShooterTransitPosition);
-   m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeTransitPosition,
-                                   false);
+  m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeTransitPosition,
+                                  false);
 
   // frc2::WaitCommand(0.5_s).Schedule();
   m_elevatorSubsystem->MoveToPosition(

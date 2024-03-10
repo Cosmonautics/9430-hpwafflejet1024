@@ -12,23 +12,24 @@ MoveToClimbPos1Command::MoveToClimbPos1Command(Elevator* elevatorSubsystem,
 void MoveToClimbPos1Command::Initialize() {
   timer = new frc::Timer();
   timer->Reset();
-  
 }
 
 void MoveToClimbPos1Command::Execute() {
-    m_shooterSubsystem->InvertMotor(true);
-  m_shooterSubsystem->PivotToSetPoint( // move the shooter
+  m_shooterSubsystem->InvertMotor(true);
+  m_shooterSubsystem->StopMotors();
+  m_shooterSubsystem->MoveFeeder(0.0);
+  m_shooterSubsystem->PivotToSetPoint(  // move the shooter
       PositionConstants::kShooterClimb1Position);
-  timer->Start(); 
+  timer->Start();
   while (!timer->HasElapsed(1_s)) {
-    // after 1 second, move the intake 
+    // after 1 second, move the intake
   }
   m_intakeSubsystem->PivotToAngle(PositionConstants::kIntakeClimb1Position,
                                   false);
-  while(!timer->HasElapsed(0.5_s)) {
-    // after .5 seconds, move the elevator 
+  while (!timer->HasElapsed(0.5_s)) {
+    // after .5 seconds, move the elevator
   }
-  m_elevatorSubsystem->MoveToPosition( // move the elevator 
+  m_elevatorSubsystem->MoveToPosition(  // move the elevator
       PositionConstants::kElevatorClimb1Position, false);
 }
 
