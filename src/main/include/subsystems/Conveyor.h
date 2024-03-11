@@ -1,8 +1,8 @@
 #pragma once
 
+#include <frc/DigitalInput.h>
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
-#include <frc/DigitalInput.h>
 
 #include "Constants.h"
 
@@ -15,8 +15,10 @@ class Conveyor : public frc2::SubsystemBase {
   void Forward();
   void Reverse();
   void Stop();
+  void Move(double speed);
 
  private:
-  rev::CANSparkMax conveyorMotor{kConveyorCanId, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax conveyorMotor{kConveyorCanId,
+                                 rev::CANSparkMax::MotorType::kBrushless};
   frc::DigitalInput limitSwitch{kLimitSwitchChannel};
 };

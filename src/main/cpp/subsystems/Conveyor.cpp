@@ -20,6 +20,13 @@ void Conveyor::Forward() {
   //}
 }
 
-void Conveyor::Reverse() { conveyorMotor.Set(-1); } // opening braces should go at end of line, close brace should be on new line
+void Conveyor::Move(double speed) {
+  // if (limitSwitch.Get() == false) {
+  conveyorMotor.Set(speed);
+  //}
+}
+void Conveyor::Reverse() {
+  conveyorMotor.Set(-1);
+}  // opening braces should go at end of line, close brace should be on new line
 
-void Conveyor::Stop() { conveyorMotor.Set(0); } // same thing here 
+void Conveyor::Stop() { conveyorMotor.Set(0); }  // same thing here

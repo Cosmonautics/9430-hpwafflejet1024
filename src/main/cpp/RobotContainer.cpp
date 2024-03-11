@@ -13,6 +13,7 @@
 #include <frc/controller/PIDController.h>
 #include <frc/geometry/Translation2d.h>
 #include <frc/shuffleboard/Shuffleboard.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/trajectory/Trajectory.h>
 #include <frc/trajectory/TrajectoryGenerator.h>
 #include <frc2/command/InstantCommand.h>
@@ -99,7 +100,7 @@ RobotContainer::RobotContainer() {
 
   // Configure the button bindings
   ConfigureButtonBindings();
-
+  ConfigureAutoChooser();
   // Set up default drive command
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
@@ -109,13 +110,13 @@ RobotContainer::RobotContainer() {
       [this] {
         m_drive.Drive(  // FLAG: x and y might be switched here.
             -units::meters_per_second_t{
-                frc::ApplyDeadband(m_driverController.GetLeftY() * 0.50,
+                frc::ApplyDeadband(m_driverController.GetLeftY() * 0.75,
                                    OIConstants::kDriveDeadband)},
             -units::meters_per_second_t{
-                frc::ApplyDeadband(m_driverController.GetLeftX() * 0.50,
+                frc::ApplyDeadband(m_driverController.GetLeftX() * 0.75,
                                    OIConstants::kDriveDeadband)},
             -units::radians_per_second_t{
-                frc::ApplyDeadband(m_driverController.GetRightX() * 0.50,
+                frc::ApplyDeadband(m_driverController.GetRightX() * 0.75,
                                    OIConstants::kDriveDeadband)},
             true, true);
       },
@@ -160,7 +161,7 @@ void RobotContainer::ConfigureButtonBindings() {
           [this] {
             if (!isClimb2) {
               isClimb1 = true;
-              (new MoveToClimbPos1Command(&m_elevator, &m_shooter, &m_intake))
+              (new DoClimb1Command(&m_elevator, &m_shooter, &m_intake))
                   ->Schedule();
             } /*else {
               isClimb1 = true;
@@ -182,16 +183,19 @@ void RobotContainer::ConfigureButtonBindings() {
                                                     &m_intake));
 
   frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kB)
-      .OnTrue(new DoAMPScoreActionCommand(&m_elevator, &m_shooter));
+      .OnTrue(new DoAMPScoreCommand(&m_elevator, &m_shooter));
 
   frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kA)
       .OnTrue(new DoNoteEjectActionCommand(&m_conveyor, &m_shooter, &m_intake))
       .OnFalse(new StopNoteIntakeEjectActionCommand(&m_conveyor, &m_shooter,
                                                     &m_intake));
+  frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kX)
+      .OnTrue(new DoSourceIntakeActionCommand(&m_elevator, &m_shooter))
+      .OnFalse(new StopSourceIntakeActionCommand(&m_elevator, &m_shooter));
 
   frc2::JoystickButton(&m_operatorController,
                        frc::XboxController::Button::kRightBumper)
-      .OnTrue(new DoSpeakerScoreActionCommand(&m_elevator, &m_shooter));
+      .OnTrue(new DoSpeakerScoreCommand(&m_elevator, &m_shooter));
 
   frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kY)
       .OnTrue(new frc2::InstantCommand(
@@ -204,41 +208,71 @@ void RobotContainer::ConfigureButtonBindings() {
           {&m_elevator, &m_shooter}));
 }
 
+void RobotContainer::ConfigureAutoChooser() {
+  m_chooser.AddOption("Do Nothing", AutonomousOption::DoNothing);
+  m_chooser.AddOption("Shoot Note and Do Nothing", AutonomousOption::ShootNote);
+  m_chooser.AddOption("Get First 3 Notes and Shoot",
+                      AutonomousOption::GetAndShootFirstThree);
+  // Add more options as needed
+
+  frc::SmartDashboard::PutData("Autonomous Options", &m_chooser);
+}
+
 frc2::Command* RobotContainer::GetAutonomousCommand() {
-  choreolib::ChoreoTrajectory traj =
-      choreolib::Choreo::GetTrajectory("NewPath");
-  m_drive.ResetOdometry(traj.GetInitialPose());
-  choreolib::ChoreoControllerFunction controller =
-      choreolib::Choreo::ChoreoSwerveController(
-          frc::PIDController(AutoConstants::kPXController, 0.0, 0.0),
-          frc::PIDController(AutoConstants::kPYController, 0.0, 0.0),
-          frc::PIDController(AutoConstants::kPThetaController, 0.0, 0.0));
-  choreolib::ChoreoSwerveCommand swerveDriveCommand =
-      choreolib::ChoreoSwerveCommand(
-          traj, [this]() { return m_drive.GetPose(); }, controller,
-          [this](auto speeds) {
-            m_drive.Drive(units::meters_per_second_t{speeds.vx},
-                          units::meters_per_second_t{speeds.vy}, speeds.omega,
-                          false, true);
-          },
-          [this]() {
-            return frc::DriverStation::GetAlliance() ==
-                   frc::DriverStation::kRed;
-          },
-          {&m_drive});
+  switch (m_chooser.GetSelected()) {
+    case AutonomousOption::DoNothing:
+      return new frc2::InstantCommand([]() {}, {});
+    case AutonomousOption::ShootNote:
+      return new DoSpeakerScoreActionCommand(&m_elevator, &m_shooter);
+      break;
+    case AutonomousOption::GetAndShootFirstThree: {
+      choreolib::ChoreoTrajectory traj =
+          choreolib::Choreo::GetTrajectory("NewPath");
 
-  auto resetOdometry = [this, traj]() {
-    m_drive.ResetOdometry(traj.GetInitialPose());
-  };
+      m_drive.ResetOdometry(traj.GetInitialPose());
 
-  auto stopRobotDrive = [this]() {
-    m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false);
-  };
+      frc::PIDController thetaController =
+          frc::PIDController(AutoConstants::kPThetaController, 0.0, 0.0);
 
-  frc2::Command* commandGroup = new frc2::SequentialCommandGroup(
-      frc2::InstantCommand(resetOdometry, {&m_drive}),
-      std::move(swerveDriveCommand),
-      frc2::RunCommand(stopRobotDrive, {&m_drive}));
+      thetaController.EnableContinuousInput(-M_PI, M_PI);
 
-  return commandGroup;
+      choreolib::ChoreoControllerFunction controller =
+          choreolib::Choreo::ChoreoSwerveController(
+              frc::PIDController(AutoConstants::kPXController, 0.0, 0.0),
+              frc::PIDController(AutoConstants::kPYController, 0.0, 0.0),
+              thetaController);
+
+      choreolib::ChoreoSwerveCommand swerveDriveCommand =
+          choreolib::ChoreoSwerveCommand(
+              traj, [this]() { return m_drive.GetPose(); }, controller,
+              [this](frc::ChassisSpeeds speeds) {
+                m_drive.Drive(units::meters_per_second_t{speeds.vx},
+                              units::meters_per_second_t{speeds.vy},
+                              speeds.omega, false, true);
+              },
+              [this]() {
+                return frc::DriverStation::GetAlliance() ==
+                       frc::DriverStation::kRed;
+              },
+              {&m_drive});
+
+      auto resetOdometry = [this, traj]() {
+        m_drive.ResetOdometry(traj.GetInitialPose());
+      };
+
+      auto stopRobotDrive = [this]() {
+        m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false);
+      };
+
+      return new frc2::SequentialCommandGroup(
+          DoSpeakerScoreActionCommand(&m_elevator, &m_shooter),
+          frc2::InstantCommand(resetOdometry, {&m_drive}), swerveDriveCommand,
+          frc2::RunCommand(stopRobotDrive, {&m_drive}));
+      break;
+    }
+    // Add more cases as needed
+    default:
+      return new frc2::InstantCommand([]() {}, {});
+  }
+  return nullptr;  // In case no match is found, though this should not happen
 }
