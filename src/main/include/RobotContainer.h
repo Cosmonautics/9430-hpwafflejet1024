@@ -32,6 +32,10 @@
 #include "commands/StopNoteIntakeEjectActionCommand.h"
 #include "commands/StopShooterMotorCommand.h"
 #include "commands/StopSourceIntakeActionCommand.h"
+#include "commands2/DoAMPScoreCommand.h"
+#include "commands2/DoClimb1Command.h"
+#include "commands2/DoClimbCommand.h"
+#include "commands2/DoSpeakerScoreCommand.h"
 #include "subsystems/Conveyor.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
@@ -46,6 +50,13 @@
  * scheduler calls).  Instead, the structure of the robot (including subsystems,
  * commands, and button mappings) should be declared here.
  */
+
+enum class AutonomousOption {
+  DoNothing,
+  ShootNote,
+  GetAndShootFirstThree,
+};
+
 class RobotContainer {
  public:
   RobotContainer();
@@ -72,12 +83,10 @@ class RobotContainer {
   Conveyor m_conveyor;
   // Conveyor m_conveyor;
   //  The chooser for the autonomous routines
-  LimelightSubsystem m_limelight;
-  
-  // The chooser for the autonomous routines
-  frc::SendableChooser<frc2::Command*> m_chooser;
+  frc::SendableChooser<AutonomousOption> m_chooser;
 
   void ConfigureButtonBindings();
+  void ConfigureAutoChooser();
 
   bool isClimb2 = false;
   bool isClimb1 = false;
