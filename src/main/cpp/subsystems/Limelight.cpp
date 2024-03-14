@@ -1,45 +1,26 @@
 #include "subsystems/Limelight.h"
 
-Limelight::Limelight() {
-  limelightTable = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
-}
+Limelight::Limelight() {}
 
 void Limelight::Periodic() {
   // perdiodic stuff if neccessary
 }
 
-bool Limelight::HasTarget() {
-  return limelightTable->GetNumber(tv, 0.0) == 1.0;
-}
+bool Limelight::HasTarget() { return LimelightHelpers::getTV() == 1.0; }
 
-double Limelight::GetTargetX() {
-  return limelightTable->GetNumber(tx, 0.0);
-}
+double Limelight::GetTargetX() { return LimelightHelpers::getTX(); }
 
-double Limelight::GetTargetY() {
-  return limelightTable->GetNumber(ty, 0.0);
-}
+double Limelight::GetTargetY() { return LimelightHelpers::getTY(); }
 
-double Limelight::GetTargetArea() {
-  return limelightTable->GetNumber(ta, 0.0);
-}
+double Limelight::GetTargetArea() { return LimelightHelpers::getTA(); }
 
-void Limelight::SetLEDOn() { limelightTable->PutNumber(ledMode, 3); }
+void Limelight::SetLEDOn() { LimelightHelpers::setLEDMode_ForceOn(); }
 
-void Limelight::SetLEDOff() { limelightTable->PutNumber(ledMode, 1); }
+void Limelight::SetLEDOff() { LimelightHelpers::setLEDMode_ForceOff(); }
 
-void Limelight::SetLEDBlink() {
-  limelightTable->PutNumber(ledMode, 2);
-}
-double Limelight::CalculateDistanceToTarget() {
-  double targetOffsetAngle_Vertical = limelightTable->GetNumber(ty, 0.0);
-  double limelightMountAngleDegrees = 25.0;  // Customize based on your setup
-  double limelightLensHeightInches = 20.0;   // Customize based on your setup
-  double goalHeightInches = 60.0;            // Customize based on your setup
+void Limelight::SetLEDBlink() { LimelightHelpers::setLEDMode_ForceBlink(); }
 
-  double angleToGoalDegrees =
-      limelightMountAngleDegrees + targetOffsetAngle_Vertical;
-  double angleToGoalRadians = angleToGoalDegrees * (M_PI / 180.0);
-  return (goalHeightInches - limelightLensHeightInches) /
-         tan(angleToGoalRadians);
+double Limelight::CalculateDistanceToTarget(bool isRed) {
+  return isRed ? LimelightHelpers::getBotPoseEstimate_wpiRed().avgTagDist
+               : LimelightHelpers::getBotPoseEstimate_wpiBlue().avgTagDist;
 }
