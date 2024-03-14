@@ -11,14 +11,14 @@ class Limelight : public frc2::Subsystem {
   void Periodic() override;
 
   bool HasTarget();
-  double GetTargetX();
-  double GetTargetY();
-  double GetTargetArea();
+  double GetTargetX(); // use LimelightHelpers::getTX()
+  double GetTargetY(); // use LimelightHelpers::getTY()
+  double GetTargetArea(); // use LimelightHelpers::getTA()
 
-  void SetLEDOn();
-  void SetLEDOff();
-  void SetLEDBlink();
-  double CalculateDistanceToTarget();
+  void SetLEDOn(); // use LimelightHelpers::setLEDMode_ForceOn()
+  void SetLEDOff(); // use LimelightHelpers::setLEDMode_ForceOff
+  void SetLEDBlink(); // use LimelightHelpers::setLEDMode_ForceBlink()
+  double CalculateDistanceToTarget(); // LimelightHelpers::getBotPoseEstimate() might be useful here as well as get*pose() methods. 
 
  private:
   std::shared_ptr<nt::NetworkTable> limelightTable;
