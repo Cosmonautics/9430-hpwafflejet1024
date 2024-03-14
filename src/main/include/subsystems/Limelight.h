@@ -3,6 +3,7 @@
 #include <frc2/command/SubsystemBase.h>
 #include <networktables/NetworkTable.h>
 #include <networktables/NetworkTableInstance.h>
+#include "utils/LimelightHelpers.h"
 
 class Limelight : public frc2::Subsystem {
  public:
