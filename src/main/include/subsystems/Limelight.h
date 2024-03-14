@@ -10,7 +10,7 @@ class Limelight : public frc2::Subsystem {
   Limelight();
   void Periodic() override;
 
-  bool HasTarget();
+  bool HasTarget(); // use LimelightHelpers::getTV() if == 1.0
   double GetTargetX(); // use LimelightHelpers::getTX()
   double GetTargetY(); // use LimelightHelpers::getTY()
   double GetTargetArea(); // use LimelightHelpers::getTA()
