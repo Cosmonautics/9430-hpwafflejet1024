@@ -195,7 +195,8 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::JoystickButton(&m_operatorController,
                        frc::XboxController::Button::kRightBumper)
-      .OnTrue(new DoSpeakerScoreCommand(&m_elevator, &m_shooter));
+      .OnTrue(new DoSpeakerScoreCommand(&m_elevator, &m_shooter, &m_drive,
+                                        &m_limelight));
 
   frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kY)
       .OnTrue(new frc2::InstantCommand(

@@ -4,9 +4,9 @@
 #include <networktables/NetworkTable.h>
 #include <networktables/NetworkTableInstance.h>
 
-class LimelightSubsystem : public frc2::Subsystem {
+class Limelight : public frc2::Subsystem {
  public:
-  LimelightSubsystem();
+  Limelight();
   void Periodic() override;
 
   bool HasTarget();

@@ -1,37 +1,37 @@
-#include "subsystems/LimelightSubsystem.h"
+#include "subsystems/Limelight.h"
 
-LimelightSubsystem::LimelightSubsystem() {
+Limelight::Limelight() {
   limelightTable = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
 }
 
-void LimelightSubsystem::Periodic() {
+void Limelight::Periodic() {
   // perdiodic stuff if neccessary
 }
 
-bool LimelightSubsystem::HasTarget() {
+bool Limelight::HasTarget() {
   return limelightTable->GetNumber(tv, 0.0) == 1.0;
 }
 
-double LimelightSubsystem::GetTargetX() {
+double Limelight::GetTargetX() {
   return limelightTable->GetNumber(tx, 0.0);
 }
 
-double LimelightSubsystem::GetTargetY() {
+double Limelight::GetTargetY() {
   return limelightTable->GetNumber(ty, 0.0);
 }
 
-double LimelightSubsystem::GetTargetArea() {
+double Limelight::GetTargetArea() {
   return limelightTable->GetNumber(ta, 0.0);
 }
 
-void LimelightSubsystem::SetLEDOn() { limelightTable->PutNumber(ledMode, 3); }
+void Limelight::SetLEDOn() { limelightTable->PutNumber(ledMode, 3); }
 
-void LimelightSubsystem::SetLEDOff() { limelightTable->PutNumber(ledMode, 1); }
+void Limelight::SetLEDOff() { limelightTable->PutNumber(ledMode, 1); }
 
-void LimelightSubsystem::SetLEDBlink() {
+void Limelight::SetLEDBlink() {
   limelightTable->PutNumber(ledMode, 2);
 }
-double LimelightSubsystem::CalculateDistanceToTarget() {
+double Limelight::CalculateDistanceToTarget() {
   double targetOffsetAngle_Vertical = limelightTable->GetNumber(ty, 0.0);
   double limelightMountAngleDegrees = 25.0;  // Customize based on your setup
   double limelightLensHeightInches = 20.0;   // Customize based on your setup
