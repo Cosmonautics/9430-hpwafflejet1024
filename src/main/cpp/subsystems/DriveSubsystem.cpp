@@ -144,6 +144,12 @@ void DriveSubsystem::SetModuleStates(
   m_rearRight.SetDesiredState(desiredStates[3]);
 }
 
+frc::ChassisSpeeds DriveSubsystem::GetRobotRelativeChassisSpeeds() {
+  return (kDriveKinematics.ToChassisSpeeds(
+      m_frontLeft.GetState(), m_rearLeft.GetState(), m_frontRight.GetState(),
+      m_rearRight.GetState()));
+}
+
 void DriveSubsystem::ResetEncoders() {
   m_frontLeft.ResetEncoders();
   m_rearLeft.ResetEncoders();

@@ -17,6 +17,12 @@
 #include "AHRS.h"
 #include "Constants.h"
 // #include "commands/CommandTemplate.h"
+#include <pathplanner/lib/auto/AutoBuilder.h>
+#include <pathplanner/lib/commands/PathPlannerAuto.h>
+#include <pathplanner/lib/util/HolonomicPathFollowerConfig.h>
+#include <pathplanner/lib/util/PIDConstants.h>
+#include <pathplanner/lib/util/ReplanningConfig.h>
+
 #include "commands/DoAMPScoreActionCommand.h"
 #include "commands/DoClimbActionCommand.h"
 #include "commands/DoNoteEjectActionCommand.h"
@@ -83,7 +89,7 @@ class RobotContainer {
   Conveyor m_conveyor;
   // Conveyor m_conveyor;
   //  The chooser for the autonomous routines
-  frc::SendableChooser<AutonomousOption> m_chooser;
+  frc::SendableChooser<frc2::Command*> m_chooser;
 
   void ConfigureButtonBindings();
   void ConfigureAutoChooser();

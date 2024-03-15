@@ -14,9 +14,9 @@
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkFlex.h>
 
+#include "AHRS.h"
 #include "Constants.h"
 #include "MAXSwerveModule.h"
-#include "AHRS.h"
 
 class DriveSubsystem : public frc2::SubsystemBase {
  public:
@@ -86,6 +86,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
    */
   frc::Pose2d GetPose();
 
+  frc::ChassisSpeeds GetRobotRelativeChassisSpeeds();
+  
   /**
    * Resets the odometry to the specified pose.
    *
@@ -124,20 +126,20 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // frc::ADIS16470_IMU m_gyro;
   AHRS *ahrs = new AHRS(frc::SPI::Port::kMXP);
   //
- /* rev::CANSparkFlex m_shooterMotorLeft{
-      DriveConstants::kShooterLeftCanId,
-      rev::CANSparkLowLevel::MotorType::kBrushless};
-  rev::CANSparkFlex m_shooterMotorRight{
-      DriveConstants::kShooterRightCanId,
-      rev::CANSparkLowLevel::MotorType::kBrushless};
+  /* rev::CANSparkFlex m_shooterMotorLeft{
+       DriveConstants::kShooterLeftCanId,
+       rev::CANSparkLowLevel::MotorType::kBrushless};
+   rev::CANSparkFlex m_shooterMotorRight{
+       DriveConstants::kShooterRightCanId,
+       rev::CANSparkLowLevel::MotorType::kBrushless};
 
-  //
-  rev::CANSparkFlex m_intakeMotorLeft{
-      DriveConstants::kIntakeLeftCanId,
-      rev::CANSparkLowLevel::MotorType::kBrushless};
-  rev::CANSparkFlex m_intakeMotorRight{
-      DriveConstants::kIntakeRightCanId,
-      rev::CANSparkLowLevel::MotorType::kBrushless};*/
+   //
+   rev::CANSparkFlex m_intakeMotorLeft{
+       DriveConstants::kIntakeLeftCanId,
+       rev::CANSparkLowLevel::MotorType::kBrushless};
+   rev::CANSparkFlex m_intakeMotorRight{
+       DriveConstants::kIntakeRightCanId,
+       rev::CANSparkLowLevel::MotorType::kBrushless};*/
   // Slew rate filter variables for controlling lateral acceleration
   double m_currentRotation = 0.0;
   double m_currentTranslationDir = 0.0;

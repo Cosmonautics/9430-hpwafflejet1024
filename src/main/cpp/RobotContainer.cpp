@@ -209,70 +209,59 @@ void RobotContainer::ConfigureButtonBindings() {
 }
 
 void RobotContainer::ConfigureAutoChooser() {
-  m_chooser.AddOption("Do Nothing", AutonomousOption::DoNothing);
-  m_chooser.AddOption("Shoot Note and Do Nothing", AutonomousOption::ShootNote);
-  m_chooser.AddOption("Get First 3 Notes and Shoot",
-                      AutonomousOption::GetAndShootFirstThree);
+  pathplanner::AutoBuilder::configureHolonomic(
+      [this]() { return m_drive.GetPose(); },  // Robot pose supplier
+      [this](frc::Pose2d pose) {
+        m_drive.ResetOdometry(pose);
+      },  // Method to reset odometry (will be called if your auto has a
+          // starting pose)
+      [this]() {
+        return m_drive.GetRobotRelativeChassisSpeeds();
+      },  // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+      [this](frc::ChassisSpeeds speeds) {
+        m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false);
+      },  // Method that will drive the robot given ROBOT RELATIVE
+          // ChassisSpeeds
+      pathplanner::HolonomicPathFollowerConfig(  // HolonomicPathFollowerConfig,
+                                                 // this should likely live
+                                                 // in your Constants class
+          pathplanner::PIDConstants(AutoConstants::kPXController, 0.0,
+                                    0.0),  // Translation PID constants
+          pathplanner::PIDConstants(AutoConstants::kPYController, 0.0,
+                                    0.0),  // Rotation PID constants
+          4.5_mps,                         // Max module speed, in m/s
+          0.4_m,  // Drive base radius in meters. Distance from robot
+                  // center to furthest module.
+          pathplanner::ReplanningConfig()  // Default path replanning
+                                           // config. See the API for
+                                           // the options here
+          ),
+      []() {
+        auto alliance = frc::DriverStation::GetAlliance();
+        if (alliance) {
+          return alliance.value() == frc::DriverStation::Alliance::kRed;
+        }
+        return false;
+      },
+      &m_drive  // Reference to this subsystem to set requirements
+  );
+  auto stopRobotDrive = [this]() {
+    m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false);
+  };
+
+  frc2::CommandPtr autoPath = pathplanner::AutoBuilder::followPathWithEvents(
+      pathplanner::PathPlannerPath::fromPathFile("GetAndShootFirstThree"));
+
+  m_chooser.AddOption("Do Nothing", new frc2::InstantCommand([]() {}, {}));
+  m_chooser.SetDefaultOption(
+      "Shoot Note and Do Nothing",
+      new DoSpeakerScoreActionCommand(&m_elevator, &m_shooter));
+  m_chooser.AddOption("Get First 3 Notes and Shoot", autoPath.get());
   // Add more options as needed
 
   frc::SmartDashboard::PutData("Autonomous Options", &m_chooser);
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
-  switch (m_chooser.GetSelected()) {
-    case AutonomousOption::DoNothing:
-      return new frc2::InstantCommand([]() {}, {});
-    case AutonomousOption::ShootNote:
-      return new DoSpeakerScoreActionCommand(&m_elevator, &m_shooter);
-      break;
-    case AutonomousOption::GetAndShootFirstThree: {
-      choreolib::ChoreoTrajectory traj =
-          choreolib::Choreo::GetTrajectory("NewPath");
-
-      m_drive.ResetOdometry(traj.GetInitialPose());
-
-      frc::PIDController thetaController =
-          frc::PIDController(AutoConstants::kPThetaController, 0.0, 0.0);
-
-      thetaController.EnableContinuousInput(-M_PI, M_PI);
-
-      choreolib::ChoreoControllerFunction controller =
-          choreolib::Choreo::ChoreoSwerveController(
-              frc::PIDController(AutoConstants::kPXController, 0.0, 0.0),
-              frc::PIDController(AutoConstants::kPYController, 0.0, 0.0),
-              thetaController);
-
-      choreolib::ChoreoSwerveCommand swerveDriveCommand =
-          choreolib::ChoreoSwerveCommand(
-              traj, [this]() { return m_drive.GetPose(); }, controller,
-              [this](frc::ChassisSpeeds speeds) {
-                m_drive.Drive(units::meters_per_second_t{speeds.vx},
-                              units::meters_per_second_t{speeds.vy},
-                              speeds.omega, false, true);
-              },
-              [this]() {
-                return frc::DriverStation::GetAlliance() ==
-                       frc::DriverStation::kRed;
-              },
-              {&m_drive});
-
-      auto resetOdometry = [this, traj]() {
-        m_drive.ResetOdometry(traj.GetInitialPose());
-      };
-
-      auto stopRobotDrive = [this]() {
-        m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false);
-      };
-
-      return new frc2::SequentialCommandGroup(
-          DoSpeakerScoreActionCommand(&m_elevator, &m_shooter),
-          frc2::InstantCommand(resetOdometry, {&m_drive}), swerveDriveCommand,
-          frc2::RunCommand(stopRobotDrive, {&m_drive}));
-      break;
-    }
-    // Add more cases as needed
-    default:
-      return new frc2::InstantCommand([]() {}, {});
-  }
-  return nullptr;  // In case no match is found, though this should not happen
+  return m_chooser.GetSelected();
 }
