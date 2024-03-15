@@ -3,13 +3,13 @@
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
 
-#include "subsystems/DriveSubsystem.h"
+#include "subsystems/Shooter.h"
 #include "subsystems/Limelight.h"
 
-class AlignWithAprilTagCommand
-    : public frc2::CommandHelper<frc2::Command, AlignWithAprilTagCommand> {
+class DoAlignShooterWithAprilTagCommand
+    : public frc2::CommandHelper<frc2::Command, DoAlignShooterWithAprilTagCommand> {
  public:
-  AlignWithAprilTagCommand(DriveSubsystem* drive, Limelight* limelight);
+  DoAlignShooterWithAprilTagCommand(Shooter* shooter, Limelight* limelight);
 
   void Initialize() override;
   void Execute() override;
@@ -18,7 +18,7 @@ class AlignWithAprilTagCommand
   double CalculateRotationSpeed(double targetOffsetAngle);
 
  private:
-  DriveSubsystem* m_drive;
+  Shooter* m_shooter;
   Limelight* m_limelight;
   double m_targetOffsetAngleHorizontal;
   bool m_isAligned;

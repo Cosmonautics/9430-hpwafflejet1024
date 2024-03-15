@@ -1,11 +1,11 @@
-#include "commands2/AlignWithAprilTagCommand.h"
+#include "commands2/DoAlignDriveWithAprilTagCommand.h"
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <units/angular_velocity.h>
 
 #include <cmath>
 
-AlignWithAprilTagCommand::AlignWithAprilTagCommand(DriveSubsystem* drive,
+DoAlignDriveWithAprilTagCommand::DoAlignDriveWithAprilTagCommand(DriveSubsystem* drive,
                                                    Limelight* limelight)
     : m_drive(drive),
       m_limelight(limelight),
@@ -14,13 +14,13 @@ AlignWithAprilTagCommand::AlignWithAprilTagCommand(DriveSubsystem* drive,
   AddRequirements({drive, limelight});
 }
 
-void AlignWithAprilTagCommand::Initialize() {
+void DoAlignDriveWithAprilTagCommand::Initialize() {
   m_limelight
       ->SetLEDOn();  // Assuming you want to turn on LEDs to detect AprilTag
   m_isAligned = false;
 }
 
-void AlignWithAprilTagCommand::Execute() {
+void DoAlignDriveWithAprilTagCommand::Execute() {
   if (m_limelight->HasTarget()) {
     m_targetOffsetAngleHorizontal =
         m_limelight
@@ -37,14 +37,14 @@ void AlignWithAprilTagCommand::Execute() {
   }
 }
 
-void AlignWithAprilTagCommand::End(bool interrupted) {
+void DoAlignDriveWithAprilTagCommand::End(bool interrupted) {
   m_drive->Drive(0_mps, 0_mps, 0_rad_per_s, false, false);
   m_limelight->SetLEDOff();  // Turn off LEDs after alignment
 }
 
-bool AlignWithAprilTagCommand::IsFinished() { return m_isAligned; }
+bool DoAlignDriveWithAprilTagCommand::IsFinished() { return m_isAligned; }
 
-double AlignWithAprilTagCommand::CalculateRotationSpeed(
+double DoAlignDriveWithAprilTagCommand::CalculateRotationSpeed(
     double targetOffsetAngle) {
   const double Kp = 0.1;
   double controlEffort = Kp * targetOffsetAngle;
