@@ -151,11 +151,11 @@ void Shooter::SetAngleBasedOnDistance(double distance) {
   if (distanceAngleLookup.empty()) return;
 
   if (distance <= distanceAngleLookup.front().distance) {
-    PivotToSetPointAngle(distanceAngleLookup.front().angle);
+    PivotToSetPoint(distanceAngleLookup.front().val);
     return;
   }
   if (distance >= distanceAngleLookup.back().distance) {
-    PivotToSetPointAngle(distanceAngleLookup.back().angle);
+    PivotToSetPoint(distanceAngleLookup.back().val);
     return;
   }
 
@@ -165,10 +165,10 @@ void Shooter::SetAngleBasedOnDistance(double distance) {
       double ratio = (distance - distanceAngleLookup[i].distance) /
                      (distanceAngleLookup[i + 1].distance -
                       distanceAngleLookup[i].distance);
-      double angle = distanceAngleLookup[i].angle +
-                     ratio * (distanceAngleLookup[i + 1].angle -
-                              distanceAngleLookup[i].angle);
-      PivotToSetPointAngle(angle);
+      double angle = distanceAngleLookup[i].val +
+                     ratio * (distanceAngleLookup[i + 1].val -
+                              distanceAngleLookup[i].val);
+      PivotToSetPoint(angle);
       return;
     }
   }

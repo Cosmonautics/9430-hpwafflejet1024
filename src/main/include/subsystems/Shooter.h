@@ -39,7 +39,7 @@ class Shooter : public frc2::Subsystem {
  private:
   struct DistanceAnglePair {
     double distance;
-    double angle;
+    double val;
   };
 
   std::vector<DistanceAnglePair> distanceAngleLookup;
