@@ -18,6 +18,7 @@
 #include "Constants.h"
 // #include "commands/CommandTemplate.h"
 #include <pathplanner/lib/auto/AutoBuilder.h>
+#include <pathplanner/lib/auto/NamedCommands.h>
 #include <pathplanner/lib/commands/PathPlannerAuto.h>
 #include <pathplanner/lib/util/HolonomicPathFollowerConfig.h>
 #include <pathplanner/lib/util/PIDConstants.h>
@@ -42,7 +43,6 @@
 #include "commands2/DoClimb1Command.h"
 #include "commands2/DoClimbCommand.h"
 #include "commands2/DoSpeakerScoreCommand.h"
-#include "subsystems/Limelight.h"
 #include "subsystems/Conveyor.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
@@ -95,6 +95,7 @@ class RobotContainer {
 
   void ConfigureButtonBindings();
   void ConfigureAutoChooser();
+  void ConfigureNamedCommands();
 
   bool isClimb2 = false;
   bool isClimb1 = false;
