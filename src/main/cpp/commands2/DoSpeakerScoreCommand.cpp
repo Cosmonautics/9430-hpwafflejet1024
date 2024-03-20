@@ -3,12 +3,16 @@
 using namespace PositionConstants;
 
 DoSpeakerScoreCommand::DoSpeakerScoreCommand(Elevator* elevatorSubsystem,
-                                     Shooter* shooterSubsystem) {
+                                             Shooter* shooterSubsystem,
+                                             DriveSubsystem* driveSubsystem,
+                                             Limelight* limelightSubsystem) {
   AddCommands(
       MoveShooterWheelsCommand(shooterSubsystem, -1.0),
-      PivotShooterCommand(shooterSubsystem, kShooterShooterPosition),
+      DoAlignDriveWithAprilTagCommand(driveSubsystem, limelightSubsystem),
+      DoAlignShooterWithAprilTagCommand(shooterSubsystem, limelightSubsystem),
+      frc2::WaitCommand(0.5_s),
       MoveElevatorCommand(elevatorSubsystem, kElevatorShooterPosition, false),
-      frc2::WaitCommand(1.5_s),
+      frc2::WaitCommand(0.5_s),
       MoveShooterFeederWheelsCommand(shooterSubsystem, -1.0),
       frc2::WaitCommand(0.5_s),
       MoveShooterFeederWheelsCommand(shooterSubsystem, 0.0),

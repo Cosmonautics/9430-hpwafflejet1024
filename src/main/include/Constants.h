@@ -220,7 +220,7 @@ constexpr double kShooterClimb1Position = 0.423;  // zero this is intended
 
 // Intake Position Constants
 constexpr double kIntakeTransitPosition = 0.026;
-constexpr double kIntakeFloorPosition = 0.260;
-constexpr double kIntakeClimb1Position = 0.260;
+constexpr double kIntakeFloorPosition = 0.308;
+constexpr double kIntakeClimb1Position = 0.308;
 
 }  // namespace PositionConstants

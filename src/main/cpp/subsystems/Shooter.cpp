@@ -28,6 +28,14 @@ Shooter::Shooter() {
                                true);
   m_pivotMotor.EnableSoftLimit(rev::CANSparkBase::SoftLimitDirection::kReverse,
                                true);
+  InitializeDistanceAngleLookup();
+  // Initialization of motors, PID controllers, etc.
+}
+
+void Shooter::InitializeDistanceAngleLookup() {
+  // Populate the distance-angle lookup table with real data
+  distanceAngleLookup = {{36.0, 0.846},  {60.0, 0.817},  {84.0, 0.794},
+                         {108.0, 0.777}, {132.0, 0.766}, {156.0, 0.763}};
 }
 
 void Shooter::PivotToSetPoint(double setPointRotations) {
@@ -60,6 +68,17 @@ void Shooter::PivotToSetPoint(double setPointRotations) {
                                     rev::ControlType::kPosition);
 }
 
+void Shooter::PivotToSetPointAngle(double setPointAngle) {
+  // Ensure setPointRotations is in the 0-1 range, representing a full rotation
+  m_targetSetpointRotations =
+      setPointAngle / 360.0;  // Store the setpoint in rotations for error
+                              // calculation
+
+  // Set the PID reference using rotations directly
+  m_pivotPIDController.SetReference(setPointAngle / 360.0,
+                                    rev::ControlType::kPosition);
+}
+
 bool Shooter::IsTargetInRestrictedRange(double targetRotations) {
   // Check if the target (in rotations) is within the restricted range
   return targetRotations >= (1.0 / 360.0) && targetRotations <= (100.0 / 360.0);
@@ -89,8 +108,9 @@ void Shooter::ShootMotors(bool isPressed, double speed) {
   }
 }
 
-void Shooter::InvertMotor(bool invert) { // not clear what motor will be inverted by function name alone 
-    m_pivotMotor.SetInverted(invert);
+void Shooter::InvertMotor(bool invert) {  // not clear what motor will be
+                                          // inverted by function name alone
+  m_pivotMotor.SetInverted(invert);
 }
 
 void Shooter::ShooterDropNote(bool isPressed, double speed) {
@@ -105,17 +125,49 @@ void Shooter::ShooterDropNote(bool isPressed, double speed) {
   }
 }
 
-void Shooter::MoveFeeder(double speed) { m_shooterFeeder.Set(speed); } // all braces should start new lines, end braces should end on new lines 
+void Shooter::MoveFeeder(double speed) {
+  m_shooterFeeder.Set(speed);
+}  // all braces should start new lines, end braces should end on new lines
 
 void Shooter::ShooterPickUpNote(bool isPressed, double speed) {
   double pickUpSpeed = speed;  // pick up is negative speed
 
   if (isPressed) {
-    m_shooterMotorLeft.Set(-pickUpSpeed); // motorLeft should be inverted from motorRight so you don't have to negate values 
+    m_shooterMotorLeft.Set(
+        -pickUpSpeed);  // motorLeft should be inverted from motorRight so you
+                        // don't have to negate values
     m_shooterMotorRight.Set(pickUpSpeed);
   } else {
     m_shooterMotorLeft.Set(0);
     m_shooterMotorRight.Set(0);
+  }
+}
+
+void Shooter::SetAngleBasedOnDistance(double distance) {
+  // If distanceAngleLookup is empty or not properly initialized, return early
+  if (distanceAngleLookup.empty()) return;
+
+  if (distance <= distanceAngleLookup.front().distance) {
+    PivotToSetPoint(distanceAngleLookup.front().val);
+    return;
+  }
+  if (distance >= distanceAngleLookup.back().distance) {
+    PivotToSetPoint(distanceAngleLookup.back().val);
+    return;
+  }
+
+  for (size_t i = 0; i < distanceAngleLookup.size() - 1; ++i) {
+    if (distance >= distanceAngleLookup[i].distance &&
+        distance <= distanceAngleLookup[i + 1].distance) {
+      double ratio = (distance - distanceAngleLookup[i].distance) /
+                     (distanceAngleLookup[i + 1].distance -
+                      distanceAngleLookup[i].distance);
+      double angle =
+          distanceAngleLookup[i].val +
+          ratio * (distanceAngleLookup[i + 1].val - distanceAngleLookup[i].val);
+      PivotToSetPoint(angle);
+      return;
+    }
   }
 }
 

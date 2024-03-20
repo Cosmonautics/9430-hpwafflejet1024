@@ -33,8 +33,19 @@ class Shooter : public frc2::Subsystem {
   void MoveFeeder(double speed);
   void StopMotors();
   void InvertMotor(bool Invert);
+  void SetAngleBasedOnDistance(double distance);
+  void PivotToSetPointAngle(double setPointAngle);
 
  private:
+  struct DistanceAnglePair {
+    double distance;
+    double val;
+  };
+
+  std::vector<DistanceAnglePair> distanceAngleLookup;
+
+  void InitializeDistanceAngleLookup();
+
   rev::CANSparkFlex m_shooterMotorLeft{
       ShooterConstants::kShooterLeftCanId,
       rev::CANSparkLowLevel::MotorType::kBrushless};

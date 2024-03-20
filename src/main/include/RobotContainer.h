@@ -42,13 +42,14 @@
 #include "commands2/DoClimb1Command.h"
 #include "commands2/DoClimbCommand.h"
 #include "commands2/DoSpeakerScoreCommand.h"
+#include "subsystems/Limelight.h"
 #include "subsystems/Conveyor.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
 #include "subsystems/Intake.h"
+#include "subsystems/Limelight.h"
 #include "subsystems/Shooter.h"
 #include "utils/ControllerUtils.h"
-
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -87,6 +88,7 @@ class RobotContainer {
   Shooter m_shooter;
   Elevator m_elevator;
   Conveyor m_conveyor;
+  Limelight m_limelight;
   // Conveyor m_conveyor;
   //  The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;
