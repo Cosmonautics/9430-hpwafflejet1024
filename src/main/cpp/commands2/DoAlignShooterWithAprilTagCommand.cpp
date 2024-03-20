@@ -25,6 +25,8 @@ void DoAlignShooterWithAprilTagCommand::Execute() {
   if (m_limelight->HasTarget()) {
     m_shooter->SetAngleBasedOnDistance(m_limelight->CalculateDistanceToTarget(
         frc::DriverStation::GetAlliance() == frc::DriverStation::kRed));
+  } else {
+    m_shooter->PivotToSetPoint(PositionConstants::kShooterShufflingPosition);
   }
   m_isAligned = true;
 }

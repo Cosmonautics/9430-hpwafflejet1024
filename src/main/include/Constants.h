@@ -217,6 +217,7 @@ constexpr double kShooterPreShooterPosition = 0.935;
 constexpr double kShooterAMPPosition = 0.875;
 constexpr double kShooterIntakeSourcePosition = 0.884;
 constexpr double kShooterClimb1Position = 0.423;  // zero this is intended
+constexpr double kShooterShufflingPosition = 0.763;
 
 // Intake Position Constants
 constexpr double kIntakeTransitPosition = 0.026;
