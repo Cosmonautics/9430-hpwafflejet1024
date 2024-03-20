@@ -35,9 +35,8 @@ Shooter::Shooter() {
 void Shooter::InitializeDistanceAngleLookup() {
   // Populate the distance-angle lookup table with real data
   distanceAngleLookup = {
-      // {distance_in_inches,
-      // corresponding_shooter_angle_in_degrees_or_rotations},
-      // Add real data here
+      {36.0, PositionConstants::kShooterShooterPosition},
+      {60.0, 0.800},
   };
 }
 
@@ -165,9 +164,9 @@ void Shooter::SetAngleBasedOnDistance(double distance) {
       double ratio = (distance - distanceAngleLookup[i].distance) /
                      (distanceAngleLookup[i + 1].distance -
                       distanceAngleLookup[i].distance);
-      double angle = distanceAngleLookup[i].val +
-                     ratio * (distanceAngleLookup[i + 1].val -
-                              distanceAngleLookup[i].val);
+      double angle =
+          distanceAngleLookup[i].val +
+          ratio * (distanceAngleLookup[i + 1].val - distanceAngleLookup[i].val);
       PivotToSetPoint(angle);
       return;
     }
