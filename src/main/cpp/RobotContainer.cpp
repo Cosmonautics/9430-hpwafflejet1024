@@ -110,13 +110,13 @@ RobotContainer::RobotContainer() {
       [this] {
         m_drive.Drive(  // FLAG: x and y might be switched here.
             -units::meters_per_second_t{
-                frc::ApplyDeadband(m_driverController.GetLeftY() * 0.75,
+                frc::ApplyDeadband(m_driverController.GetLeftY(),
                                    OIConstants::kDriveDeadband)},
             -units::meters_per_second_t{
-                frc::ApplyDeadband(m_driverController.GetLeftX() * 0.75,
+                frc::ApplyDeadband(m_driverController.GetLeftX(),
                                    OIConstants::kDriveDeadband)},
             -units::radians_per_second_t{
-                frc::ApplyDeadband(m_driverController.GetRightX() * 0.75,
+                frc::ApplyDeadband(m_driverController.GetRightX(),
                                    OIConstants::kDriveDeadband)},
             true, true);
       },
