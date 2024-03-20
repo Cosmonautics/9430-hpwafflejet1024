@@ -8,11 +8,11 @@ DoSpeakerScoreCommand::DoSpeakerScoreCommand(Elevator* elevatorSubsystem,
                                              Limelight* limelightSubsystem) {
   AddCommands(
       MoveShooterWheelsCommand(shooterSubsystem, -1.0),
-      //DoAlignDriveWithAprilTagCommand(driveSubsystem, limelightSubsystem),
+      DoAlignDriveWithAprilTagCommand(driveSubsystem, limelightSubsystem),
       DoAlignShooterWithAprilTagCommand(shooterSubsystem, limelightSubsystem),
       frc2::WaitCommand(0.5_s),
       MoveElevatorCommand(elevatorSubsystem, kElevatorShooterPosition, false),
-      frc2::WaitCommand(1_s),
+      frc2::WaitCommand(0.5_s),
       MoveShooterFeederWheelsCommand(shooterSubsystem, -1.0),
       frc2::WaitCommand(0.5_s),
       MoveShooterFeederWheelsCommand(shooterSubsystem, 0.0),

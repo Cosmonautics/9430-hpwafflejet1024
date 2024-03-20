@@ -5,8 +5,8 @@
 
 #include <cmath>
 
-DoAlignDriveWithAprilTagCommand::DoAlignDriveWithAprilTagCommand(DriveSubsystem* drive,
-                                                   Limelight* limelight)
+DoAlignDriveWithAprilTagCommand::DoAlignDriveWithAprilTagCommand(
+    DriveSubsystem* drive, Limelight* limelight)
     : m_drive(drive),
       m_limelight(limelight),
       m_targetOffsetAngleHorizontal(0.0),
@@ -21,6 +21,7 @@ void DoAlignDriveWithAprilTagCommand::Initialize() {
 }
 
 void DoAlignDriveWithAprilTagCommand::Execute() {
+  m_drive->Drive(0_mps, 0_mps, 0_rad_per_s, false, false);
   if (m_limelight->HasTarget()) {
     m_targetOffsetAngleHorizontal =
         m_limelight
@@ -30,7 +31,7 @@ void DoAlignDriveWithAprilTagCommand::Execute() {
 
     // Rotate the robot at calculated speed. Negative speed if the angle is to
     // the left, positive if to the right.
-    m_drive->Drive(0_mps, 0_mps, units::radians_per_second_t(rotationSpeed),
+    m_drive->Drive(0_mps, 0_mps, units::radians_per_second_t(-rotationSpeed),
                    false, false);
   } else {
     m_drive->Drive(0_mps, 0_mps, 0_rad_per_s, false, false);
@@ -46,7 +47,7 @@ bool DoAlignDriveWithAprilTagCommand::IsFinished() { return m_isAligned; }
 
 double DoAlignDriveWithAprilTagCommand::CalculateRotationSpeed(
     double targetOffsetAngle) {
-  const double Kp = 0.1;
+  const double Kp = 0.03;
   double controlEffort = Kp * targetOffsetAngle;
 
   // Limit the control effort to maximum allowed rotation speed to prevent the
@@ -56,7 +57,7 @@ double DoAlignDriveWithAprilTagCommand::CalculateRotationSpeed(
       std::clamp(controlEffort, -maxRotationSpeed, maxRotationSpeed);
 
   const double alignmentThreshold =
-      1.0;  // Degrees, adjust based on desired precision
+      2.0;  // Degrees, adjust based on desired precision
   m_isAligned = std::abs(targetOffsetAngle) < alignmentThreshold;
 
   return controlEffort;

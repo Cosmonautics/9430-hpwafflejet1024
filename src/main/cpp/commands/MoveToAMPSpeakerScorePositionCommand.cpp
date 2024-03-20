@@ -13,6 +13,8 @@ void MoveToAMPSpeakerScorePositionCommand::Execute() {
   m_shooterSubsystem->InvertMotor(true);
   m_shooterSubsystem->PivotToSetPoint(
       PositionConstants::kShooterPreShooterPosition);
+  m_shooterSubsystem->StopMotors();
+  m_shooterSubsystem->MoveFeeder(0);
   // frc2::WaitCommand(0.8_s).Schedule();
   m_elevatorSubsystem->MoveToPosition(
       PositionConstants::kElevatorShooterPosition, false);
