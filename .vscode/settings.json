@@ -94,6 +94,7 @@
     "variant": "cpp",
     "*.inc": "cpp",
     "movetoclimbpos2command": "c",
-    "xutility": "cpp"
+    "xutility": "cpp",
+    "charconv": "cpp"
   }
 }

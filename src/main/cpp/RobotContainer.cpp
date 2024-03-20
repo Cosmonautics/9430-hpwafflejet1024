@@ -155,10 +155,6 @@ void RobotContainer::ConfigureNamedCommands() {
       std::make_shared<DoSourceIntakeActionCommand>(&m_elevator, &m_shooter));
 
   pathplanner::NamedCommands::registerCommand(
-      "DoClimbActionCommand",
-      std::make_shared<DoClimbActionCommand>(&m_intake, true, -0.10));
-
-  pathplanner::NamedCommands::registerCommand(
       "StopNoteIntakeEjectActionCommand",
       std::make_shared<StopNoteIntakeEjectActionCommand>(
           &m_conveyor, &m_shooter, &m_intake));
@@ -177,7 +173,7 @@ void RobotContainer::ConfigureNamedCommands() {
 
   pathplanner::NamedCommands::registerCommand(
       "DoClimbCommand",
-      std::make_shared<DoClimbCommand>(&m_elevator, &m_shooter));
+      std::make_shared<DoClimbCommand>(&m_elevator));
 }
 
 void RobotContainer::ConfigureButtonBindings() {
