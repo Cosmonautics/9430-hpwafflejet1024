@@ -194,23 +194,10 @@ void RobotContainer::ConfigureButtonBindings() {
                        frc::XboxController::Button::kRightBumper)
       .OnTrue(new frc2::InstantCommand(
           [this] {
-            if (!doSpeakerScoreCommand ||
-                !doSpeakerScoreCommand->IsScheduled()) {
-              // Command not running, so start it
-              if (m_limelight.HasTarget()) {
-                frc::SmartDashboard::PutNumber(
-                    "Limelight Distance",
-                    m_limelight.CalculateDistanceToTarget(true));
-              }
-              // Create the command fresh each time to ensure it's not finished
-              // or cancelled
-              doSpeakerScoreCommand = std::make_unique<DoSpeakerScoreCommand>(
-                  &m_elevator, &m_shooter, &m_drive, &m_limelight);
-              doSpeakerScoreCommand->Schedule();
-            } else {
-              doSpeakerScoreCommand->Cancel();
-              (new StopSpeakerScoreCommand(&m_shooter, &m_drive))->Schedule();
-            }
+            frc::SmartDashboard::PutNumber("Limelight Distance", m_limelight.CalculateDistanceToTarget(true));
+            (new DoSpeakerScoreCommand(&m_elevator, &m_shooter, &m_drive,
+                                       &m_limelight))
+                ->Schedule();
           },
           {&m_elevator, &m_shooter, &m_drive, &m_limelight}));
 

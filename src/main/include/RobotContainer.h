@@ -34,9 +34,9 @@
 #include "commands/StopSourceIntakeActionCommand.h"
 #include "commands2/DoAMPScoreCommand.h"
 #include "commands2/DoClimb1Command.h"
-#include "commands2/StopSpeakerScoreCommand.h"
 #include "commands2/DoClimbCommand.h"
 #include "commands2/DoSpeakerScoreCommand.h"
+#include "subsystems/Limelight.h"
 #include "subsystems/Conveyor.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
@@ -92,6 +92,4 @@ class RobotContainer {
 
   bool isClimb2 = false;
   bool isClimb1 = false;
-
-  std::unique_ptr<frc2::Command> doSpeakerScoreCommand;
 };
