@@ -32,8 +32,62 @@
 using namespace DriveConstants;
 
 RobotContainer::RobotContainer() {
-  // Initialize all of your commands and subsystems here
-  ConfigureNamedCommands();
+  pathplanner::NamedCommands::registerCommand(
+      "MoveToFloorIntakePositionCommand",
+      std::make_shared<MoveToFloorIntakePositionCommand>(
+          &m_elevator, &m_shooter, &m_intake));
+
+  pathplanner::NamedCommands::registerCommand(
+      "MoveToAMPSpeakerScorePositionCommand",
+      std::make_shared<MoveToAMPSpeakerScorePositionCommand>(&m_elevator,
+                                                             &m_shooter));
+
+  pathplanner::NamedCommands::registerCommand(
+      "MoveToTransitPositionCommand",
+      std::make_shared<MoveToTransitPositionCommand>(&m_elevator, &m_shooter,
+                                                     &m_intake));
+
+  pathplanner::NamedCommands::registerCommand(
+      "DoClimb1Command",
+      std::make_shared<DoClimb1Command>(&m_elevator, &m_shooter, &m_intake));
+
+  pathplanner::NamedCommands::registerCommand(
+      "DoSpeakerScoreCommand",
+      std::make_shared<DoSpeakerScoreCommand>(&m_elevator, &m_shooter, &m_drive,
+                                              &m_limelight));
+
+  pathplanner::NamedCommands::registerCommand(
+      "DoNoteEjectActionCommand", std::make_shared<DoNoteEjectActionCommand>(
+                                      &m_conveyor, &m_shooter, &m_intake));
+
+  pathplanner::NamedCommands::registerCommand(
+      "DoNoteIntakeActionCommand", std::make_shared<DoNoteIntakeActionCommand>(
+                                       &m_conveyor, &m_shooter, &m_intake));
+
+  pathplanner::NamedCommands::registerCommand(
+      "DoSourceIntakeActionCommand",
+      std::make_shared<DoSourceIntakeActionCommand>(&m_elevator, &m_shooter));
+
+  pathplanner::NamedCommands::registerCommand(
+      "StopNoteIntakeEjectActionCommand",
+      std::make_shared<StopNoteIntakeEjectActionCommand>(
+          &m_conveyor, &m_shooter, &m_intake));
+
+  pathplanner::NamedCommands::registerCommand(
+      "StopSourceIntakeActionCommand",
+      std::make_shared<StopSourceIntakeActionCommand>(&m_elevator, &m_shooter));
+
+  pathplanner::NamedCommands::registerCommand(
+      "DoAMPScoreCommand",
+      std::make_shared<DoAMPScoreCommand>(&m_elevator, &m_shooter));
+
+  pathplanner::NamedCommands::registerCommand(
+      "DoSpeakerScoreActionCommand",
+      std::make_shared<DoSpeakerScoreActionCommand>(&m_elevator, &m_shooter));
+
+  pathplanner::NamedCommands::registerCommand(
+      "DoClimbCommand", std::make_shared<DoClimbCommand>(&m_elevator));
+
   m_elevator.SetDefaultCommand(frc2::RunCommand(
       [this] {
         double rightTriggerValue = m_operatorController.GetRightTriggerAxis();
@@ -117,64 +171,7 @@ RobotContainer::RobotContainer() {
       },
       {&m_drive}));
 }
-void RobotContainer::ConfigureNamedCommands() {
-  pathplanner::NamedCommands::registerCommand(
-      "MoveToFloorIntakePositionCommand",
-      std::make_shared<MoveToFloorIntakePositionCommand>(
-          &m_elevator, &m_shooter, &m_intake));
-
-  pathplanner::NamedCommands::registerCommand(
-      "MoveToAMPSpeakerScorePositionCommand",
-      std::make_shared<MoveToAMPSpeakerScorePositionCommand>(&m_elevator,
-                                                             &m_shooter));
-
-  pathplanner::NamedCommands::registerCommand(
-      "MoveToTransitPositionCommand",
-      std::make_shared<MoveToTransitPositionCommand>(&m_elevator, &m_shooter,
-                                                     &m_intake));
-
-  pathplanner::NamedCommands::registerCommand(
-      "DoClimb1Command",
-      std::make_shared<DoClimb1Command>(&m_elevator, &m_shooter, &m_intake));
-
-  pathplanner::NamedCommands::registerCommand(
-      "DoSpeakerScoreCommand",
-      std::make_shared<DoSpeakerScoreCommand>(&m_elevator, &m_shooter, &m_drive,
-                                              &m_limelight));
-
-  pathplanner::NamedCommands::registerCommand(
-      "DoNoteEjectActionCommand", std::make_shared<DoNoteEjectActionCommand>(
-                                      &m_conveyor, &m_shooter, &m_intake));
-
-  pathplanner::NamedCommands::registerCommand(
-      "DoNoteIntakeActionCommand", std::make_shared<DoNoteIntakeActionCommand>(
-                                       &m_conveyor, &m_shooter, &m_intake));
-
-  pathplanner::NamedCommands::registerCommand(
-      "DoSourceIntakeActionCommand",
-      std::make_shared<DoSourceIntakeActionCommand>(&m_elevator, &m_shooter));
-
-  pathplanner::NamedCommands::registerCommand(
-      "StopNoteIntakeEjectActionCommand",
-      std::make_shared<StopNoteIntakeEjectActionCommand>(
-          &m_conveyor, &m_shooter, &m_intake));
-
-  pathplanner::NamedCommands::registerCommand(
-      "StopSourceIntakeActionCommand",
-      std::make_shared<StopSourceIntakeActionCommand>(&m_elevator, &m_shooter));
-
-  pathplanner::NamedCommands::registerCommand(
-      "DoAMPScoreCommand",
-      std::make_shared<DoAMPScoreCommand>(&m_elevator, &m_shooter));
-
-  pathplanner::NamedCommands::registerCommand(
-      "DoSpeakerScoreActionCommand",
-      std::make_shared<DoSpeakerScoreActionCommand>(&m_elevator, &m_shooter));
-
-  pathplanner::NamedCommands::registerCommand(
-      "DoClimbCommand",
-      std::make_shared<DoClimbCommand>(&m_elevator));
-}
+void RobotContainer::ConfigureNamedCommands() {}
 
 void RobotContainer::ConfigureButtonBindings() {
   frc::Timer holdTimer;
