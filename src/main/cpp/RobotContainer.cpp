@@ -267,52 +267,51 @@ void RobotContainer::ConfigureButtonBindings() {
 
 void RobotContainer::ConfigureAutoChooser() {
   try {
-    pathplanner::AutoBuilder::configureHolonomic(
-        [this]() { return m_drive.GetPose(); },  // Robot pose supplier
-        [this](frc::Pose2d pose) {
-          m_drive.ResetOdometry(pose);
-        },  // Method to reset odometry (will be called if your auto has a
-            // starting pose)
-        [this]() {
-          return m_drive.GetRobotRelativeChassisSpeeds();
-        },  // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-        [this](frc::ChassisSpeeds speeds) {
-          m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false);
-        },  // Method that will drive the robot given ROBOT RELATIVE
-            // ChassisSpeeds
-        pathplanner::
-            HolonomicPathFollowerConfig(  // HolonomicPathFollowerConfig,
-                                          // this should likely live
-                                          // in your Constants class
-                pathplanner::PIDConstants(AutoConstants::kPXController, 0.0,
-                                          0.0),  // Translation PID constants
-                pathplanner::PIDConstants(AutoConstants::kPYController, 0.0,
-                                          0.0),  // Rotation PID constants
-                4.5_mps,                         // Max module speed, in m/s
-                0.4_m,  // Drive base radius in meters. Distance from robot
-                        // center to furthest module.
-                pathplanner::ReplanningConfig()  // Default path replanning
-                                                 // config. See the API for
-                                                 // the options here
-                ),
-        []() {
-          auto alliance = frc::DriverStation::GetAlliance();
-          if (alliance) {
-            return alliance.value() == frc::DriverStation::Alliance::kRed;
-          }
-          return false;
-        },
-        &m_drive  // Reference to this subsystem to set requirements
-    );
-    auto stopRobotDrive = [this]() {
-      m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false);
-    };
+    pathplanner::PIDConstants translationConstants{AutoConstants::kPXController,
+                                                   0.0, 0.0};
+    pathplanner::PIDConstants rotationConstants{
+        AutoConstants::kPThetaController, 0.0, 0.0};
+
+    // Max module speed and drive base radius. Adjust these values as necessary.
+    units::meters_per_second_t maxModuleSpeed = 4.5_mps;
+    units::meter_t driveBaseRadius = 1.7_m;
+
+    // ReplanningConfig, adjust based on your requirements.
+    pathplanner::ReplanningConfig
+        replanningConfig;  // Assuming a default constructor is available
+
+    // Requirements for the command. Adapt this to your subsystems.
+    frc2::Requirements requirements = {&m_drive};
+
+    // Assuming a default period is acceptable.
+    units::second_t period = 0.02_s;
+
+    // Instantiate and execute the FollowPathHolonomic command.
+    pathplanner::FollowPathHolonomic followPathCommand =
+        pathplanner::FollowPathHolonomic(
+            pathplanner::PathPlannerPath::fromPathFile("GetAndShootFirstThree"),
+            [this]() { return m_drive.GetPose(); },
+            [this]() { return m_drive.GetRobotRelativeChassisSpeeds(); },
+            [this](frc::ChassisSpeeds speeds) {
+              m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false);
+            },
+            translationConstants, rotationConstants, maxModuleSpeed,
+            driveBaseRadius, replanningConfig,
+            [this]() {
+              auto alliance = frc::DriverStation::GetAlliance();
+              return alliance &&
+                     (alliance.value() == frc::DriverStation::Alliance::kRed);
+            },
+            requirements, period);
     m_chooser.AddOption("Do Nothing", new frc2::InstantCommand([]() {}, {}));
     m_chooser.AddOption(
         "Shoot Note and Do Nothing",
         new DoSpeakerScoreActionCommand(&m_elevator, &m_shooter));
-    m_chooser.SetDefaultOption("Get First 3 Notes and Shoot",
-                               autos::Test::cmdPtr.get());
+    m_chooser.SetDefaultOption(
+        "Get First 3 Notes and Shoot",
+        new frc2::SequentialCommandGroup(
+            DoSpeakerScoreAutoCommand(&m_elevator, &m_shooter, &m_limelight),
+            std::move(followPathCommand)));
     // Add more options as needed
 
     frc::SmartDashboard::PutData("Autonomous Options", &m_chooser);

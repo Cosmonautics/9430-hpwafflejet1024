@@ -17,14 +17,15 @@
 #include "AHRS.h"
 #include "Constants.h"
 // #include "commands/CommandTemplate.h"
-#include <pathplanner/lib/auto/AutoBuilder.h>
+#include <pathplanner/lib/controllers/PPHolonomicDriveController.h>
+#include <pathplanner/lib/commands/FollowPathHolonomic.h>
 #include <pathplanner/lib/auto/NamedCommands.h>
-#include <pathplanner/lib/commands/PathPlannerAuto.h>
 #include <pathplanner/lib/util/HolonomicPathFollowerConfig.h>
 #include <pathplanner/lib/util/PIDConstants.h>
 #include <pathplanner/lib/util/ReplanningConfig.h>
 
 #include "commands/DoAMPScoreActionCommand.h"
+#include "commands2/DoSpeakerScoreAutoCommand.h"
 #include "commands/DoClimbActionCommand.h"
 #include "commands/DoNoteEjectActionCommand.h"
 #include "commands/DoNoteIntakeActionCommand.h"
