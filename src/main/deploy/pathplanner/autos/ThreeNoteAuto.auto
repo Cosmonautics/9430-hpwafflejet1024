@@ -43,7 +43,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ThreeNotePTwo"
+                  "pathName": "GetAndShootFirstThree"
                 }
               }
             ]
@@ -82,6 +82,69 @@
                       }
                     }
                   ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "MoveToFloorIntakePositionCommand"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "DoNoteIntakeActionCommand"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.08
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ThreeNotePTwo"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopNoteIntakeEjectActionCommand"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "MoveToAMPSpeakerScorePositionCommand"
                 }
               }
             ]

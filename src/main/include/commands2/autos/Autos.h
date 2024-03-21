@@ -28,4 +28,8 @@ frc2::CommandPtr GetAndShootFirstThree(Elevator* elevatorSubsystem,
                                        Shooter* shooterSubsystem,
                                        DriveSubsystem* driveSubsystem,
                                        Limelight* limelightSubsystem);
+frc2::CommandPtr ThreeNoteAuto(Elevator* elevatorSubsystem,
+                               Shooter* shooterSubsystem,
+                               DriveSubsystem* driveSubsystem,
+                               Limelight* limelightSubsystem);
 }  // namespace autos

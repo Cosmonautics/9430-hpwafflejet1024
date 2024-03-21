@@ -93,6 +93,8 @@ RobotContainer::RobotContainer() {
       "DoClimbCommand", std::move(DoClimbCommand(&m_elevator).ToPtr()));
   m_getAndShootFirstThreeAuto = autos::GetAndShootFirstThree(
       &m_elevator, &m_shooter, &m_drive, &m_limelight);
+  m_threeNoteAuto =
+      autos::ThreeNoteAuto(&m_elevator, &m_shooter, &m_drive, &m_limelight);
   ConfigureAutoChooser();
   m_elevator.SetDefaultCommand(frc2::RunCommand(
       [this] {
@@ -282,11 +284,13 @@ void RobotContainer::ConfigureAutoChooser() {
     m_chooser.AddOption(
         "Shoot Note and Do Nothing",
         new DoSpeakerScoreActionCommand(&m_elevator, &m_shooter));
-    m_chooser.SetDefaultOption("Get First 3 Notes and Shoot",
+    m_chooser.SetDefaultOption("Get First 2 Notes and Shoot",
                                m_getAndShootFirstThreeAuto.get());
-    // Add more options as needed
+    m_chooser.SetDefaultOption("Get First 3 Notes and Shoot",
+                               m_threeNoteAuto.get());
+        // Add more options as needed
 
-    frc::SmartDashboard::PutData("Autonomous Options", &m_chooser);
+        frc::SmartDashboard::PutData("Autonomous Options", &m_chooser);
   } catch (std::exception& ex) {
     std::string what_string = ex.what();
     std::string err_msg = "Error Starting Autonomous:  " + what_string;
