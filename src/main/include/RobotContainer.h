@@ -20,7 +20,7 @@
 #include <pathplanner/lib/auto/AutoBuilder.h>
 #include <pathplanner/lib/auto/NamedCommands.h>
 #include <pathplanner/lib/commands/PathPlannerAuto.h>
-#include <pathplanner/lib/util/HolonomicPathFollowerConfig.h>
+#include <pathplanner/lib/path/PathPlannerPath.h>
 #include <pathplanner/lib/util/PIDConstants.h>
 #include <pathplanner/lib/util/ReplanningConfig.h>
 
@@ -42,7 +42,9 @@
 #include "commands2/DoAMPScoreCommand.h"
 #include "commands2/DoClimb1Command.h"
 #include "commands2/DoClimbCommand.h"
+#include "commands2/DoSpeakerScoreAutoCommand.h"
 #include "commands2/DoSpeakerScoreCommand.h"
+#include "commands2/autos/Autos.h"
 #include "subsystems/Conveyor.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
@@ -79,7 +81,6 @@ class RobotContainer {
       OIConstants::kOperatorControllerPort};
   // In RobotContainer.cpp, within the RobotContainer constructor:
   // Enum to keep track of the last pressed trigger
-
   // Variables to track the last pressed trigger and its value
   double lastTriggerValue = 0.0;
   // The robot's subsystems
@@ -91,12 +92,14 @@ class RobotContainer {
   Limelight m_limelight;
   // Conveyor m_conveyor;
   //  The chooser for the autonomous routines
-  frc::SendableChooser<frc2::Command*> m_chooser;
 
   void ConfigureButtonBindings();
   void ConfigureAutoChooser();
   void ConfigureNamedCommands();
-
+  
+  frc::SendableChooser<frc2::Command*> m_chooser;
+  frc2::CommandPtr m_getAndShootFirstThreeAuto = autos::GetAndShootFirstThree(
+      &m_elevator, &m_shooter, &m_drive, &m_limelight);
   bool isClimb2 = false;
   bool isClimb1 = false;
 };

@@ -27,7 +27,44 @@ DriveSubsystem::DriveSubsystem()
                  ahrs->GetRotation2d(),
                  {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                   m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
-                 frc::Pose2d{}} {}
+                 frc::Pose2d{}} {
+  pathplanner::AutoBuilder::configureHolonomic(
+      [this]() { return this->GetPose(); },  // Robot pose supplier
+      [this](frc::Pose2d pose) {
+        this->ResetOdometry(pose);
+      },  // Method to reset odometry (will be called if your auto has a
+          // starting pose)
+      [this]() {
+        return this->GetRobotRelativeChassisSpeeds();
+      },  // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+      [this](frc::ChassisSpeeds speeds) {
+        this->Drive(speeds.vx, speeds.vy, speeds.omega, false, false);
+      },  // Method that will drive the robot given ROBOT RELATIVE
+          // ChassisSpeeds
+      pathplanner::HolonomicPathFollowerConfig(  // HolonomicPathFollowerConfig,
+                                                 // this should likely live
+                                                 // in your Constants class
+          pathplanner::PIDConstants(AutoConstants::kPXController, 0.0,
+                                    0.0),  // Translation PID constants
+          pathplanner::PIDConstants(AutoConstants::kPYController, 0.0,
+                                    0.0),  // Rotation PID constants
+          4.5_mps,                         // Max module speed, in m/s
+          0.457_m,  // Drive base radius in meters. Distance from robot
+                  // center to furthest module.
+          pathplanner::ReplanningConfig()  // Default path replanning
+                                           // config. See the API for
+                                           // the options here
+          ),
+      []() {
+        auto alliance = frc::DriverStation::GetAlliance();
+        if (alliance) {
+          return alliance.value() == frc::DriverStation::Alliance::kRed;
+        }
+        return false;
+      },
+      this  // Reference to this subsystem to set requirements
+  );
+}
 
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.

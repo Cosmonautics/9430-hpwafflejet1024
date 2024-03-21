@@ -14,6 +14,13 @@
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkFlex.h>
 
+#include <pathplanner/lib/auto/AutoBuilder.h>
+#include <pathplanner/lib/auto/NamedCommands.h>
+#include <pathplanner/lib/commands/PathPlannerAuto.h>
+#include <pathplanner/lib/path/PathPlannerPath.h>
+#include <pathplanner/lib/util/PIDConstants.h>
+#include <pathplanner/lib/util/ReplanningConfig.h>
+#include <frc/DriverStation.h>
 #include "AHRS.h"
 #include "Constants.h"
 #include "MAXSwerveModule.h"

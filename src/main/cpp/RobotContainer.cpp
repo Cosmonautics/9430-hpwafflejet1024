@@ -34,58 +34,66 @@ using namespace DriveConstants;
 RobotContainer::RobotContainer() {
   pathplanner::NamedCommands::registerCommand(
       "MoveToFloorIntakePositionCommand",
-      std::make_shared<MoveToFloorIntakePositionCommand>(
-          &m_elevator, &m_shooter, &m_intake));
+      std::move(
+          MoveToFloorIntakePositionCommand(&m_elevator, &m_shooter, &m_intake)
+              .ToPtr()));
 
   pathplanner::NamedCommands::registerCommand(
       "MoveToAMPSpeakerScorePositionCommand",
-      std::make_shared<MoveToAMPSpeakerScorePositionCommand>(&m_elevator,
-                                                             &m_shooter));
+      std::move(MoveToAMPSpeakerScorePositionCommand(&m_elevator, &m_shooter)
+                    .ToPtr()));
 
   pathplanner::NamedCommands::registerCommand(
       "MoveToTransitPositionCommand",
-      std::make_shared<MoveToTransitPositionCommand>(&m_elevator, &m_shooter,
-                                                     &m_intake));
+      std::move(MoveToTransitPositionCommand(&m_elevator, &m_shooter, &m_intake)
+                    .ToPtr()));
 
   pathplanner::NamedCommands::registerCommand(
       "DoClimb1Command",
-      std::make_shared<DoClimb1Command>(&m_elevator, &m_shooter, &m_intake));
+      std::move(DoClimb1Command(&m_elevator, &m_shooter, &m_intake).ToPtr()));
 
   pathplanner::NamedCommands::registerCommand(
-      "DoSpeakerScoreAutoCommand", std::make_shared<DoSpeakerScoreAutoCommand>(
-                                       &m_elevator, &m_shooter, &m_limelight));
+      "DoSpeakerScoreAutoCommand",
+      std::move(DoSpeakerScoreAutoCommand(&m_elevator, &m_shooter, &m_limelight)
+                    .ToPtr()));
 
   pathplanner::NamedCommands::registerCommand(
-      "DoNoteEjectActionCommand", std::make_shared<DoNoteEjectActionCommand>(
-                                      &m_conveyor, &m_shooter, &m_intake));
+      "DoNoteEjectActionCommand",
+      std::move(DoNoteEjectActionCommand(&m_conveyor, &m_shooter, &m_intake)
+                    .ToPtr()));
 
   pathplanner::NamedCommands::registerCommand(
-      "DoNoteIntakeActionCommand", std::make_shared<DoNoteIntakeActionCommand>(
-                                       &m_conveyor, &m_shooter, &m_intake));
+      "DoNoteIntakeActionCommand",
+      std::move(DoNoteIntakeActionCommand(&m_conveyor, &m_shooter, &m_intake)
+                    .ToPtr()));
 
   pathplanner::NamedCommands::registerCommand(
       "DoSourceIntakeActionCommand",
-      std::make_shared<DoSourceIntakeActionCommand>(&m_elevator, &m_shooter));
+      std::move(DoSourceIntakeActionCommand(&m_elevator, &m_shooter).ToPtr()));
 
   pathplanner::NamedCommands::registerCommand(
       "StopNoteIntakeEjectActionCommand",
-      std::make_shared<StopNoteIntakeEjectActionCommand>(
-          &m_conveyor, &m_shooter, &m_intake));
+      std::move(
+          StopNoteIntakeEjectActionCommand(&m_conveyor, &m_shooter, &m_intake)
+              .ToPtr()));
 
   pathplanner::NamedCommands::registerCommand(
       "StopSourceIntakeActionCommand",
-      std::make_shared<StopSourceIntakeActionCommand>(&m_elevator, &m_shooter));
+      std::move(
+          StopSourceIntakeActionCommand(&m_elevator, &m_shooter).ToPtr()));
 
   pathplanner::NamedCommands::registerCommand(
       "DoAMPScoreCommand",
-      std::make_shared<DoAMPScoreCommand>(&m_elevator, &m_shooter));
+      std::move(DoAMPScoreCommand(&m_elevator, &m_shooter).ToPtr()));
 
   pathplanner::NamedCommands::registerCommand(
       "DoSpeakerScoreActionCommand",
-      std::make_shared<DoSpeakerScoreActionCommand>(&m_elevator, &m_shooter));
+      std::move(DoSpeakerScoreActionCommand(&m_elevator, &m_shooter).ToPtr()));
 
   pathplanner::NamedCommands::registerCommand(
-      "DoClimbCommand", std::make_shared<DoClimbCommand>(&m_elevator));
+      "DoClimbCommand", std::move(DoClimbCommand(&m_elevator).ToPtr()));
+
+  ConfigureAutoChooser();
   m_elevator.SetDefaultCommand(frc2::RunCommand(
       [this] {
         double rightTriggerValue = m_operatorController.GetRightTriggerAxis();
@@ -150,7 +158,6 @@ RobotContainer::RobotContainer() {
 
   // Configure the button bindings
   ConfigureButtonBindings();
-  ConfigureAutoChooser();
   // Set up default drive command
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
@@ -312,7 +319,7 @@ void RobotContainer::ConfigureAutoChooser() {
         "Shoot Note and Do Nothing",
         new DoSpeakerScoreActionCommand(&m_elevator, &m_shooter));
     m_chooser.SetDefaultOption("Get First 3 Notes and Shoot",
-                               autos::Test::cmdPtr.get());
+                               m_getAndShootFirstThreeAuto.get());
     // Add more options as needed
 
     frc::SmartDashboard::PutData("Autonomous Options", &m_chooser);
