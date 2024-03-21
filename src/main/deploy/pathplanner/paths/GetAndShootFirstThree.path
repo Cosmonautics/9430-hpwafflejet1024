@@ -3,15 +3,15 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.4854713072574635,
+        "x": 1.49,
         "y": 5.551187918118234
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.485471307257467,
+        "x": 2.4900000000000038,
         "y": 5.551187918118234
       },
-      "isLocked": false,
+      "isLocked": true,
       "linkedName": null
     },
     {
@@ -24,80 +24,16 @@
         "y": 5.551187918118234
       },
       "nextControl": null,
-      "isLocked": false,
+      "isLocked": true,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.0,
-      "rotationDegrees": 0.0,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": 0,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "IntakePos",
-      "waypointRelativePos": 0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "MoveToFloorIntakePositionCommand"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "DoNoteIntakeActionCommand"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Shoot",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "MoveToAMPSpeakerScorePositionCommand"
-              }
-            },
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 0.8
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "DoSpeakerScoreActionCommand"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 0.5,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

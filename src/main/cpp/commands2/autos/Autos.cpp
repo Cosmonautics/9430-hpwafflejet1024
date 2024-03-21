@@ -19,6 +19,14 @@ frc2::CommandPtr autos::GetAndShootFirstThree(Elevator* elevatorSubsystem,
       DoSpeakerScoreCommand(elevatorSubsystem, shooterSubsystem, driveSubsystem,
                             limelightSubsystem)
           .ToPtr(),
-          frc2::WaitCommand(1.5_s).ToPtr(),
+      frc2::WaitCommand(1.2_s).ToPtr(),
+      frc2::InstantCommand(
+          [driveSubsystem]() {
+            driveSubsystem->ResetOdometry(
+                pathplanner::PathPlannerAuto::getStartingPoseFromAutoFile(
+                    "GetAndShootFirstThree"));
+          },
+          {})
+          .ToPtr(),
       pathplanner::PathPlannerAuto("GetAndShootFirstThree").ToPtr());
 }

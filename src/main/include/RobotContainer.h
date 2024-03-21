@@ -96,10 +96,11 @@ class RobotContainer {
   void ConfigureButtonBindings();
   void ConfigureAutoChooser();
   void ConfigureNamedCommands();
-  
+
   frc::SendableChooser<frc2::Command*> m_chooser;
-  frc2::CommandPtr m_getAndShootFirstThreeAuto = autos::GetAndShootFirstThree(
-      &m_elevator, &m_shooter, &m_drive, &m_limelight);
+  // autos::GetAndShootFirstThree( &m_elevator, &m_shooter,
+                     // &m_drive, &m_limelight);
+  frc2::CommandPtr m_getAndShootFirstThreeAuto =  frc2::cmd::Sequence();
   bool isClimb2 = false;
   bool isClimb1 = false;
 };

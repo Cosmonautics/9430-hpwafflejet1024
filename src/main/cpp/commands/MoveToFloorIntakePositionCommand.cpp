@@ -25,7 +25,5 @@ void MoveToFloorIntakePositionCommand::Execute() {
 }
 
 bool MoveToFloorIntakePositionCommand::IsFinished() {
-  return m_elevatorSubsystem->AtTargetPosition() &&
-         m_shooterSubsystem->IsAtSetPoint() &&
-         m_intakeSubsystem->IsAtSetPoint();
+  return true;
 }

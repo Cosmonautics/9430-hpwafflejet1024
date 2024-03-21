@@ -30,7 +30,6 @@
 #include "subsystems/Shooter.h"
 
 using namespace DriveConstants;
-
 RobotContainer::RobotContainer() {
   pathplanner::NamedCommands::registerCommand(
       "MoveToFloorIntakePositionCommand",
@@ -92,7 +91,8 @@ RobotContainer::RobotContainer() {
 
   pathplanner::NamedCommands::registerCommand(
       "DoClimbCommand", std::move(DoClimbCommand(&m_elevator).ToPtr()));
-
+  m_getAndShootFirstThreeAuto = autos::GetAndShootFirstThree(
+      &m_elevator, &m_shooter, &m_drive, &m_limelight);
   ConfigureAutoChooser();
   m_elevator.SetDefaultCommand(frc2::RunCommand(
       [this] {
@@ -112,16 +112,16 @@ RobotContainer::RobotContainer() {
         if (rightTriggerValue > leftTriggerValue) {
           triggerValue = rightTriggerValue;  // Positive direction
         }
-        // If left trigger is pressed more than the right, move down (negative
-        // direction)
+        // If left trigger is pressed more than the right, move down
+        // (negative direction)
         else if (leftTriggerValue > rightTriggerValue) {
           triggerValue = -leftTriggerValue;  // Negative direction
         }
         // If both triggers are pressed equally or not at all, don't move
         // (triggerValue remains 0)
 
-        // Use the triggerValue to control the elevator. Assuming SetSpeed or a
-        // similar method controls the elevator's speed.
+        // Use the triggerValue to control the elevator. Assuming SetSpeed
+        // or a similar method controls the elevator's speed.
         m_elevator.ManualMove(triggerValue);
       },
       {&m_elevator}));
@@ -142,16 +142,16 @@ RobotContainer::RobotContainer() {
         if (rightTriggerValue > leftTriggerValue) {
           triggerValue = rightTriggerValue;  // Positive direction
         }
-        // If left trigger is pressed more than the right, move down (negative
-        // direction)
+        // If left trigger is pressed more than the right, move down
+        // (negative direction)
         else if (leftTriggerValue > rightTriggerValue) {
           triggerValue = -leftTriggerValue;  // Negative direction
         }
         // If both triggers are pressed equally or not at all, don't move
         // (triggerValue remains 0)
 
-        // Use the triggerValue to control the elevator. Assuming SetSpeed or a
-        // similar method controls the elevator's speed.
+        // Use the triggerValue to control the elevator. Assuming SetSpeed
+        // or a similar method controls the elevator's speed.
         m_shooter.ManualMove(triggerValue);
       },
       {&m_shooter}));
@@ -227,9 +227,10 @@ void RobotContainer::ConfigureButtonBindings() {
           },
           {&m_elevator, &m_shooter, &m_intake}));
 
-  /*frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kX)
-      .OnTrue(new DoClimbActionCommand(&m_intake, true, -0.10))
-      .OnFalse(new DoClimbActionCommand(&m_intake, false, 0));*/
+  /*frc2::JoystickButton(&m_operatorController,
+     frc::XboxController::Button::kX) .OnTrue(new
+     DoClimbActionCommand(&m_intake, true, -0.10)) .OnFalse(new
+     DoClimbActionCommand(&m_intake, false, 0));*/
 
   frc2::JoystickButton(&m_operatorController,
                        frc::XboxController::Button::kLeftBumper)
@@ -274,43 +275,6 @@ void RobotContainer::ConfigureButtonBindings() {
 
 void RobotContainer::ConfigureAutoChooser() {
   try {
-    pathplanner::AutoBuilder::configureHolonomic(
-        [this]() { return m_drive.GetPose(); },  // Robot pose supplier
-        [this](frc::Pose2d pose) {
-          m_drive.ResetOdometry(pose);
-        },  // Method to reset odometry (will be called if your auto has a
-            // starting pose)
-        [this]() {
-          return m_drive.GetRobotRelativeChassisSpeeds();
-        },  // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-        [this](frc::ChassisSpeeds speeds) {
-          m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false);
-        },  // Method that will drive the robot given ROBOT RELATIVE
-            // ChassisSpeeds
-        pathplanner::
-            HolonomicPathFollowerConfig(  // HolonomicPathFollowerConfig,
-                                          // this should likely live
-                                          // in your Constants class
-                pathplanner::PIDConstants(AutoConstants::kPXController, 0.0,
-                                          0.0),  // Translation PID constants
-                pathplanner::PIDConstants(AutoConstants::kPYController, 0.0,
-                                          0.0),  // Rotation PID constants
-                4.5_mps,                         // Max module speed, in m/s
-                0.4_m,  // Drive base radius in meters. Distance from robot
-                        // center to furthest module.
-                pathplanner::ReplanningConfig()  // Default path replanning
-                                                 // config. See the API for
-                                                 // the options here
-                ),
-        []() {
-          auto alliance = frc::DriverStation::GetAlliance();
-          if (alliance) {
-            return alliance.value() == frc::DriverStation::Alliance::kRed;
-          }
-          return false;
-        },
-        &m_drive  // Reference to this subsystem to set requirements
-    );
     auto stopRobotDrive = [this]() {
       m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false);
     };

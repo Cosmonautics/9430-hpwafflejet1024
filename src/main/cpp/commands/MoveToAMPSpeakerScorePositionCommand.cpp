@@ -21,6 +21,5 @@ void MoveToAMPSpeakerScorePositionCommand::Execute() {
 }
 
 bool MoveToAMPSpeakerScorePositionCommand::IsFinished() {
-  return m_elevatorSubsystem->AtTargetPosition() &&
-         m_shooterSubsystem->IsAtSetPoint();
+  return true;
 }
