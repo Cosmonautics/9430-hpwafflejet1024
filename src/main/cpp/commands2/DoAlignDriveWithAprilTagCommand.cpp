@@ -21,6 +21,7 @@ void DoAlignDriveWithAprilTagCommand::Initialize() {
 }
 
 void DoAlignDriveWithAprilTagCommand::Execute() {
+  m_drive->Drive(0_mps, 0_mps, 0_rad_per_s, false, false);
   if (m_limelight->HasTarget()) {
     m_targetOffsetAngleHorizontal =
         m_limelight
@@ -34,7 +35,6 @@ void DoAlignDriveWithAprilTagCommand::Execute() {
                    false, false);
   } else {
     m_drive->Drive(0_mps, 0_mps, 0_rad_per_s, false, false);
-    m_isAligned = true;
   }
 }
 
