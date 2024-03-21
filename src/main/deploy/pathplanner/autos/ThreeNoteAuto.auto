@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.49,
-      "y": 5.551187918118234
+      "x": 1.456099942611335,
+      "y": 5.521816553472107
     },
     "rotation": 0
   },
@@ -43,7 +43,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "GetAndShootFirstThree"
+                  "pathName": "TwoNoteAuto"
                 }
               }
             ]
@@ -119,7 +119,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ThreeNotePTwo"
+                  "pathName": "ThreeNoteAuto"
                 }
               }
             ]

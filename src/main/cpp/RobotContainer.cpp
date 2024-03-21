@@ -283,12 +283,11 @@ void RobotContainer::ConfigureAutoChooser() {
     m_chooser.AddOption("Do Nothing", new frc2::InstantCommand([]() {}, {}));
     m_chooser.AddOption(
         "Shoot Note and Do Nothing",
-        new DoSpeakerScoreActionCommand(&m_elevator, &m_shooter));
-    m_chooser.SetDefaultOption("Get First 2 Notes and Shoot",
+        new DoSpeakerScoreCommand(&m_elevator, &m_shooter, &m_drive, &m_limelight));
+    m_chooser.AddOption("Get First 2 Notes and Shoot",
                                m_getAndShootFirstThreeAuto.get());
     m_chooser.SetDefaultOption("Get First 3 Notes and Shoot",
                                m_threeNoteAuto.get());
-        // Add more options as needed
 
         frc::SmartDashboard::PutData("Autonomous Options", &m_chooser);
   } catch (std::exception& ex) {
