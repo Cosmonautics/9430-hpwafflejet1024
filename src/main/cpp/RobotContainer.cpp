@@ -52,9 +52,8 @@ RobotContainer::RobotContainer() {
       std::make_shared<DoClimb1Command>(&m_elevator, &m_shooter, &m_intake));
 
   pathplanner::NamedCommands::registerCommand(
-      "DoSpeakerScoreCommand",
-      std::make_shared<DoSpeakerScoreCommand>(&m_elevator, &m_shooter, &m_drive,
-                                              &m_limelight));
+      "DoSpeakerScoreAutoCommand", std::make_shared<DoSpeakerScoreAutoCommand>(
+                                       &m_elevator, &m_shooter, &m_limelight));
 
   pathplanner::NamedCommands::registerCommand(
       "DoNoteEjectActionCommand", std::make_shared<DoNoteEjectActionCommand>(
@@ -87,7 +86,6 @@ RobotContainer::RobotContainer() {
 
   pathplanner::NamedCommands::registerCommand(
       "DoClimbCommand", std::make_shared<DoClimbCommand>(&m_elevator));
-
   m_elevator.SetDefaultCommand(frc2::RunCommand(
       [this] {
         double rightTriggerValue = m_operatorController.GetRightTriggerAxis();
@@ -268,57 +266,62 @@ void RobotContainer::ConfigureButtonBindings() {
 }
 
 void RobotContainer::ConfigureAutoChooser() {
-  pathplanner::AutoBuilder::configureHolonomic(
-      [this]() { return m_drive.GetPose(); },  // Robot pose supplier
-      [this](frc::Pose2d pose) {
-        m_drive.ResetOdometry(pose);
-      },  // Method to reset odometry (will be called if your auto has a
-          // starting pose)
-      [this]() {
-        return m_drive.GetRobotRelativeChassisSpeeds();
-      },  // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-      [this](frc::ChassisSpeeds speeds) {
-        m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false);
-      },  // Method that will drive the robot given ROBOT RELATIVE
-          // ChassisSpeeds
-      pathplanner::HolonomicPathFollowerConfig(  // HolonomicPathFollowerConfig,
-                                                 // this should likely live
-                                                 // in your Constants class
-          pathplanner::PIDConstants(AutoConstants::kPXController, 0.0,
-                                    0.0),  // Translation PID constants
-          pathplanner::PIDConstants(AutoConstants::kPYController, 0.0,
-                                    0.0),  // Rotation PID constants
-          4.5_mps,                         // Max module speed, in m/s
-          0.4_m,  // Drive base radius in meters. Distance from robot
-                  // center to furthest module.
-          pathplanner::ReplanningConfig()  // Default path replanning
-                                           // config. See the API for
-                                           // the options here
-          ),
-      []() {
-        auto alliance = frc::DriverStation::GetAlliance();
-        if (alliance) {
-          return alliance.value() == frc::DriverStation::Alliance::kRed;
-        }
-        return false;
-      },
-      &m_drive  // Reference to this subsystem to set requirements
-  );
-  auto stopRobotDrive = [this]() {
-    m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false);
-  };
+  try {
+    pathplanner::AutoBuilder::configureHolonomic(
+        [this]() { return m_drive.GetPose(); },  // Robot pose supplier
+        [this](frc::Pose2d pose) {
+          m_drive.ResetOdometry(pose);
+        },  // Method to reset odometry (will be called if your auto has a
+            // starting pose)
+        [this]() {
+          return m_drive.GetRobotRelativeChassisSpeeds();
+        },  // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+        [this](frc::ChassisSpeeds speeds) {
+          m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false);
+        },  // Method that will drive the robot given ROBOT RELATIVE
+            // ChassisSpeeds
+        pathplanner::
+            HolonomicPathFollowerConfig(  // HolonomicPathFollowerConfig,
+                                          // this should likely live
+                                          // in your Constants class
+                pathplanner::PIDConstants(AutoConstants::kPXController, 0.0,
+                                          0.0),  // Translation PID constants
+                pathplanner::PIDConstants(AutoConstants::kPYController, 0.0,
+                                          0.0),  // Rotation PID constants
+                4.5_mps,                         // Max module speed, in m/s
+                0.4_m,  // Drive base radius in meters. Distance from robot
+                        // center to furthest module.
+                pathplanner::ReplanningConfig()  // Default path replanning
+                                                 // config. See the API for
+                                                 // the options here
+                ),
+        []() {
+          auto alliance = frc::DriverStation::GetAlliance();
+          if (alliance) {
+            return alliance.value() == frc::DriverStation::Alliance::kRed;
+          }
+          return false;
+        },
+        &m_drive  // Reference to this subsystem to set requirements
+    );
+    auto stopRobotDrive = [this]() {
+      m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false);
+    };
+    m_chooser.AddOption("Do Nothing", new frc2::InstantCommand([]() {}, {}));
+    m_chooser.AddOption(
+        "Shoot Note and Do Nothing",
+        new DoSpeakerScoreActionCommand(&m_elevator, &m_shooter));
+    m_chooser.SetDefaultOption("Get First 3 Notes and Shoot",
+                               autos::Test::cmdPtr.get());
+    // Add more options as needed
 
-  frc2::CommandPtr autoPath = pathplanner::AutoBuilder::followPathWithEvents(
-      pathplanner::PathPlannerPath::fromPathFile("GetAndShootFirstThree"));
-
-  m_chooser.AddOption("Do Nothing", new frc2::InstantCommand([]() {}, {}));
-  m_chooser.SetDefaultOption(
-      "Shoot Note and Do Nothing",
-      new DoSpeakerScoreActionCommand(&m_elevator, &m_shooter));
-  m_chooser.AddOption("Get First 3 Notes and Shoot", autoPath.get());
-  // Add more options as needed
-
-  frc::SmartDashboard::PutData("Autonomous Options", &m_chooser);
+    frc::SmartDashboard::PutData("Autonomous Options", &m_chooser);
+  } catch (std::exception& ex) {
+    std::string what_string = ex.what();
+    std::string err_msg = "Error Starting Autonomous:  " + what_string;
+    // std::cout << p_err_msg;
+    wpi::outs() << err_msg;
+  }
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
