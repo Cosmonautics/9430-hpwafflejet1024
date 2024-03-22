@@ -38,7 +38,7 @@ DriveSubsystem::DriveSubsystem()
         return this->GetRobotRelativeChassisSpeeds();
       },  // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
       [this](frc::ChassisSpeeds speeds) {
-        this->Drive(speeds.vx, speeds.vy, speeds.omega, false, false);
+        this->Drive(speeds.vx, speeds.vy, speeds.omega, false, true);
       },  // Method that will drive the robot given ROBOT RELATIVE
           // ChassisSpeeds
       pathplanner::HolonomicPathFollowerConfig(  // HolonomicPathFollowerConfig,
@@ -48,7 +48,7 @@ DriveSubsystem::DriveSubsystem()
                                     0.0),  // Translation PID constants
           pathplanner::PIDConstants(AutoConstants::kPYController, 0.0,
                                     0.0),  // Rotation PID constants
-          4.46_mps,                         // Max module speed, in m/s
+          4.46_mps,                        // Max module speed, in m/s
           0.457_m,  // Drive base radius in meters. Distance from robot
                     // center to furthest module.
           pathplanner::ReplanningConfig()  // Default path replanning
@@ -183,7 +183,7 @@ void DriveSubsystem::SetModuleStates(
 
 frc::ChassisSpeeds DriveSubsystem::GetRobotRelativeChassisSpeeds() {
   return (kDriveKinematics.ToChassisSpeeds(
-      m_frontLeft.GetState(), m_rearLeft.GetState(), m_frontRight.GetState(),
+      m_frontLeft.GetState(), m_frontRight.GetState(), m_rearLeft.GetState(),
       m_rearRight.GetState()));
 }
 
