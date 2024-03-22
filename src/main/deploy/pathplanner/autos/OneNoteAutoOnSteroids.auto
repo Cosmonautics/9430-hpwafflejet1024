@@ -36,7 +36,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "DoSpeakerScoreAutoCommand"
+                  "name": "DoNoteIntakeActionCommand"
                 }
               },
               {
@@ -89,6 +89,12 @@
           "type": "named",
           "data": {
             "name": "MoveToAMPSpeakerScorePositionCommand"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.0
           }
         }
       ]

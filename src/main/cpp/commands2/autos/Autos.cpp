@@ -52,7 +52,7 @@ frc2::CommandPtr autos::ThreeNoteAuto(Elevator* elevatorSubsystem,
                             limelightSubsystem)
           .ToPtr());
 }
-frc2::CommandPtr autos::ThreeNoteAuto(Elevator* elevatorSubsystem,
+frc2::CommandPtr autos::OneNoteAutoOnSteroids(Elevator* elevatorSubsystem,
                                       Shooter* shooterSubsystem,
                                       DriveSubsystem* driveSubsystem,
                                       Limelight* limelightSubsystem) {
