@@ -1,0 +1,99 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.8,
+      "y": 4.244162191365528
+    },
+    "rotation": -55.13026350349401
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "MoveToTransitPositionCommand"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "OneNoteAuto"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "MoveToFloorIntakePositionCommand"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "DoSpeakerScoreAutoCommand"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.3
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "OneNoteAutoIntake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopNoteIntakeEjectActionCommand"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "MoveToTransitPositionCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "OneNoteAutoTheSequel"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "MoveToAMPSpeakerScorePositionCommand"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

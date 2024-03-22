@@ -52,3 +52,25 @@ frc2::CommandPtr autos::ThreeNoteAuto(Elevator* elevatorSubsystem,
                             limelightSubsystem)
           .ToPtr());
 }
+frc2::CommandPtr autos::ThreeNoteAuto(Elevator* elevatorSubsystem,
+                                      Shooter* shooterSubsystem,
+                                      DriveSubsystem* driveSubsystem,
+                                      Limelight* limelightSubsystem) {
+  return frc2::cmd::Sequence(
+      DoSpeakerScoreCommand(elevatorSubsystem, shooterSubsystem, driveSubsystem,
+                            limelightSubsystem)
+          .ToPtr(),
+      frc2::WaitCommand(0.2_s).ToPtr(),
+      frc2::InstantCommand(
+          [driveSubsystem]() {
+            driveSubsystem->ResetOdometry(
+                pathplanner::PathPlannerAuto::getStartingPoseFromAutoFile(
+                    "OneNoteAutoOnSteroids"));
+          },
+          {})
+          .ToPtr(),
+      pathplanner::PathPlannerAuto("OneNoteAutoOnSteroids").ToPtr(),
+      DoSpeakerScoreCommand(elevatorSubsystem, shooterSubsystem, driveSubsystem,
+                            limelightSubsystem)
+          .ToPtr());
+}

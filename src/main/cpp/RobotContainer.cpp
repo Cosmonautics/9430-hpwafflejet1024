@@ -95,6 +95,9 @@ RobotContainer::RobotContainer() {
       &m_elevator, &m_shooter, &m_drive, &m_limelight);
   m_threeNoteAuto =
       autos::ThreeNoteAuto(&m_elevator, &m_shooter, &m_drive, &m_limelight);
+
+  m_oneNoteAutoOnSteroids = autos::OneNoteAutoOnSteroids(
+      &m_elevator, &m_shooter, &m_drive, &m_limelight);
   ConfigureAutoChooser();
 
   // Configure the button bindings
@@ -115,7 +118,8 @@ RobotContainer::RobotContainer() {
         // direction)
         if (rightTriggerValue > 0.75 && m_manualShoot) {
           if (!m_manualShoot.IsScheduled()) {
-            m_manualShoot = DoSpeakerScoreManualCommand(&m_elevator, &m_shooter).ToPtr();
+            m_manualShoot =
+                DoSpeakerScoreManualCommand(&m_elevator, &m_shooter).ToPtr();
             m_manualShoot.Schedule();
           }
         }
@@ -253,6 +257,8 @@ void RobotContainer::ConfigureAutoChooser() {
                                                   &m_drive, &m_limelight));
     m_chooser.AddOption("Get First 2 Notes and Shoot",
                         m_getAndShootFirstThreeAuto.get());
+    m_chooser.AddOption("Get First Note and Shoot Far Note",
+                        m_oneNoteAutoOnSteroids.get());
     m_chooser.SetDefaultOption("Get First 3 Notes and Shoot",
                                m_threeNoteAuto.get());
 

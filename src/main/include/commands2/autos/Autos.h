@@ -32,4 +32,8 @@ frc2::CommandPtr ThreeNoteAuto(Elevator* elevatorSubsystem,
                                Shooter* shooterSubsystem,
                                DriveSubsystem* driveSubsystem,
                                Limelight* limelightSubsystem);
+frc2::CommandPtr OneNoteAutoOnSteroids(Elevator* elevatorSubsystem,
+                               Shooter* shooterSubsystem,
+                               DriveSubsystem* driveSubsystem,
+                               Limelight* limelightSubsystem);
 }  // namespace autos

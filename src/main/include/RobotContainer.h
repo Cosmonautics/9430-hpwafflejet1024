@@ -103,6 +103,7 @@ class RobotContainer {
   // &m_drive, &m_limelight);
   frc2::CommandPtr m_getAndShootFirstThreeAuto = frc2::cmd::Sequence();
   frc2::CommandPtr m_threeNoteAuto = frc2::cmd::Sequence();
+  frc2::CommandPtr m_oneNoteAutoOnSteroids = frc2::cmd::Sequence();
   bool isClimb2 = false;
   bool isClimb1 = false;
 
