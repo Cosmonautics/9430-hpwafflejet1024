@@ -35,6 +35,12 @@
                 }
               },
               {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.08
+                }
+              },
+              {
                 "type": "path",
                 "data": {
                   "pathName": "TwoNoteAuto"
@@ -64,15 +70,15 @@
                       }
                     },
                     {
-                      "type": "named",
-                      "data": {
-                        "name": "DoSpeakerScoreAutoCommand"
-                      }
-                    },
-                    {
                       "type": "wait",
                       "data": {
                         "waitTime": 0.5
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "DoSpeakerScoreAutoCommand"
                       }
                     }
                   ]
@@ -94,21 +100,20 @@
                       "data": {
                         "name": "MoveToFloorIntakePositionCommand"
                       }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "DoNoteIntakeActionCommand"
+                      }
                     }
                   ]
                 }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
+              },
               {
-                "type": "named",
+                "type": "wait",
                 "data": {
-                  "name": "DoNoteIntakeActionCommand"
+                  "waitTime": 0.08
                 }
               },
               {
@@ -123,7 +128,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.2
           }
         },
         {

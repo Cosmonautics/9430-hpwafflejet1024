@@ -5,7 +5,7 @@
       "x": 0.8,
       "y": 4.244162191365528
     },
-    "rotation": -55.55000000000001
+    "rotation": -55.13026350349401
   },
   "command": {
     "type": "sequential",
@@ -37,6 +37,12 @@
                 "type": "named",
                 "data": {
                   "name": "DoNoteIntakeActionCommand"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.3
                 }
               }
             ]
@@ -83,6 +89,12 @@
           "type": "named",
           "data": {
             "name": "MoveToAMPSpeakerScorePositionCommand"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.0
           }
         }
       ]
