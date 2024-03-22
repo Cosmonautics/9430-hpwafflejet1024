@@ -101,6 +101,8 @@ class RobotContainer {
   frc::SendableChooser<frc2::Command*> m_chooser;
   // autos::GetAndShootFirstThree( &m_elevator, &m_shooter,
   // &m_drive, &m_limelight);
+
+  //This right here is my favorite thing. Ever! In the history of forever. I think about this every day. I think about this all night long. I stay awake at night not sleeping because I'm thinking about this!
   frc2::CommandPtr m_getAndShootFirstThreeAuto = frc2::cmd::Sequence();
   frc2::CommandPtr m_threeNoteAuto = frc2::cmd::Sequence();
   frc2::CommandPtr m_oneNoteAutoOnSteroids = frc2::cmd::Sequence();
