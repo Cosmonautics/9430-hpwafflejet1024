@@ -48,7 +48,7 @@ DriveSubsystem::DriveSubsystem()
                                     0.0),  // Translation PID constants
           pathplanner::PIDConstants(AutoConstants::kPYController, 0.0,
                                     0.0),  // Rotation PID constants
-          4.5_mps,                         // Max module speed, in m/s
+          4.46_mps,                         // Max module speed, in m/s
           0.457_m,  // Drive base radius in meters. Distance from robot
                     // center to furthest module.
           pathplanner::ReplanningConfig()  // Default path replanning

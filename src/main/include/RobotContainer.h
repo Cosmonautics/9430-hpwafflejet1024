@@ -43,6 +43,7 @@
 #include "commands2/DoClimb1Command.h"
 #include "commands2/DoClimbCommand.h"
 #include "commands2/DoSpeakerScoreAutoCommand.h"
+#include "commands2/DoSpeakerScoreManualCommand.h"
 #include "commands2/DoSpeakerScoreCommand.h"
 #include "commands2/autos/Autos.h"
 #include "subsystems/Conveyor.h"
@@ -104,4 +105,6 @@ class RobotContainer {
   frc2::CommandPtr m_threeNoteAuto = frc2::cmd::Sequence();
   bool isClimb2 = false;
   bool isClimb1 = false;
+
+  frc2::CommandPtr m_manualShoot = frc2::cmd::Sequence();
 };

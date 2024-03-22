@@ -96,67 +96,6 @@ RobotContainer::RobotContainer() {
   m_threeNoteAuto =
       autos::ThreeNoteAuto(&m_elevator, &m_shooter, &m_drive, &m_limelight);
   ConfigureAutoChooser();
-  m_elevator.SetDefaultCommand(frc2::RunCommand(
-      [this] {
-        double rightTriggerValue = m_operatorController.GetRightTriggerAxis();
-        double leftTriggerValue = m_operatorController.GetLeftTriggerAxis();
-
-        // Apply deadband to the trigger values
-        rightTriggerValue = frc::ApplyDeadband(
-            rightTriggerValue, ElevatorConstants::kTriggerDeadband);
-        leftTriggerValue = frc::ApplyDeadband(
-            leftTriggerValue, ElevatorConstants::kTriggerDeadband);
-
-        double triggerValue = 0;
-
-        // If right trigger is pressed more than the left, move up (positive
-        // direction)
-        if (rightTriggerValue > leftTriggerValue) {
-          triggerValue = rightTriggerValue;  // Positive direction
-        }
-        // If left trigger is pressed more than the right, move down
-        // (negative direction)
-        else if (leftTriggerValue > rightTriggerValue) {
-          triggerValue = -leftTriggerValue;  // Negative direction
-        }
-        // If both triggers are pressed equally or not at all, don't move
-        // (triggerValue remains 0)
-
-        // Use the triggerValue to control the elevator. Assuming SetSpeed
-        // or a similar method controls the elevator's speed.
-        m_elevator.ManualMove(triggerValue);
-      },
-      {&m_elevator}));
-
-  m_shooter.SetDefaultCommand(frc2::RunCommand(
-      [this] {
-        double rightTriggerValue = m_operatorController.GetPOV(0);
-        double leftTriggerValue = m_operatorController.GetPOV(4);
-
-        // Apply deadband to the trigger values
-        rightTriggerValue = rightTriggerValue;
-        leftTriggerValue = leftTriggerValue;
-
-        double triggerValue = 0;
-
-        // If right trigger is pressed more than the left, move up (positive
-        // direction)
-        if (rightTriggerValue > leftTriggerValue) {
-          triggerValue = rightTriggerValue;  // Positive direction
-        }
-        // If left trigger is pressed more than the right, move down
-        // (negative direction)
-        else if (leftTriggerValue > rightTriggerValue) {
-          triggerValue = -leftTriggerValue;  // Negative direction
-        }
-        // If both triggers are pressed equally or not at all, don't move
-        // (triggerValue remains 0)
-
-        // Use the triggerValue to control the elevator. Assuming SetSpeed
-        // or a similar method controls the elevator's speed.
-        m_shooter.ManualMove(triggerValue);
-      },
-      {&m_shooter}));
 
   // Configure the button bindings
   ConfigureButtonBindings();
@@ -164,6 +103,23 @@ RobotContainer::RobotContainer() {
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
   // SPEED IS AT 50%
+  m_shooter.SetDefaultCommand(frc2::RunCommand(
+      [this] {
+        double rightTriggerValue = m_operatorController.GetRightTriggerAxis();
+        // Apply deadband to the trigger values
+        rightTriggerValue = rightTriggerValue;
+
+        double triggerValue = 0;
+
+        // If right trigger is pressed more than the left, move up (positive
+        // direction)
+        if (rightTriggerValue > 0.75 && m_manualShoot) {
+          if (!m_manualShoot.IsScheduled()) {
+            m_manualShoot = DoSpeakerScoreManualCommand(&m_elevator, &m_shooter).ToPtr();
+          }
+        }
+      },
+      {&m_shooter}));
 
   m_drive.SetDefaultCommand(frc2::RunCommand(
       [this] {
@@ -197,8 +153,6 @@ void RobotContainer::ConfigureButtonBindings() {
             ControllerUtils::VibrateController(m_driverController, 0.8, 0.3_s);
           },
           {&m_drive}));
-  frc::ApplyDeadband(m_operatorController.GetRightTriggerAxis(),
-                     ElevatorConstants::kTriggerDeadband);
 
   // D-Pad Left (Floor Intake)
   frc2::POVButton(&m_operatorController, 270)
@@ -263,6 +217,18 @@ void RobotContainer::ConfigureButtonBindings() {
                 ->Schedule();
           },
           {&m_elevator, &m_shooter, &m_drive, &m_limelight}));
+  frc2::JoystickButton(&m_operatorController,
+                       frc::XboxController::Button::kRightBumper)
+      .OnTrue(new frc2::InstantCommand(
+          [this] {
+            frc::SmartDashboard::PutNumber(
+                "Limelight Distance",
+                m_limelight.CalculateDistanceToTarget(true));
+            (new DoSpeakerScoreCommand(&m_elevator, &m_shooter, &m_drive,
+                                       &m_limelight))
+                ->Schedule();
+          },
+          {&m_elevator, &m_shooter, &m_drive, &m_limelight}));
 
   frc2::JoystickButton(&m_operatorController, frc::XboxController::Button::kY)
       .OnTrue(new frc2::InstantCommand(
@@ -281,15 +247,15 @@ void RobotContainer::ConfigureAutoChooser() {
       m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false);
     };
     m_chooser.AddOption("Do Nothing", new frc2::InstantCommand([]() {}, {}));
-    m_chooser.AddOption(
-        "Shoot Note and Do Nothing",
-        new DoSpeakerScoreCommand(&m_elevator, &m_shooter, &m_drive, &m_limelight));
+    m_chooser.AddOption("Shoot Note and Do Nothing",
+                        new DoSpeakerScoreCommand(&m_elevator, &m_shooter,
+                                                  &m_drive, &m_limelight));
     m_chooser.AddOption("Get First 2 Notes and Shoot",
-                               m_getAndShootFirstThreeAuto.get());
+                        m_getAndShootFirstThreeAuto.get());
     m_chooser.SetDefaultOption("Get First 3 Notes and Shoot",
                                m_threeNoteAuto.get());
 
-        frc::SmartDashboard::PutData("Autonomous Options", &m_chooser);
+    frc::SmartDashboard::PutData("Autonomous Options", &m_chooser);
   } catch (std::exception& ex) {
     std::string what_string = ex.what();
     std::string err_msg = "Error Starting Autonomous:  " + what_string;
