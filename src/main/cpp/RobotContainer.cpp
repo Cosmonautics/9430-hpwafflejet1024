@@ -116,6 +116,7 @@ RobotContainer::RobotContainer() {
         if (rightTriggerValue > 0.75 && m_manualShoot) {
           if (!m_manualShoot.IsScheduled()) {
             m_manualShoot = DoSpeakerScoreManualCommand(&m_elevator, &m_shooter).ToPtr();
+            m_manualShoot.Schedule();
           }
         }
       },
