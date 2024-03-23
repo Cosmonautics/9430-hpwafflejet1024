@@ -34,7 +34,7 @@ Shooter::Shooter() {
 
 void Shooter::InitializeDistanceAngleLookup() {
   // Populate the distance-angle lookup table with real data
-  distanceAngleLookup = {{36.0, 0.885},  {60.0, 0.821},  {84.0, 0.794},
+  distanceAngleLookup = {{36.0, 0.846},  {60.0, 0.817},  {84.0, 0.794},
                          {108.0, 0.777}, {132.0, 0.77}, {156.0, 0.763}};
 }
 
