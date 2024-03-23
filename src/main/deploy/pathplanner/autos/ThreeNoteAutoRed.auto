@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 15.11,
-      "y": 5.565873600441298
+      "x": 1.456099942611335,
+      "y": 5.521816553472107
     },
-    "rotation": -179.0720985370442
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -43,7 +43,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "TwoNoteAutoRed"
+                  "pathName": "TwoNoteAuto"
                 }
               }
             ]

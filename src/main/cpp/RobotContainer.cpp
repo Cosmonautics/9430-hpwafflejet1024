@@ -98,7 +98,6 @@ RobotContainer::RobotContainer() {
 
   m_oneNoteAutoOnSteroids = autos::OneNoteAutoOnSteroids(
       &m_elevator, &m_shooter, &m_drive, &m_limelight);
-  m_limelight.SetLEDOff();
   ConfigureAutoChooser();
 
   // Configure the button bindings
