@@ -35,21 +35,25 @@ frc2::CommandPtr autos::ThreeNoteAuto(Elevator* elevatorSubsystem,
                                       Shooter* shooterSubsystem,
                                       DriveSubsystem* driveSubsystem,
                                       Limelight* limelightSubsystem) {
+  std::string threeNoteAuto = frc::DriverStation::GetAlliance().value() ==
+                                      frc::DriverStation::Alliance::kRed
+                                  ? "ThreeNoteAutoRed"
+                                  : "ThreeNoteAuto";
   return frc2::cmd::Sequence(
       DoSpeakerScoreCommand(elevatorSubsystem, shooterSubsystem, driveSubsystem,
                             limelightSubsystem)
           .ToPtr(),
       frc2::WaitCommand(0.2_s).ToPtr(),
       frc2::InstantCommand(
-          [driveSubsystem]() {
+          [driveSubsystem, threeNoteAuto]() {
             driveSubsystem->ResetOdometry(
                 pathplanner::PathPlannerAuto::getStartingPoseFromAutoFile(
-                    "ThreeNoteAuto"));
+                    threeNoteAuto));
           },
           {driveSubsystem})
           .ToPtr(),
       frc2::WaitCommand(0.2_s).ToPtr(),
-      pathplanner::PathPlannerAuto("ThreeNoteAuto").ToPtr(),
+      pathplanner::PathPlannerAuto(threeNoteAuto).ToPtr(),
       DoSpeakerScoreCommand(elevatorSubsystem, shooterSubsystem, driveSubsystem,
                             limelightSubsystem)
           .ToPtr());
