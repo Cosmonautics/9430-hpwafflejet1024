@@ -15,21 +15,25 @@ frc2::CommandPtr autos::GetAndShootFirstThree(Elevator* elevatorSubsystem,
                                               Shooter* shooterSubsystem,
                                               DriveSubsystem* driveSubsystem,
                                               Limelight* limelightSubsystem) {
+  std::string twoNoteAuto = frc::DriverStation::GetAlliance().value() ==
+                                    frc::DriverStation::Alliance::kRed
+                                ? "GetAndShootFirstThreeRed"
+                                : "GetAndShootFirstThree";
   return frc2::cmd::Sequence(
       DoSpeakerScoreCommand(elevatorSubsystem, shooterSubsystem, driveSubsystem,
                             limelightSubsystem)
           .ToPtr(),
       frc2::WaitCommand(0.2_s).ToPtr(),
       frc2::InstantCommand(
-          [driveSubsystem]() {
+          [driveSubsystem, twoNoteAuto]() {
             driveSubsystem->ResetOdometry(
                 pathplanner::PathPlannerAuto::getStartingPoseFromAutoFile(
-                    "GetAndShootFirstThree"));
+                    twoNoteAuto));
           },
           {driveSubsystem})
           .ToPtr(),
       frc2::WaitCommand(0.2_s).ToPtr(),
-      pathplanner::PathPlannerAuto("GetAndShootFirstThree").ToPtr());
+      pathplanner::PathPlannerAuto(twoNoteAuto).ToPtr());
 }
 frc2::CommandPtr autos::ThreeNoteAuto(Elevator* elevatorSubsystem,
                                       Shooter* shooterSubsystem,
@@ -39,6 +43,7 @@ frc2::CommandPtr autos::ThreeNoteAuto(Elevator* elevatorSubsystem,
                                       frc::DriverStation::Alliance::kRed
                                   ? "ThreeNoteAutoRed"
                                   : "ThreeNoteAuto";
+
   return frc2::cmd::Sequence(
       DoSpeakerScoreCommand(elevatorSubsystem, shooterSubsystem, driveSubsystem,
                             limelightSubsystem)

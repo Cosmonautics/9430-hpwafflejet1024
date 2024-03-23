@@ -5,7 +5,7 @@
       "x": 15.11,
       "y": 5.565873600441298
     },
-    "rotation": -179.0720985370442
+    "rotation": 180.0
   },
   "command": {
     "type": "sequential",
@@ -82,69 +82,6 @@
                       }
                     }
                   ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "MoveToFloorIntakePositionCommand"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "DoNoteIntakeActionCommand"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.08
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "ThreeNoteAutoRed"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "StopNoteIntakeEjectActionCommand"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "MoveToAMPSpeakerScorePositionCommand"
                 }
               }
             ]
