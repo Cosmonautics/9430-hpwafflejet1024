@@ -31,6 +31,7 @@ class Elevator : public frc2::Subsystem {
   double CalculateTargetHeight(units::degree_t theta2);
   double InchesToRotations(double inches);
   double RotationsToInches(double revolution);
+  double RotationsToInchesEncorder();
   bool ToggleManualOverride();
 
   void SetToBrakeMode();

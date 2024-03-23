@@ -7,9 +7,10 @@ DoSpeakerScoreAutoCommand::DoSpeakerScoreAutoCommand(
     Limelight* limelightSubsystem) {
   AddCommands(
       MoveShooterWheelsCommand(shooterSubsystem, -1.0),
-      DoAlignShooterWithAprilTagCommand(shooterSubsystem, limelightSubsystem),
-      frc2::WaitCommand(0.5_s),
       MoveElevatorCommand(elevatorSubsystem, kElevatorShooterPosition, false),
+      frc2::WaitCommand(0.5_s),
+      DoAlignShooterWithAprilTagCommand(shooterSubsystem, limelightSubsystem,
+                                        elevatorSubsystem),
       frc2::WaitCommand(0.5_s),
       MoveShooterFeederWheelsCommand(shooterSubsystem, -1.0),
       frc2::WaitCommand(0.5_s),

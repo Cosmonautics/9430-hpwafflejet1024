@@ -97,6 +97,10 @@ double Elevator::RotationsToInches(double rotations) {
   return (rotations * kPullyDiameter * M_PI) / kGearBoxScale;
 }
 
+double Elevator::RotationsToInchesEncorder() {
+  return (m_ElevatorThroughBoreEncoder.GetPosition() * kPullyDiameter * M_PI) / kGearBoxScale;
+}
+
 bool Elevator::AtTargetPosition() {
   bool flag = std::abs(currentPositionInches - targetPositionInches) <=
               ElevatorConstants::kPositionToleranceInches;

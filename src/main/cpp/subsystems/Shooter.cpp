@@ -34,7 +34,7 @@ Shooter::Shooter() {
 
 void Shooter::InitializeDistanceAngleLookup() {
   // Populate the distance-angle lookup table with real data
-  distanceAngleLookup = {{36.0, 0.846},  {60.0, 0.817},  {84.0, 0.794},
+  distanceAngleLookup = {{36.0, 0.846},  {60.0, 0.817}, {84.0, 0.794},
                          {108.0, 0.777}, {132.0, 0.77}, {156.0, 0.763}};
 }
 
@@ -143,32 +143,19 @@ void Shooter::ShooterPickUpNote(bool isPressed, double speed) {
   }
 }
 
-void Shooter::SetAngleBasedOnDistance(double distance) {
-  // If distanceAngleLookup is empty or not properly initialized, return early
-  if (distanceAngleLookup.empty()) return;
-
-  if (distance <= distanceAngleLookup.front().distance) {
-    PivotToSetPoint(distanceAngleLookup.front().val);
-    return;
-  }
-  if (distance >= distanceAngleLookup.back().distance) {
-    PivotToSetPoint(distanceAngleLookup.back().val);
-    return;
-  }
-
-  for (size_t i = 0; i < distanceAngleLookup.size() - 1; ++i) {
-    if (distance >= distanceAngleLookup[i].distance &&
-        distance <= distanceAngleLookup[i + 1].distance) {
-      double ratio = (distance - distanceAngleLookup[i].distance) /
-                     (distanceAngleLookup[i + 1].distance -
-                      distanceAngleLookup[i].distance);
-      double angle =
-          distanceAngleLookup[i].val +
-          ratio * (distanceAngleLookup[i + 1].val - distanceAngleLookup[i].val);
-      PivotToSetPoint(angle);
-      return;
-    }
-  }
+void Shooter::SetAngleBasedOnDistance(double distance, double elevatorHeight) {
+  double apriltagHeight = 8.125;
+  double apriltagToFloor = 51.875;
+  double apriltagToSpeaker = 17.0;  // inches or else
+  double targetHeight = (apriltagHeight + apriltagToFloor + apriltagToSpeaker) +
+                        elevatorHeight + 5;
+  double hyp = sqrt((targetHeight * targetHeight) + (distance * distance));
+  double desiredAngle = asin(sin(targetHeight / hyp));
+  frc::SmartDashboard::PutNumber("desangle",desiredAngle);
+  //PivotToSetPointAngle(desiredAngle);
+  // angle theta = t
+  // sin(t) = opp / hyp
+  // t = sin^-1(sin(t))
 }
 
 void Shooter::ManualMove(double speed) {

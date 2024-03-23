@@ -8,7 +8,8 @@
 #include <frc2/command/ParallelRaceGroup.h>
 #include <frc2/command/RunCommand.h>
 #include <rev/CANSparkFlex.h>
-
+#include <frc/smartdashboard/SmartDashboard.h>
+#include <cmath>
 #include "Constants.h"
 
 // one pivot motor - shooter manipulator
@@ -33,7 +34,7 @@ class Shooter : public frc2::Subsystem {
   void MoveFeeder(double speed);
   void StopMotors();
   void InvertMotor(bool Invert);
-  void SetAngleBasedOnDistance(double distance);
+  void SetAngleBasedOnDistance(double distance, double elevatorHeight);
   void PivotToSetPointAngle(double setPointAngle);
 
  private:

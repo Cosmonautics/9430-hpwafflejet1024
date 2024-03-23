@@ -7,12 +7,13 @@
 #include <cmath>
 
 DoAlignShooterWithAprilTagCommand::DoAlignShooterWithAprilTagCommand(
-    Shooter* shooter, Limelight* limelight)
+    Shooter* shooter, Limelight* limelight, Elevator* elevator)
     : m_shooter(shooter),
       m_limelight(limelight),
       m_targetOffsetAngleHorizontal(0.0),
-      m_isAligned(false) {
-  AddRequirements({shooter, limelight});
+      m_isAligned(false),
+      m_elevator(elevator) {
+  AddRequirements({shooter, limelight, elevator});
 }
 
 void DoAlignShooterWithAprilTagCommand::Initialize() {
@@ -23,8 +24,10 @@ void DoAlignShooterWithAprilTagCommand::Initialize() {
 
 void DoAlignShooterWithAprilTagCommand::Execute() {
   if (m_limelight->HasTarget()) {
-    m_shooter->SetAngleBasedOnDistance(m_limelight->CalculateDistanceToTarget(
-        frc::DriverStation::GetAlliance() == frc::DriverStation::kRed));
+    m_shooter->SetAngleBasedOnDistance(
+        m_limelight->CalculateDistanceToTarget(
+            frc::DriverStation::GetAlliance() == frc::DriverStation::kRed),
+        m_elevator->RotationsToInchesEncorder());
   }
   m_isAligned = true;
 }
