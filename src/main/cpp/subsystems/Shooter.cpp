@@ -150,12 +150,12 @@ void Shooter::SetAngleBasedOnDistance(double distance, double elevatorHeight) {
   double targetHeight = (apriltagHeight + apriltagToFloor + apriltagToSpeaker) +
                         elevatorHeight + 5;
   double hyp = sqrt((targetHeight * targetHeight) + (distance * distance));
-  double desiredAngle = asin(sin(targetHeight / hyp));
-  frc::SmartDashboard::PutNumber("desangle",desiredAngle);
-  //PivotToSetPointAngle(desiredAngle);
-  // angle theta = t
-  // sin(t) = opp / hyp
-  // t = sin^-1(sin(t))
+  double desiredAngle = atan((targetHeight / distance)) * (180.0 / M_PI);
+  frc::SmartDashboard::PutNumber("desangle", desiredAngle);
+  // PivotToSetPointAngle(desiredAngle);
+  //  angle theta = t
+  //  sin(t) = opp / hyp
+  //  t = sin^-1(sin(t))
 }
 
 void Shooter::ManualMove(double speed) {
