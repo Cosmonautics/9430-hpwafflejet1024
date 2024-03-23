@@ -151,8 +151,9 @@ void Shooter::SetAngleBasedOnDistance(double distance, double elevatorHeight) {
                         elevatorHeight + 5;
   double hyp = sqrt((targetHeight * targetHeight) + (distance * distance));
   double desiredAngle = atan((targetHeight / distance)) * (180.0 / M_PI);
-  frc::SmartDashboard::PutNumber("desangle", desiredAngle);
-  // PivotToSetPointAngle(desiredAngle);
+  double desiredRotation = 1.0 - (desiredAngle / 360.0);
+  frc::SmartDashboard::PutNumber("desangle", desiredRotation);
+  PivotToSetPoint(desiredRotation);
   //  angle theta = t
   //  sin(t) = opp / hyp
   //  t = sin^-1(sin(t))
